@@ -1,18 +1,18 @@
 Supinfo\WebBundle\Entity\SubFamilyFieldValue:
     type: entity
-    table: sub_family_field_value
+    table: sub_family_fields_values
     id:
         subFamilyFieldId:
             type: integer
-            columnName: sub_family_field_id
+            column: sub_family_field_id
             generator:
                 strategy: NONE
         articleId:
             type: integer
-            columnName: article_id
+            column: article_id
             generator:
                 strategy: NONE
-    field:
+    fields:
         value:
             type: string
             length: 255
@@ -23,7 +23,7 @@ Supinfo\WebBundle\Entity\SubFamilyFieldValue:
             joinColumn:
                 name: sub_family_field_id
                 referencedColumnName: id
-            cascade: ["remove"]
+                onDelete: "CASCADE"
         article:
             targetEntity: Article
             joinColumn:

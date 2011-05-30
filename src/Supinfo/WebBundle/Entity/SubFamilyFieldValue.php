@@ -18,6 +18,11 @@ class SubFamilyFieldValue
     private $articleId;
 
     /**
+     * @var string $value
+     */
+    private $value;
+
+    /**
      * @var Supinfo\WebBundle\Entity\SubFamilyField
      */
     private $subFamilyField;
@@ -66,6 +71,26 @@ class SubFamilyFieldValue
     public function getArticleId()
     {
         return $this->articleId;
+    }
+
+    /**
+     * Set value
+     *
+     * @param string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string $value
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**

@@ -24,15 +24,13 @@ Supinfo\WebBundle\Entity\Article:
             joinColumn:
                 name: place_id
                 referencedColumnName: id
-                nullable: true
-            cascade: ["persist"]
+                onDelete: "SET NULL"
         subFamily:
             targetEntity: SubFamily
             joinColumn:
                 name: sub_family_id
                 referencedColumnName: id
-                nullable: true
-            cascade: ["persist"]
+                onDelete: "SET NULL"
     oneToMany:
         fieldValues:
             targetEntity: SubFamilyFieldValue

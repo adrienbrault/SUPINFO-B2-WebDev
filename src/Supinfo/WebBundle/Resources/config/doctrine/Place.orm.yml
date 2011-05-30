@@ -9,4 +9,4 @@ Supinfo\WebBundle\Entity\Place:
     fields:
         name:
             type: string
-            lenght: 50
+            length: 50

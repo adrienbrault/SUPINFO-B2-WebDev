@@ -1,0 +1,31 @@
+Supinfo\WebBundle\Entity\SubFamilyFieldValue:
+    type: entity
+    table: sub_family_field_value
+    id:
+        subFamilyFieldId:
+            type: integer
+            columnName: sub_family_field_id
+            generator:
+                strategy: NONE
+        articleId:
+            type: integer
+            columnName: article_id
+            generator:
+                strategy: NONE
+    field:
+        value:
+            type: string
+            length: 255
+            nullable: true
+    manyToOne:
+        subFamilyField:
+            targetEntity: SubFamilyField
+            joinColumn:
+                name: sub_family_field_id
+                referencedColumnName: id
+            cascade: ["remove"]
+        article:
+            targetEntity: Article
+            joinColumn:
+                name: article_id
+                referencedColumnName: id

@@ -1,0 +1,23 @@
+Supinfo\WebBundle\Entity\Loan:
+    type: entity
+    table: loans
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        reason:
+            type: text
+        dateStart:
+            type: date
+            column: date_start
+        dateEnd:
+            type: date
+            column: date_end
+    manyToOne:
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id

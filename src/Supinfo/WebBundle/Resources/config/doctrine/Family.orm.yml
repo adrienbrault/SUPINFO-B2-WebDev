@@ -1,0 +1,16 @@
+Supinfo\WebBundle\Entity\Family:
+    type: entity
+    table: families
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 50
+    oneToMany:
+        subFamilies:
+            targetEntity: SubFamily
+            mappedBy: family

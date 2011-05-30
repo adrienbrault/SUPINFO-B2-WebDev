@@ -1,0 +1,43 @@
+Supinfo\WebBundle\Entity\User:
+    type: entity
+    table: users
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 50
+        password:
+            type: string
+            length: 255
+        salt:
+            type: string
+            length: 255
+        firstName:
+            type: string
+            length: 50
+            nullable: true
+        lastName:
+            type: string
+            length: 50
+            nullable: true
+        telephone:
+            type: string
+            length: 25
+            nullable: true
+        function:
+            type: string
+            length: 50
+            nullable: true
+        address:
+            type: text
+            nullable: true
+    manyToOne:
+        structure:
+            targetEntity: Structure
+            joinColumn:
+                name: structure_id
+                referencedColumnName: id

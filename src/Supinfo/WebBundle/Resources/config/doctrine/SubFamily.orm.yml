@@ -1,0 +1,23 @@
+Supinfo\WebBundle\Entity\SubFamily:
+    type: entity
+    table: sub_families
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 50
+    manyToOne:
+        family:
+            targetEntity: Family
+            joinColumn:
+                name: family_id
+                referencedColumnName: id
+                cascade: ["DELETE"]
+    oneToMany:
+        fields:
+            targetEntity: SubFamilyField
+            mappedBy: subFamily

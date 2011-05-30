@@ -1,0 +1,28 @@
+Supinfo\WebBundle\Entity\ArticleLoan:
+    type: entity
+    table: articles_loans
+    id:
+        loanId:
+            type: integer
+            column: loan_id
+            generator:
+                strategy: NONE
+        articleId:
+            type: integer
+            column: article_id
+            generator:
+                strategy: NONE
+    fields:
+        quantity:
+            type: integer
+    manyToOne:
+        article:
+            targetEntity: Article
+            joinColumn:
+                name: article_id
+                referencedColumnName: id
+        loan:
+            targetEntity: Loan
+            joinColumn:
+                name: loan_id
+                referencedColumnName: id

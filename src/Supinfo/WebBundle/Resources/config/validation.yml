@@ -1,0 +1,92 @@
+Supinfo\WebBundle\Entity\Article:
+    properties:
+        code:
+            - MaxLength: 15
+        description:
+            - NotBlank: ~
+            - MaxLength: 255
+        state:
+            - NotBlank: ~
+            - Choice: [0, 1, 2]
+        quantity:
+            - NotBlank: ~
+            - Min: 0
+            - Max: 100000
+            
+
+Supinfo\WebBundle\Entity\ArticleLoan:
+    properties:
+        quantity:
+            - NotBlank: ~
+            - Min: 1
+            - Max: 100000
+
+Supinfo\WebBundle\Entity\Family:
+    properties:
+        name:
+            - NotBlank: ~
+            - MinLength: 3
+            - MaxLength: 50
+
+Supinfo\WebBundle\Entity\Loan:
+    properties:
+        reason:
+        dateStart:
+            - Date: ~
+        dateEnd:
+            - Date:
+
+Supinfo\WebBundle\Entity\Place:
+    properties:
+        name:
+            - NotBlank: ~
+            - MinLength: 3
+            - MaxLength: 50
+
+Supinfo\WebBundle\Entity\Structure:
+    properties:
+        name:
+            - NotBlank:
+            - MinLength: 3
+            - MaxLength: 50
+
+Supinfo\WebBundle\Entity\SubFamily:
+    properties:
+        name:
+            - NotBlank: ~
+            - MinLength: 3
+            - MaxLength: 50
+
+Supinfo\WebBundle\Entity\SubFamilyField:
+    properties:
+        name:
+            - NotBlank: ~
+            - MinLength: 3
+            - MaxLength: 50
+
+Supinfo\WebBundle\Entity\SubFamilyFieldValue:
+    properties:
+        value:
+            - MaxLength: 255
+
+Supinfo\WebBundle\Entity\User:
+    properties:
+        username:
+            - NotBlank: ~
+            - MaxLength: 50
+        password:
+            - NotBlank: ~
+            - MinLength: 6
+        firstName:
+            - NotBlank: ~
+            - MinLength: 3
+            - MaxLength: 50
+        lastName:
+            - NotBlank: ~
+            - MinLength: 3
+            - MaxLength: 50
+        telephone:
+            - MaxLength: 25
+        function:
+            - MaxLength: 50
+        address:

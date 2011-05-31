@@ -142,3 +142,6 @@ a, a:visited {
     text-shadow: 0 0 3px white;
 }
 
+#content {
+    padding: 15px;
+}

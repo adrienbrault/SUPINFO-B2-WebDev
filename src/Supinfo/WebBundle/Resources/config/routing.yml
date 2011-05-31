@@ -1,0 +1,3 @@
+admin:
+    resource: "@SupinfoWebBundle/Resources/config/routing_admin.yml"
+    prefix: /admin

@@ -20,6 +20,8 @@ abstract class AdminController extends Controller
 
     protected $entityForm;
 
+    protected $paginator;
+
 
 
     /*
@@ -75,6 +77,7 @@ abstract class AdminController extends Controller
         $this->viewData['entity'] = $this->entity;
         $this->viewData['entities'] = $this->entities;
         $this->viewData['form'] = $this->entityForm instanceof Form ? $this->entityForm->createView() : null ;
+        $this->viewData['paginator'] = $this->paginator;
 
         return parent::render(
             $view,
@@ -263,6 +266,29 @@ abstract class AdminController extends Controller
         return $this->redirect($redirectUrl);
     }
 
+
+
+    /*
+     *  Pagination stuff.
+     */
+
+    protected function initPaginator()
+    {
+        $page = $this->get('request')->get('page');
+
+        $this->paginator = $this->get('services.paginator');
+
+        $this->paginator
+            ->setEntityManager($this->getEntityManager())
+            ->setEntityClassName($this->getEntityClassName())
+            ->setRoute($this->getAdminRoute('list'))
+            ->setCurrentPage($page);
+
+        if ($this->paginator->currentPageExists()) {
+
+        }
+    }
+
     
     /*
      *  Actions.
@@ -307,7 +333,7 @@ abstract class AdminController extends Controller
 
     protected function listAction()
     {
-        $this->initPagination();
+        $this->initPaginator();
         $this->fetchEntities();
     }
 }

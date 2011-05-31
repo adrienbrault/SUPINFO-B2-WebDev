@@ -23,4 +23,4 @@ Place_admin_list:
         _admin_type: "list"
         page: 1
     requirements:
-        page: d+
+        page: \d+

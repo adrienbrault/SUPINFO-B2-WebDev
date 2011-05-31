@@ -19,9 +19,24 @@ class EntityRepository extends DoctrineEntityRepository
 
     public function selectQB()
     {
-        return $this->createQB()
+        $qb = $this->createQB();
+        
+        return $qb
             ->select($this->getAlias())
             ->from($this->getEntityName(), $this->getAlias());
+    }
+
+    public function selectByIdQB($id)
+    {
+        $qb = $this->selectQB();
+
+        $qb ->andWhere(
+            $qb->expr()->eq($this->getAlias().'.id', ':id')
+        );
+
+        $qb->setParameter('id', $id);
+
+        return $qb;
     }
 
     public function countQB()

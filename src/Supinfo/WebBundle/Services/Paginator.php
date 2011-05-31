@@ -2,7 +2,7 @@
 
 namespace Supinfo\WebBundle\Services;
 
-use Doctrine\Orm\EntityManager;
+use Supinfo\WebBundle\Repository\EntityRepository;
 
 class Paginator
 {
@@ -11,8 +11,7 @@ class Paginator
      *  Properties.
      */
 
-    private $entityManager;
-    private $entityClassName;
+    private $entityRepository;
     private $route;
     private $resultsPerPage;
     private $currentPage;
@@ -26,27 +25,15 @@ class Paginator
      *  Getters and setters.
      */
 
-    public function setEntityManager(EntityManager $entityManager)
+    public function setEntityRepository(EntityRepository $entityRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->entityRepository = $entityRepository;
         return $this;
     }
 
-    public function getEntityManager()
+    public function getEntityRepository()
     {
-        return $this->entityManager;
-    }
-
-
-    public function setEntityClassName($entityClassName)
-    {
-        $this->entityClassName = $entityClassName;
-        return $this;
-    }
-
-    public function getEntityClassName()
-    {
-        return $this->entityClassName;
+        return $this->entityRepository;
     }
 
     
@@ -106,6 +93,16 @@ class Paginator
 
 
     /*
+     *  Query helper.
+     */
+
+    public function getPageCriteria()
+    {
+        
+    }
+
+
+    /*
      *
      */
 
@@ -123,19 +120,11 @@ class Paginator
 
     private function fetchResultsCount()
     {
-        if (!$this->entityManager) {
-            throw new InvalidArgumentException('Paginator: An entityManager is required.');
+        if (!$this->entityRepository) {
+            throw new InvalidArgumentException('Paginator: An entityRepository is required.');
         }
 
-        // TODO: Using the entityRepository fictional count() method based on a createQuery would be better.
-        
-        $alias = 'e';
-        $qb = $this->entityManager->createQueryBuilder();
-        
-        $qb ->select($qb->expr()->count($alias))
-            ->from($this->entityClassName, $alias);
-
-        $this->resultsCount = $qb->getQuery()->getSingleScalarResult();
+        $this->resultsCount = $this->getEntityRepository()->countQB()->getQuery()->getSingleScalarResult();
     }
 
     public function currentPageExists($forceFetch = false)
@@ -146,4 +135,21 @@ class Paginator
 
         return $this->getOffset() < $this->getResultsCount();
     }
+
+
+
+    /*
+     *
+     */
+
+    public function getCurrentPageQB()
+    {
+        $qb = $this->getEntityRepository()->selectQB();
+
+        $qb ->setFirstResult($this->getOffset())
+            ->setMaxResults($this->getResultsPerPage());
+
+        return $qb;
+    }
+
 }

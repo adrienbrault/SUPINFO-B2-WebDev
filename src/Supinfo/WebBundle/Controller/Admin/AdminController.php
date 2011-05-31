@@ -118,7 +118,8 @@ abstract class AdminController extends Controller
         $id = $this->get('request')->get('id');
 
         if (null !== $id) {
-            $this->entity = $this->getEntityRepository()->find($id);
+            $qb = $this->getEntityRepository()->selectByIdQB($id);
+            $this->entity = $qb->getQuery()->getSingleResult();
 
             if (!$this->entity) {
                throw $this->createNotFoundException();
@@ -131,9 +132,10 @@ abstract class AdminController extends Controller
 
     protected function fetchEntities()
     {
-        $criteria = $this->getCurrentPageCriteria();
+        $this->initPaginator();
 
-        $this->objects = $this->getEntityRepository()->findBy($criteria);
+        $qb = $this->paginator->getCurrentPageQB();
+        $this->objects = $qb->getQuery()->getResult();
 
         if (!$this->objects) {
             throw $this->createNotFoundException();
@@ -279,8 +281,7 @@ abstract class AdminController extends Controller
         $this->paginator = $this->get('services.paginator');
 
         $this->paginator
-            ->setEntityManager($this->getEntityManager())
-            ->setEntityClassName($this->getEntityClassName())
+            ->setEntityRepository($this->getEntityRepository())
             ->setRoute($this->getAdminRoute('list'))
             ->setCurrentPage($page);
 
@@ -333,7 +334,6 @@ abstract class AdminController extends Controller
 
     protected function listAction()
     {
-        $this->initPaginator();
         $this->fetchEntities();
     }
 }

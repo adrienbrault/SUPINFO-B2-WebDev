@@ -1,6 +1,7 @@
 Supinfo\WebBundle\Entity\SubFamilyField:
     type: entity
     table: sub_family_fields
+    repositoryClass: 'Supinfo\WebBundle\Repository\SubFamilyFieldRepository'
     id:
         id:
             type: integer

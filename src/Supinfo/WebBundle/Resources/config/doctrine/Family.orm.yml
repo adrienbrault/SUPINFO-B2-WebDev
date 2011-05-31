@@ -1,6 +1,7 @@
 Supinfo\WebBundle\Entity\Family:
     type: entity
     table: families
+    repositoryClass: 'Supinfo\WebBundle\Repository\FamilyRepository'
     id:
         id:
             type: integer

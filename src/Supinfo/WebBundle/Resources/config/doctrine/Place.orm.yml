@@ -1,6 +1,7 @@
 Supinfo\WebBundle\Entity\Place:
     type: entity
     table: places
+    repositoryClass: 'Supinfo\WebBundle\Repository\PlaceRepository'
     id:
         id:
             type: integer

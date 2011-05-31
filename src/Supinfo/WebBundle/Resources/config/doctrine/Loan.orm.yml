@@ -1,6 +1,7 @@
 Supinfo\WebBundle\Entity\Loan:
     type: entity
     table: loans
+    repositoryClass: 'Supinfo\WebBundle\Repository\LoanRepository'
     id:
         id:
             type: integer

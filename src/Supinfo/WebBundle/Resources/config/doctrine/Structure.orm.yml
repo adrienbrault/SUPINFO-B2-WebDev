@@ -1,6 +1,7 @@
 Supinfo\WebBundle\Entity\Structure:
     type: entity
     table: structures
+    repositoryClass: 'Supinfo\WebBundle\Repository\StructureRepository'
     id:
         id:
             type: integer

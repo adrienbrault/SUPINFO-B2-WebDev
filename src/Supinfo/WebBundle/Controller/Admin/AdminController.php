@@ -100,10 +100,14 @@ abstract class AdminController extends Controller
      *  Doctrine.
      */
 
+    protected function getEntityManager()
+    {
+        return $this->get('doctrine')->getEntityManager();
+    }
+
     protected function getEntityRepository()
     {
-        $em = $this->get('doctrine')->getEntityManager();
-        return $em->getRepository($this->getEntityRepositoryIdentifier());
+        return $this->getEntityManager()->getRepository($this->getEntityRepositoryIdentifier());
     }
     
     protected function fetchEntity()
@@ -237,6 +241,28 @@ abstract class AdminController extends Controller
     }
 
 
+
+    /*
+     *  Routes stuff.
+     */
+
+    protected function getAdminRoute($admin_type)
+    {
+        return $this->getEntityName().'_admin_'.$admin_type;
+    }
+
+    protected function redirectToList($page = null)
+    {
+        $redirectUrl = $this->generateUrl($this->getAdminRoute('list'), array('page' => $page));
+        return $this->redirect($redirectUrl);
+    }
+
+    protected function redirectToEdit()
+    {
+        $redirectUrl = $this->generateUrl($this->getAdminRoute('edit'), array('id' => $this->entity->getId()));
+        return $this->redirect($redirectUrl);
+    }
+
     
     /*
      *  Actions.
@@ -245,19 +271,43 @@ abstract class AdminController extends Controller
     protected function editAction()
     {
         $this->fetchEntity();
-
         $this->createEntityForm();
+
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') {
+            $this->entityForm->bindRequest($request);
+
+            if ($this->entityForm->isValid()) {
+                // Save modifications to DB.
+                $em = $this->getEntityManager();
+                $em->persist($this->entity);
+                $em->flush();
+
+                // TODO: Set flash notice.
+
+                // Redirect to the edit page.
+                return $this->redirectToEdit();
+            }
+        }
     }
 
     protected function deleteAction()
     {
         $this->fetchEntity();
+
+        $em = $this->getEntityManager();
+        $em->remove($this->entity);
+        $em->flush();
+
+        // TODO: Set flash notice.
+
+        // Redirect to the list.
+        return $this->redirectToList();
     }
 
     protected function listAction()
     {
         $this->initPagination();
-        
         $this->fetchEntities();
     }
 }

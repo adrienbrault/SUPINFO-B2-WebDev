@@ -115,6 +115,7 @@ class Paginator
         }
 
         $this->resultsCount = $this->getEntityRepository()->countQB()->getQuery()->getSingleScalarResult();
+        $this->maxPage = ceil($this->resultsCount % $this->getResultsPerPage());
     }
 
     public function currentPageExists($forceFetch = false)
@@ -123,8 +124,7 @@ class Paginator
             $this->fetchResultsCount();
         }
 
-        return $this->getCurrentPage() == 1
-            || ($this->getCurrentPage() > 0 && $this->getOffset() < $this->getResultsCount());
+        return $this->getCurrentPage() > 0 && $this->getCurrentPage() <= $this->getMaxPage();
     }
 
 

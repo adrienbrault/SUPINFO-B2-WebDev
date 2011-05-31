@@ -93,17 +93,7 @@ class Paginator
 
 
     /*
-     *  Query helper.
-     */
-
-    public function getPageCriteria()
-    {
-        
-    }
-
-
-    /*
-     *
+     *  Defaults.
      */
 
     public function __construct()
@@ -115,7 +105,7 @@ class Paginator
 
 
     /*
-     *
+     *  Logic part.
      */
 
     private function fetchResultsCount()
@@ -133,17 +123,22 @@ class Paginator
             $this->fetchResultsCount();
         }
 
-        return $this->getOffset() < $this->getResultsCount();
+        return $this->getCurrentPage() == 1
+            || ($this->getCurrentPage() > 0 && $this->getOffset() < $this->getResultsCount());
     }
 
 
 
     /*
-     *
+     *  Query builder helper.
      */
 
     public function getCurrentPageQB()
     {
+        if (!$this->currentPageExists()) {
+            throw new Exception('Paginator: can\'t return currentPageQB as the page does not exists.');
+        }
+
         $qb = $this->getEntityRepository()->selectQB();
 
         $qb ->setFirstResult($this->getOffset())

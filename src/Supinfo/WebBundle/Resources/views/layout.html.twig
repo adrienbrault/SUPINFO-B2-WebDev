@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+    <div id="container">
+        <div id="header">
+            <img src="{{ asset('img/header.png') }}" alt="Header" />
+        </div>
+
+        {% include 'SupinfoWebBundle::menu.html.twig' %}
+        
+        <div id="content">
+            {% if app.session.hasFlash('notice') %}
+                {% block flash_notice %}
+                    <div id="flash-notice">
+					    {{ app.session.flash('notice') }}
+				    </div>
+                {% endblock flash_notice %}
+			{% endif %}
+
+            {% block content %}{% endblock content %}
+        </div>
+    </div>
+{% endblock body %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles.css') }}" />
+{% endblock stylesheets %}
+
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/lib/jquery-1.6.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/scripts.js') }}"></script>
+{% endblock javascripts %}

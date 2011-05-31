@@ -1,0 +1,26 @@
+Place_admin_new:
+    pattern: /place/new
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Place:admin'
+        _admin_type: "edit"
+
+Place_admin_edit:
+    pattern: /place/edit/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Place:admin'
+        _admin_type: "edit"
+
+Place_admin_delete:
+    pattern: /place/delete/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Place:admin'
+        _admin_type: "delete"
+
+Place_admin_list:
+    pattern: /place/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Place:admin'
+        _admin_type: "list"
+        page: 1
+    requirements:
+        page: d+

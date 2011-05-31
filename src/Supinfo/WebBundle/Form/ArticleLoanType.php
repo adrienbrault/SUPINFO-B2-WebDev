@@ -10,11 +10,11 @@ class ArticleLoanType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $this->add('quantity');
+        $builder->add('quantity');
 
         // Relations.
-        $this->add('article');
-        $this->add('loan');
+        $builder->add('article');
+        $builder->add('loan');
     }
 
     public function getDefaultOptions(array $options)

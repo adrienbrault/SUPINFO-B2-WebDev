@@ -10,7 +10,7 @@ class PlaceType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $this->add('name');
+        $builder->add('name');
     }
 
     public function getDefaultOptions(array $options)

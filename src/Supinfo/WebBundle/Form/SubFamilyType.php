@@ -9,7 +9,8 @@ class SubFamilyType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-
+        // Fields.
+        $builder->add('name');
     }
 
     public function getDefaultOptions(array $options)

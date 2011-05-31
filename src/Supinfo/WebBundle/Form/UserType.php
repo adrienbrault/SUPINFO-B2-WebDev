@@ -10,16 +10,16 @@ class UserType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $this->add('username');
-        $this->add('password');
-        $this->add('firstName');
-        $this->add('lastName');
-        $this->add('telephone');
-        $this->add('function');
-        $this->add('address');
+        $builder->add('username');
+        $builder->add('password');
+        $builder->add('firstName');
+        $builder->add('lastName');
+        $builder->add('telephone');
+        $builder->add('function');
+        $builder->add('address');
 
         // Relations.
-        $this->add('structure');
+        $builder->add('structure');
     }
 
     public function getDefaultOptions(array $options)

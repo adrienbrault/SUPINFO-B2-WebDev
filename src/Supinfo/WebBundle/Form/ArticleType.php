@@ -10,15 +10,15 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $this->add('code');
-        $this->add('description');
-        $this->add('state');
-        $this->add('quantity');
+        $builder->add('code');
+        $builder->add('description');
+        $builder->add('state');
+        $builder->add('quantity');
 
         // Relations.
-        $this->add('place');
-        $this->add('subFamily');
-        $this->add('fieldValues');
+        $builder->add('place');
+        $builder->add('subFamily');
+        $builder->add('fieldValues');
     }
 
     public function getDefaultOptions(array $options)

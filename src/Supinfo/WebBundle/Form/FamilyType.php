@@ -10,10 +10,10 @@ class FamilyType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $this->add('name');
+        $builder->add('name');
 
         // Relations.
-        $this->add('subFamilies');
+        $builder->add('subFamilies');
     }
 
     public function getDefaultOptions(array $options)

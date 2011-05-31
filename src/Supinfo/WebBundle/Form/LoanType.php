@@ -10,12 +10,12 @@ class LoanType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $this->add('reason');
-        $this->add('dateStart');
-        $this->add('dateEnd');
+        $builder->add('reason');
+        $builder->add('dateStart');
+        $builder->add('dateEnd');
 
         // Relations.
-        $this->add('user');
+        $builder->add('user');
     }
 
     public function getDefaultOptions(array $options)

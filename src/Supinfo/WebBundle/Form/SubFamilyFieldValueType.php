@@ -10,11 +10,11 @@ class SubFamilyFieldValueType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $this->add('value');
+        $builder->add('value');
 
         // Relations.
-        $this->add('subFamilyField');
-        $this->add('article');
+        $builder->add('subFamilyField');
+        $builder->add('article');
     }
 
     public function getDefaultOptions(array $options)

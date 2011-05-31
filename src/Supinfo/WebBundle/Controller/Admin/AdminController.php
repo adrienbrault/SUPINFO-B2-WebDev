@@ -285,10 +285,11 @@ abstract class AdminController extends Controller
             ->setRoute($this->getAdminRoute('list'))
             ->setCurrentPage($page);
 
-        if ($this->paginator->currentPageExists()) {
-
+        if (!$this->paginator->currentPageExists()) {
+            throw $this->createNotFoundException();
         }
     }
+
 
     
     /*

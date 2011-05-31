@@ -5,6 +5,7 @@ namespace Supinfo\WebBundle\Controller\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\Form;
 
 abstract class AdminController extends Controller
 {
@@ -13,6 +14,11 @@ abstract class AdminController extends Controller
      */
 
     protected $viewData = array();
+
+    protected $entity;
+    protected $entities;
+
+    protected $entityForm;
 
 
 
@@ -35,19 +41,19 @@ abstract class AdminController extends Controller
      * 
      */
 
-    public function adminAction($admin_type)
+    public function adminAction($_admin_type)
     {
         $this->initialize();
 
-        if (!in_array($admin_type, $this->getAdminTypes())) {
+        if (!in_array($_admin_type, $this->getAdminTypes())) {
             throw $this->createNotFoundException();
         }
 
-        $response = call_user_func(array($this, $admin_type.'Action'));
+        $response = call_user_func(array($this, $_admin_type.'Action'));
 
         return $response ?
             $response :
-            $this->render($this->getViewName($admin_type), $this->viewData);
+            $this->renderAdminView($_admin_type);
     }
 
     private function initialize()
@@ -60,29 +66,129 @@ abstract class AdminController extends Controller
 
 
     /*
-     *
+     *  View override.
      */
 
     public function render($view, array $parameters = array(), Response $response = null)
     {
-        return $this->render(
+        $this->viewData['form'] = $this->entityForm;
+        $this->viewData['entity'] = $this->entity;
+        $this->viewData['entities'] = $this->entities;
+        $this->viewData['form'] = $this->entityForm instanceof Form ? $this->entityForm->createView() : null ;
+
+        return parent::render(
             $view,
             array_merge($this->viewData, $parameters),
             $response
         );
     }
 
+    protected function renderAdminView($admin_type)
+    {
+        $viewFullName = $this->getViewFullName($admin_type);
+
+        if (!$this->viewExists($viewFullName)) {
+            $viewFullName = $this->getDefaultAdminViewFullName($admin_type);
+        }
+        //echo $viewFullName;
+        return $this->render($viewFullName, $this->viewData);
+    }
+
 
 
     /*
-     *
+     *  Doctrine.
+     */
+
+    protected function getEntityRepository()
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        return $em->getRepository($this->getEntityRepositoryIdentifier());
+    }
+    
+    protected function fetchEntity()
+    {
+        $id = $this->get('request')->get('id');
+
+        if (null !== $id) {
+            $this->entity = $this->getEntityRepository()->find($id);
+
+            if (!$this->entity) {
+               throw $this->createNotFoundException();
+            }
+        } else {
+            $entityClassName = $this->getEntityClassName();
+            $this->entity = new $entityClassName();
+        }
+    }
+
+    protected function fetchEntities()
+    {
+        $criteria = $this->getCurrentPageCriteria();
+
+        $this->objects = $this->getEntityRepository()->findBy($criteria);
+
+        if (!$this->objects) {
+            throw $this->createNotFoundException();
+        }
+    }
+
+
+
+    /*
+     *  Form stuff.
+     */
+
+    protected function getEntityTypeClassName()
+    {
+        return $this->getBundleNamespace().'\Form\\'.$this->getEntityName().'Type';
+    }
+
+    protected function createEntityForm()
+    {
+        $entityTypeClassName = $this->getEntityTypeClassName();
+        $entityType = new $entityTypeClassName();
+
+        $this->entityForm = $this->get('form.factory')->create($entityType, $this->entity);
+    }
+
+
+
+    /*
+     *  Bundle namespaces stuff.
+     */
+
+    protected function getBundleDir()
+    {
+        return 'Supinfo';
+    }
+
+    protected function getBundleName()
+    {
+        return 'WebBundle';
+    }
+
+    protected function getBundleNamespace()
+    {
+        return $this->getBundleDir().'\\'.$this->getBundleName();
+    }
+
+    protected function getBundleFormat()
+    {
+        return $this->getBundleDir().$this->getBundleName();
+    }
+
+
+
+    /*
+     *  Entity name stuff.
      */
 
     abstract protected function getEntityName();
 
     protected function getEntityNameSpace()
     {
-        return 'Supinfo\WebBundle\Entity';
+        return $this->getBundleNamespace().'\Entity';
     }
 
     protected function getEntityClassName()
@@ -90,9 +196,14 @@ abstract class AdminController extends Controller
         return $this->getEntityNameSpace().'\\'.$this->getEntityName();
     }
 
+    protected function getEntityRepositoryIdentifier()
+    {
+        return $this->getBundleFormat().':'.$this->getEntityName();
+    }
+
 
     /*
-     *  View param.
+     *  View stuff.
      */
 
     protected function getViewFileName($admin_type)
@@ -100,24 +211,53 @@ abstract class AdminController extends Controller
         return $admin_type.'.html.twig';
     }
 
-    protected function getViewNamespace()
+    protected function getAdminViewFormat()
     {
-        return 'SupinfoWebBundle:Admin\\'.$this->getEntityName();
+        return $this->getBundleFormat().':Admin';
+    }
+
+    protected function getViewFormat()
+    {
+        return $this->getAdminViewFormat().'\\'.$this->getEntityName();
     }
 
     protected function getViewFullName($admin_type)
     {
-        return $this->getViewNamespace().':'.$this->getViewFileName($admin_type);
+        return $this->getViewFormat().':'.$this->getViewFileName($admin_type);
+    }
+
+    protected function getDefaultAdminViewFullName($admin_type)
+    {
+        return $this->getAdminViewFormat().':'.$admin_type.'.html.twig';
+    }
+
+    protected function viewExists($viewFullName)
+    {
+        return $this->get('templating')->exists($viewFullName);
     }
 
 
     
     /*
-     *  Abstract part.
+     *  Actions.
      */
     
-    abstract protected function addAction();
-    abstract protected function editAction();
-    abstract protected function deleteAction();
-    abstract protected function listAction();
+    protected function editAction()
+    {
+        $this->fetchEntity();
+
+        $this->createEntityForm();
+    }
+
+    protected function deleteAction()
+    {
+        $this->fetchEntity();
+    }
+
+    protected function listAction()
+    {
+        $this->initPagination();
+        
+        $this->fetchEntities();
+    }
 }

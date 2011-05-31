@@ -1,0 +1,13 @@
+{% extends 'SupinfoWebBundle:Admin:admin.html.twig' %}
+
+{% block content %}
+    {% block form %}
+        <form action="{% block form_action_url '' %}" method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="{% block form_submit_title 'Save' %}" />
+        </form>
+    {% endblock %}
+{% endblock %}

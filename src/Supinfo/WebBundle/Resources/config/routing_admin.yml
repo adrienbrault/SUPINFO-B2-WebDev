@@ -164,3 +164,31 @@ SubFamilyField_admin_list:
         page: 1
     requirements:
         page: \d+
+
+
+User_admin_new:
+    pattern: /user/new
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\User:admin'
+        _admin_type: "edit"
+
+User_admin_edit:
+    pattern: /user/edit/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\User:admin'
+        _admin_type: "edit"
+
+User_admin_delete:
+    pattern: /user/delete/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\User:admin'
+        _admin_type: "delete"
+
+User_admin_list:
+    pattern: /user/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\User:admin'
+        _admin_type: "list"
+        page: 1
+    requirements:
+        page: \d+

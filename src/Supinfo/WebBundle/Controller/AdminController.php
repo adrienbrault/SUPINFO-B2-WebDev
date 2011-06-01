@@ -46,7 +46,7 @@ abstract class AdminController extends EntityController
     private function initialize()
     {
         if (!class_exists($this->getEntityClassName())) {
-            throw new Exception('AdminController: Entity Class "'.$this->getEntityClassName().'" can not be found.');
+            throw new \Exception('AdminController: Entity Class "'.$this->getEntityClassName().'" can not be found.');
         }
     }
 

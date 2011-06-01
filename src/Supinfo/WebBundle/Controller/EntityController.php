@@ -132,10 +132,6 @@ abstract class EntityController extends Controller
 
         $qb = $this->paginator->getCurrentPageQB();
         $this->entities = $qb->getQuery()->getResult();
-
-        if (!$this->entities) {
-            throw $this->createNotFoundException();
-        }
     }
 
 

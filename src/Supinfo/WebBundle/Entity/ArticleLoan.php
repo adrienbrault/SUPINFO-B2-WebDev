@@ -135,6 +135,6 @@ class ArticleLoan
 
     public function __toString()
     {
-        return $this->getLoanId().'_'.$this->getArticleId();
+        return (string)$this->getLoanId().'_'.(string)$this->getArticleId();
     }
 }

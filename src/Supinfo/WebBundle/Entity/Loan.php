@@ -125,6 +125,6 @@ class Loan
 
     public function __toString()
     {
-        return $this->getId();
+        return (string)$this->getId();
     }
 }

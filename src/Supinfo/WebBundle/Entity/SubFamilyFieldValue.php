@@ -135,6 +135,6 @@ class SubFamilyFieldValue
 
     public function __toString()
     {
-        return $this->getArticleId().'_'.$this->getSubFamilyFieldId();
+        return (string)$this->getArticleId().'_'.(string)$this->getSubFamilyFieldId();
     }
 }

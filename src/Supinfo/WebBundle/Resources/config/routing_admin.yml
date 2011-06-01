@@ -108,3 +108,31 @@ SubFamily_admin_list:
         page: 1
     requirements:
         page: \d+
+
+
+Structure_admin_new:
+    pattern: /structure/new
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
+        _admin_type: "edit"
+
+Structure_admin_edit:
+    pattern: /structure/edit/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
+        _admin_type: "edit"
+
+Structure_admin_delete:
+    pattern: /structure/delete/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
+        _admin_type: "delete"
+
+Structure_admin_list:
+    pattern: /structure/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
+        _admin_type: "list"
+        page: 1
+    requirements:
+        page: \d+

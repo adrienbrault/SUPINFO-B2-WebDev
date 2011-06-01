@@ -52,3 +52,31 @@ Article_admin_list:
         page: 1
     requirements:
         page: \d+
+
+
+Family_admin_new:
+    pattern: /family/new
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Family:admin'
+        _admin_type: "edit"
+
+Family_admin_edit:
+    pattern: /family/edit/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Family:admin'
+        _admin_type: "edit"
+
+Family_admin_delete:
+    pattern: /family/delete/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Family:admin'
+        _admin_type: "delete"
+
+Family_admin_list:
+    pattern: /family/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Family:admin'
+        _admin_type: "list"
+        page: 1
+    requirements:
+        page: \d+

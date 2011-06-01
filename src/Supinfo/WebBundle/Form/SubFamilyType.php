@@ -11,6 +11,9 @@ class SubFamilyType extends AbstractType
     {
         // Fields.
         $builder->add('name');
+
+        // Relations.
+        $builder->add('family');
     }
 
     public function getDefaultOptions(array $options)

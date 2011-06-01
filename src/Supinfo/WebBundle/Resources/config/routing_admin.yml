@@ -80,3 +80,31 @@ Family_admin_list:
         page: 1
     requirements:
         page: \d+
+
+
+SubFamily_admin_new:
+    pattern: /sub-family/new
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
+        _admin_type: "edit"
+
+SubFamily_admin_edit:
+    pattern: /sub-family/edit/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
+        _admin_type: "edit"
+
+SubFamily_admin_delete:
+    pattern: /sub-family/delete/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
+        _admin_type: "delete"
+
+SubFamily_admin_list:
+    pattern: /sub-family/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
+        _admin_type: "list"
+        page: 1
+    requirements:
+        page: \d+

@@ -90,3 +90,4 @@ Supinfo\WebBundle\Entity\User:
         function:
             - MaxLength: 50
         address:
+            - MaxLength: 500

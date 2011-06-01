@@ -101,4 +101,9 @@ class SubFamily
     {
         return $this->family;
     }
+
+    public function __toString()
+    {
+        return $this->getId();
+    }
 }

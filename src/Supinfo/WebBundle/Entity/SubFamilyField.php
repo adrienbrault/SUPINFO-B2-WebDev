@@ -72,4 +72,9 @@ class SubFamilyField
     {
         return $this->subFamily;
     }
+
+    public function __toString()
+    {
+        return $this->getId();
+    }
 }

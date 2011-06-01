@@ -247,4 +247,9 @@ class User
     {
         return $this->structure;
     }
+
+    public function __toString()
+    {
+        return $this->getId();
+    }
 }

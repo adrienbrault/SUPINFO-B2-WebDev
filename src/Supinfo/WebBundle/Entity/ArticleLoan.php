@@ -132,4 +132,9 @@ class ArticleLoan
     {
         return $this->loan;
     }
+
+    public function __toString()
+    {
+        return $this->getLoanId().'_'.$this->getArticleId();
+    }
 }

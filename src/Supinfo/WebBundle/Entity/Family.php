@@ -76,4 +76,9 @@ class Family
     {
         return $this->subFamilies;
     }
+
+    public function __toString()
+    {
+        return $this->getId();
+    }
 }

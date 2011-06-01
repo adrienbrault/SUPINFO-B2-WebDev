@@ -173,7 +173,7 @@ abstract class AdminController extends EntityController
                 $em->persist($this->entity);
                 $em->flush();
 
-                // TODO: Set flash notice.
+                $this->get('session')->setFlash('notice', $this->getEntityName().' successfully modified.');
 
                 // Redirect to the edit page.
                 return $this->redirectToList();
@@ -189,7 +189,7 @@ abstract class AdminController extends EntityController
         $em->remove($this->entity);
         $em->flush();
 
-        // TODO: Set flash notice.
+        $this->get('session')->setFlash('notice', $this->getEntityName().' successfully deleted.');
 
         // Redirect to the list.
         return $this->redirectToList();

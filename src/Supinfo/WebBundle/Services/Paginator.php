@@ -87,7 +87,7 @@ class Paginator
 
     public function getOffset()
     {
-        return ($this->getCurrentPage() - 1) * $this->getResultsPerPage() + 1;
+        return ($this->getCurrentPage() - 1) * $this->getResultsPerPage();
     }
 
 
@@ -115,7 +115,7 @@ class Paginator
         }
 
         $this->resultsCount = $this->getEntityRepository()->countQB()->getQuery()->getSingleScalarResult();
-        $this->maxPage = ceil($this->resultsCount % $this->getResultsPerPage());
+        $this->maxPage = ceil($this->resultsCount / $this->getResultsPerPage());
     }
 
     public function currentPageExists($forceFetch = false)

@@ -1,5 +1,7 @@
 {% extends 'SupinfoWebBundle:Admin:admin.html.twig' %}
 
-{% block content %}
+{% block admin %}
     List.
+
+    {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' with { 'paginator': paginator } %}
 {% endblock %}

@@ -145,3 +145,16 @@ a, a:visited {
 #content {
     padding: 15px;
 }
+
+
+
+/* PAGINATOR
+************/
+
+.paginator-pages-list {
+    list-style-type: none;
+}
+
+.paginator-pages-list li {
+    display: inline-block;
+}

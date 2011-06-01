@@ -1,0 +1,19 @@
+{% block paginator_pages_list %}
+    <ol class="paginator-pages-list">
+        {% if paginator %}
+            {% for pageNumber in range(1, paginator.maxPage) %}
+                <li>
+                    {% block paginator_list_item %}
+                        {% if pageNumber == paginator.currentPage %}
+                            {{ pageNumber }}
+                        {% else %}
+                            <a href="{{ path(paginator.route, { 'page': pageNumber }) }}">{{ pageNumber }}</a>
+                        {% endif %}
+                    {% endblock %}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No page.</li>
+        {% endif %}
+    </ol>
+{% endblock %}

@@ -127,7 +127,7 @@ abstract class EntityController extends Controller
 
     protected function fetchEntities()
     {
-        $this->initPaginator($this->getListRoute());
+        $this->initPaginator($this->getRoute('list'));
 
         $qb = $this->paginator->getCurrentPageQB();
         $this->objects = $qb->getQuery()->getResult();
@@ -166,9 +166,23 @@ abstract class EntityController extends Controller
      *  Route stuff.
      */
 
-    protected function getListRoute()
+    protected function getRoutes()
     {
-        return $this->getEntityName().'_list';
+        return array(
+            'view' => $this->getEntityName().'_view',
+            'list' => $this->getEntityName().'_list',
+        );
+    }
+
+    protected function getRoute($key)
+    {
+        $routes = $this->getRoutes();
+
+        if (!array_key_exists($key, $routes)) {
+            throw new Exception(sprintf('EntityController: route "%s" not found', key));
+        }
+
+        return $routes[$key];
     }
 
 

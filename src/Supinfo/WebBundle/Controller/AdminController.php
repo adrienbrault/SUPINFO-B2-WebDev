@@ -128,25 +128,27 @@ abstract class AdminController extends EntityController
      *  Routes stuff.
      */
 
-    protected function getListRoute()
+    protected function getRoutes()
     {
-        return $this->getAdminRoute('list');
-    }
+        $adminRoutes = array(
+            'new' => $this->getEntityName().'_admin_new',
+            'edit' => $this->getEntityName().'_admin_edit',
+            'delete' => $this->getEntityName().'_admin_delete',
+            'list' => $this->getEntityName().'_admin_list',
+        );
 
-    protected function getAdminRoute($admin_type)
-    {
-        return $this->getEntityName().'_admin_'.$admin_type;
+        return array_merge(parent::getRoutes(), $adminRoutes);
     }
 
     protected function redirectToList($page = null)
     {
-        $redirectUrl = $this->generateUrl($this->getAdminRoute('list'), array('page' => $page));
+        $redirectUrl = $this->generateUrl($this->getRoute('list'), array('page' => $page));
         return $this->redirect($redirectUrl);
     }
 
     protected function redirectToEdit()
     {
-        $redirectUrl = $this->generateUrl($this->getAdminRoute('edit'), array('id' => $this->entity->getId()));
+        $redirectUrl = $this->generateUrl($this->getRoute('edit'), array('id' => $this->entity->getId()));
         return $this->redirect($redirectUrl);
     }
 

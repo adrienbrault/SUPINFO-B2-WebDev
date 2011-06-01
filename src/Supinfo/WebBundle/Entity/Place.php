@@ -50,6 +50,6 @@ class Place
 
     public function __toString()
     {
-        return $this->getId();
+        return $this->getName();
     }
 }

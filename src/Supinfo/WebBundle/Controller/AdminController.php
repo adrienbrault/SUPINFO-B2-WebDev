@@ -176,7 +176,7 @@ abstract class AdminController extends EntityController
                 // TODO: Set flash notice.
 
                 // Redirect to the edit page.
-                return $this->redirectToEdit();
+                return $this->redirectToList();
             }
         }
     }

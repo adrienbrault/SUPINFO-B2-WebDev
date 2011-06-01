@@ -3,5 +3,28 @@
 {% block admin %}
     List.
 
+    {% block list %}
+        <table class="list">
+            <tr>
+                {% block list_th %}
+                    <th>Name</th>
+                    <th>Actions</th>
+                {% endblock %}
+            </tr>
+
+            {% for entity in entities %}
+                <tr>
+                    {% block list_td %}
+                        <td>{{ entity }}</td>
+                        <td>
+                            <a href="{{ path(routes.edit, { 'id': entity.id }) }}">Edit</a>
+                            <a href="{{ path(routes.delete, { 'id': entity.id }) }}">Delete</a>
+                        </td>
+                    {% endblock %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+
     {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' with { 'paginator': paginator } %}
 {% endblock %}

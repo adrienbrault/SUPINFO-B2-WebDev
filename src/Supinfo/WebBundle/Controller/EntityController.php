@@ -52,7 +52,7 @@ abstract class EntityController extends Controller
 
 
     /*
-     *  View override.
+     *  View stuff.
      */
 
     public function render($view, array $parameters = array(), Response $response = null)
@@ -62,6 +62,7 @@ abstract class EntityController extends Controller
         $this->viewData['entities'] = $this->entities;
         $this->viewData['form'] = $this->entityForm instanceof Form ? $this->entityForm->createView() : null ;
         $this->viewData['paginator'] = $this->paginator;
+        $this->viewData['routes'] = $this->getRoutes();
 
         return parent::render(
             $view,
@@ -130,9 +131,9 @@ abstract class EntityController extends Controller
         $this->initPaginator($this->getRoute('list'));
 
         $qb = $this->paginator->getCurrentPageQB();
-        $this->objects = $qb->getQuery()->getResult();
+        $this->entities = $qb->getQuery()->getResult();
 
-        if (!$this->objects) {
+        if (!$this->entities) {
             throw $this->createNotFoundException();
         }
     }

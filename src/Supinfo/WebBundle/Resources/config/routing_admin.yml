@@ -24,3 +24,31 @@ Place_admin_list:
         page: 1
     requirements:
         page: \d+
+
+
+Article_admin_new:
+    pattern: /article/new
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Article:admin'
+        _admin_type: "edit"
+
+Article_admin_edit:
+    pattern: /article/edit/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Article:admin'
+        _admin_type: "edit"
+
+Article_admin_delete:
+    pattern: /article/delete/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Article:admin'
+        _admin_type: "delete"
+
+Article_admin_list:
+    pattern: /article/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Article:admin'
+        _admin_type: "list"
+        page: 1
+    requirements:
+        page: \d+

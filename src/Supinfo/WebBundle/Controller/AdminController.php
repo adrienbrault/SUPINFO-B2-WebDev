@@ -1,28 +1,13 @@
 <?php
 
-namespace Supinfo\WebBundle\Controller\Admin;
+namespace Supinfo\WebBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
 
-abstract class AdminController extends Controller
+abstract class AdminController extends EntityController
 {
-    /*
-     *
-     */
-
-    protected $viewData = array();
-
-    protected $entity;
-    protected $entities;
-
-    protected $entityForm;
-
-    protected $paginator;
-
-
 
     /*
      *
@@ -71,21 +56,6 @@ abstract class AdminController extends Controller
      *  View override.
      */
 
-    public function render($view, array $parameters = array(), Response $response = null)
-    {
-        $this->viewData['form'] = $this->entityForm;
-        $this->viewData['entity'] = $this->entity;
-        $this->viewData['entities'] = $this->entities;
-        $this->viewData['form'] = $this->entityForm instanceof Form ? $this->entityForm->createView() : null ;
-        $this->viewData['paginator'] = $this->paginator;
-
-        return parent::render(
-            $view,
-            array_merge($this->viewData, $parameters),
-            $response
-        );
-    }
-
     protected function renderAdminView($admin_type)
     {
         $viewFullName = $this->getViewFullName($admin_type);
@@ -95,51 +65,6 @@ abstract class AdminController extends Controller
         }
         //echo $viewFullName;
         return $this->render($viewFullName, $this->viewData);
-    }
-
-
-
-    /*
-     *  Doctrine.
-     */
-
-    protected function getEntityManager()
-    {
-        return $this->get('doctrine')->getEntityManager();
-    }
-
-    protected function getEntityRepository()
-    {
-        return $this->getEntityManager()->getRepository($this->getEntityRepositoryIdentifier());
-    }
-    
-    protected function fetchEntity()
-    {
-        $id = $this->get('request')->get('id');
-
-        if (null !== $id) {
-            $qb = $this->getEntityRepository()->selectByIdQB($id);
-            $this->entity = $qb->getQuery()->getSingleResult();
-
-            if (!$this->entity) {
-               throw $this->createNotFoundException();
-            }
-        } else {
-            $entityClassName = $this->getEntityClassName();
-            $this->entity = new $entityClassName();
-        }
-    }
-
-    protected function fetchEntities()
-    {
-        $this->initPaginator();
-
-        $qb = $this->paginator->getCurrentPageQB();
-        $this->objects = $qb->getQuery()->getResult();
-
-        if (!$this->objects) {
-            throw $this->createNotFoundException();
-        }
     }
 
 
@@ -161,54 +86,6 @@ abstract class AdminController extends Controller
         $this->entityForm = $this->get('form.factory')->create($entityType, $this->entity);
     }
 
-
-
-    /*
-     *  Bundle namespaces stuff.
-     */
-
-    protected function getBundleDir()
-    {
-        return 'Supinfo';
-    }
-
-    protected function getBundleName()
-    {
-        return 'WebBundle';
-    }
-
-    protected function getBundleNamespace()
-    {
-        return $this->getBundleDir().'\\'.$this->getBundleName();
-    }
-
-    protected function getBundleFormat()
-    {
-        return $this->getBundleDir().$this->getBundleName();
-    }
-
-
-
-    /*
-     *  Entity name stuff.
-     */
-
-    abstract protected function getEntityName();
-
-    protected function getEntityNameSpace()
-    {
-        return $this->getBundleNamespace().'\Entity';
-    }
-
-    protected function getEntityClassName()
-    {
-        return $this->getEntityNameSpace().'\\'.$this->getEntityName();
-    }
-
-    protected function getEntityRepositoryIdentifier()
-    {
-        return $this->getBundleFormat().':'.$this->getEntityName();
-    }
 
 
     /*
@@ -251,6 +128,11 @@ abstract class AdminController extends Controller
      *  Routes stuff.
      */
 
+    protected function getListRoute()
+    {
+        return $this->getAdminRoute('list');
+    }
+
     protected function getAdminRoute($admin_type)
     {
         return $this->getEntityName().'_admin_'.$admin_type;
@@ -266,28 +148,6 @@ abstract class AdminController extends Controller
     {
         $redirectUrl = $this->generateUrl($this->getAdminRoute('edit'), array('id' => $this->entity->getId()));
         return $this->redirect($redirectUrl);
-    }
-
-
-
-    /*
-     *  Pagination stuff.
-     */
-
-    protected function initPaginator()
-    {
-        $page = $this->get('request')->get('page');
-
-        $this->paginator = $this->get('services.paginator');
-
-        $this->paginator
-            ->setEntityRepository($this->getEntityRepository())
-            ->setRoute($this->getAdminRoute('list'))
-            ->setCurrentPage($page);
-
-        if (!$this->paginator->currentPageExists()) {
-            throw $this->createNotFoundException();
-        }
     }
 
 
@@ -332,9 +192,5 @@ abstract class AdminController extends Controller
         // Redirect to the list.
         return $this->redirectToList();
     }
-
-    protected function listAction()
-    {
-        $this->fetchEntities();
-    }
+    
 }

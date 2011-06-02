@@ -71,6 +71,11 @@ abstract class EntityController extends Controller
         );
     }
 
+    protected function viewExists($viewName)
+    {
+        return $this->get('templating')->exists($viewName);
+    }
+
 
 
     /*

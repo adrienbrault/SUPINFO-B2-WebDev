@@ -74,9 +74,10 @@ Supinfo\WebBundle\Entity\User:
         username:
             - NotBlank: ~
             - MaxLength: 50
-        password:
-            - NotBlank: ~
-            - MinLength: 6
+        plainPassword:
+            - Regex:
+                pattern: /^$|^.{6,50}$/
+                message: "The password must be at least 6 characters long."
         firstName:
             - NotBlank: ~
             - MinLength: 3

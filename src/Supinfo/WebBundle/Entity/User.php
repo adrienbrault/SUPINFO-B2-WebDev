@@ -2,10 +2,12 @@
 
 namespace Supinfo\WebBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * Supinfo\WebBundle\Entity\User
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer $id
@@ -251,5 +253,48 @@ class User
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+
+    
+    /*
+     *  UserInterface specifics.
+     */
+
+    public function getRoles()
+    {
+        return 'ROLE_USER';
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Don't really know.
+    }
+
+    public function equals(UserInterface $user)
+    {
+        if ($user instanceof User && $user->getId() == $this->getId()) {
+            return true;
+        }
+        
+        return false;
+    }
+
+
+
+    /*
+     *  PlainPassword is a transient property.
+     */
+
+    private $plainPassword;
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
     }
 }

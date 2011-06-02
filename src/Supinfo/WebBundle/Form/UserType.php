@@ -11,7 +11,7 @@ class UserType extends AbstractType
     {
         // Fields.
         $builder->add('username');
-        $builder->add('password');
+        $builder->add('plainpassword', 'password', array('required' => false));
         $builder->add('firstName');
         $builder->add('lastName');
         $builder->add('telephone');

@@ -24,6 +24,10 @@ $loader->registerPrefixFallback(array(
     __DIR__.'/../vendor/symfony/src/Symfony/Component/Locale/Resources/stubs',
 ));
 
+if (!function_exists('intl_is_failure')) {
+    require(__DIR__.'/../vendor/symfony/src/Symfony/Component/Locale/Resources/stubs/functions.php');
+}
+
 // Swiftmailer needs a special autoloader to allow
 // the lazy loading of the init file (which is expensive)
 spl_autoload_register(function ($class) {

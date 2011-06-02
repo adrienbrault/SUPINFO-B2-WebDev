@@ -33,15 +33,16 @@ class SubFamilyFieldValue
     private $article;
 
 
-    /**
-     * Set subFamilyFieldId
-     *
-     * @param integer $subFamilyFieldId
-     */
-    public function setSubFamilyFieldId($subFamilyFieldId)
+    public function __construct(array $values = array())
     {
-        $this->subFamilyFieldId = $subFamilyFieldId;
+        if (array_key_exists('subFamilyField', $values)) {
+            $this->setSubFamilyField($values['subFamilyField']);
+        }
+        if (array_key_exists('article', $values)) {
+            $this->setArticle($values['article']);
+        }
     }
+
 
     /**
      * Get subFamilyFieldId
@@ -51,16 +52,6 @@ class SubFamilyFieldValue
     public function getSubFamilyFieldId()
     {
         return $this->subFamilyFieldId;
-    }
-
-    /**
-     * Set articleId
-     *
-     * @param integer $articleId
-     */
-    public function setArticleId($articleId)
-    {
-        $this->articleId = $articleId;
     }
 
     /**
@@ -101,6 +92,7 @@ class SubFamilyFieldValue
     public function setSubFamilyField(\Supinfo\WebBundle\Entity\SubFamilyField $subFamilyField)
     {
         $this->subFamilyField = $subFamilyField;
+        $this->subFamilyFieldId = $this->subFamilyField->getId();
     }
 
     /**
@@ -121,6 +113,7 @@ class SubFamilyFieldValue
     public function setArticle(\Supinfo\WebBundle\Entity\Article $article)
     {
         $this->article = $article;
+        $this->articleId = $this->article->getId();
     }
 
     /**

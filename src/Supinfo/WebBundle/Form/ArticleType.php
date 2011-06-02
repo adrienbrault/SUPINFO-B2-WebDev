@@ -18,7 +18,8 @@ class ArticleType extends AbstractType
         // Relations.
         $builder->add('place');
         $builder->add('subFamily');
-        $builder->add('fieldValues');
+
+        $builder->add('fieldValues', 'collection', array('type' => new SubFamilyFieldValueType()));
     }
 
     public function getDefaultOptions(array $options)

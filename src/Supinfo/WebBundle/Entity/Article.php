@@ -162,6 +162,12 @@ class Article
         return $this->fieldValues;
     }
 
+    public function setFieldValues($fieldValues)
+    {
+        // Required for the form.
+        // This method does not do anything because the form will try to set an empty collection after
+    }
+
     /**
      * Set place
      *
@@ -205,6 +211,34 @@ class Article
     public function __toString()
     {
         return $this->getDescription();
+    }
+
+
+
+    public function checkAndReplaceSubFamilyFields(\Doctrine\ORM\EntityManager $em)
+    {
+        // Removing wrong field values.
+        foreach ($this->getFieldValues() as $fieldValue) {
+            if ($fieldValue->getSubFamilyField()->getSubFamily() != $this->getSubFamily()) {
+                $this->fieldValues->removeElement($fieldValue);
+                $em->remove($fieldValue);
+                
+                // We have to remove the FieldValue ourselves because orphanRemoval does not work in YAML schema file in Doctrine 2.0.5
+            }
+        }
+
+        // Creating missing field values.
+        foreach ($this->getSubFamily()->getFields() as $field) {
+            foreach ($this->getFieldValues() as $fieldValue) {
+                if ($fieldValue->getSubFamilyField()->getSubFamily()->getId() == $this->getSubFamily()->getId()) {
+                    break 2;
+                }
+            }
+
+            // If where are here, no fieldValue exists for the subfamily field.
+            $fieldValue = new SubFamilyFieldValue(array('article' => $this, 'subFamilyField' => $field));
+            $this->addFieldValues($fieldValue);
+        }
     }
 
 

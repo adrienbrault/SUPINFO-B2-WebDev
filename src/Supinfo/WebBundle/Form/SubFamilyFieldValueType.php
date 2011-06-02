@@ -11,10 +11,6 @@ class SubFamilyFieldValueType extends AbstractType
     {
         // Fields.
         $builder->add('value');
-
-        // Relations.
-        $builder->add('subFamilyField');
-        $builder->add('article');
     }
 
     public function getDefaultOptions(array $options)

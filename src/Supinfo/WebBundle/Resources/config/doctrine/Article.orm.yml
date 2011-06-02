@@ -37,3 +37,4 @@ Supinfo\WebBundle\Entity\Article:
             targetEntity: SubFamilyFieldValue
             mappedBy: article
             cascade: ["persist"]
+            orphanRemoval: true

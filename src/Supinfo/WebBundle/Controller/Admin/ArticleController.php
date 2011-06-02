@@ -28,4 +28,11 @@ class ArticleController extends AdminController
 
         parent::saveFormEntity();
     }
+
+    protected function fetchEntity()
+    {
+        parent::fetchEntity();
+
+        $this->entity->checkAndReplaceSubFamilyFields($this->getEntityManager());
+    }
 }

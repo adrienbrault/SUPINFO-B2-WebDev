@@ -213,6 +213,11 @@ class Article
         return $this->getDescription();
     }
 
+    public function getDisplayId()
+    {
+        return sprintf('1%05s', $this->getId());
+    }
+
 
 
     public function checkAndReplaceSubFamilyFields(\Doctrine\ORM\EntityManager $em)
@@ -252,7 +257,7 @@ class Article
         return array(
             'OK',
             'NOK',
-            'To repair'
+            'To repair',
         );
     }
 }

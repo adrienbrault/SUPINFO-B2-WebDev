@@ -63,6 +63,7 @@ abstract class EntityController extends Controller
         $this->viewData['form'] = $this->entityForm instanceof Form ? $this->entityForm->createView() : null ;
         $this->viewData['paginator'] = $this->paginator;
         $this->viewData['routes'] = $this->getRoutes();
+        $this->viewData['entityName'] = $this->getEntityName();
 
         return parent::render(
             $view,
@@ -86,7 +87,7 @@ abstract class EntityController extends Controller
     {
         $page = $this->get('request')->get('page');
 
-        $this->paginator = $this->get('services.paginator');
+        $this->paginator = new \Supinfo\WebBundle\Tool\Paginator();
 
         $this->paginator
             ->setEntityRepository($this->getEntityRepository())

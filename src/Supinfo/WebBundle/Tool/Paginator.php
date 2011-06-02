@@ -1,6 +1,6 @@
 <?php
 
-namespace Supinfo\WebBundle\Services;
+namespace Supinfo\WebBundle\Tool;
 
 use Supinfo\WebBundle\Repository\EntityRepository;
 

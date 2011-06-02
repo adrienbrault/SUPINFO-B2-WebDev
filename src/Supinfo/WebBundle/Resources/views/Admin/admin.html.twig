@@ -2,9 +2,14 @@
 
 {% block content %}
     <div class="admin">
+        <h2>{{ entityName }}</h2>
         <p>
             <a href="{{ path(routes.new) }}">New</a>
+            <a href="{{ path(routes.list) }}">List</a>
         </p>
+
+        <br />
+        <br />
 
 
         {% block admin %}

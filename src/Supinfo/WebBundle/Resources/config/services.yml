@@ -1,3 +1,0 @@
-services:
-    services.paginator:
-        class: 'Supinfo\WebBundle\Services\Paginator'

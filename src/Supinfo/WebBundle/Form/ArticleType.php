@@ -10,6 +10,7 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
+        $builder->add('displayId', 'text', array('read_only' => true));
         $builder->add('description');
         $builder->add('code');
         $builder->add('state', 'choice', array('choices' => $this->getStateChoices()));

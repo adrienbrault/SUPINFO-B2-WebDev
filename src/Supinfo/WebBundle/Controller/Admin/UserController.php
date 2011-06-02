@@ -31,6 +31,13 @@ class UserController extends AdminController
             return false;
         }
 
+        if ($this->entity->getUsername() != $this->entityClone->getUsername()
+            && !$this->getEntityRepository()->usernameIsAvailable($this->entity->getUsername())) {
+            $this->entityForm->get('username')->addError(new FormError('Username not available.'));
+
+            return false;
+        }
+
         return $this->entityForm->isValid();
     }
 

@@ -10,6 +10,14 @@ abstract class AdminController extends EntityController
 {
 
     /*
+     *  Properties.
+     */
+
+    protected $entityClone;
+
+
+
+    /*
      * 
      */
 
@@ -69,6 +77,7 @@ abstract class AdminController extends EntityController
 
     protected function createEntityForm()
     {
+        $this->entityClone = clone $this->entity;
         $this->entityForm = $this->getEntityFormBuilder()->getForm();
     }
 

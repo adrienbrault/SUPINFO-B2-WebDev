@@ -10,4 +10,19 @@ namespace Supinfo\WebBundle\Repository;
  */
 class UserRepository extends EntityRepository
 {
+
+    public function usernameIsAvailable($username)
+    {
+        $qb = $this->countQB();
+        
+        $qb->andWhere($qb->expr()->eq(
+            $qb->expr()->lower($this->getAlias().'.username'),
+            $qb->expr()->lower(':username')
+        ));
+        
+        $qb->setParameter('username',$username);
+
+        return $qb->getQuery()->getSingleScalarResult() < 1;
+    }
+
 }

@@ -7,7 +7,6 @@ Supinfo\WebBundle\Entity\Article:
             - MaxLength: 255
         state:
             - NotBlank: ~
-            - Choice: { callback: getStates }
         quantity:
             - NotBlank: ~
             - Min: 0

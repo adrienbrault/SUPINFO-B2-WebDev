@@ -10,9 +10,9 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         // Fields.
-        $builder->add('code');
         $builder->add('description');
-        $builder->add('state');
+        $builder->add('code');
+        $builder->add('state', 'choice', array('choices' => $this->getStateChoices()));
         $builder->add('quantity');
 
         // Relations.
@@ -26,5 +26,15 @@ class ArticleType extends AbstractType
         return array(
             'data_class' => 'Supinfo\WebBundle\Entity\Article',
         );
+    }
+
+    protected function getStateChoices()
+    {
+        $defaultOptions = $this->getDefaultOptions(array());
+        
+        return call_user_func(array(
+            $defaultOptions['data_class'],
+            'getStates'
+        ));
     }
 }

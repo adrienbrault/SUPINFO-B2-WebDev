@@ -206,4 +206,19 @@ class Article
     {
         return $this->getDescription();
     }
+
+
+
+    /*
+     *  Choices.
+     */
+    
+    public static function getStates()
+    {
+        return array(
+            'OK',
+            'NOK',
+            'To repair'
+        );
+    }
 }

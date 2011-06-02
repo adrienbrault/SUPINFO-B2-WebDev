@@ -59,12 +59,29 @@ abstract class AdminController extends EntityController
         return $this->getBundleNamespace().'\Form\\'.$this->getEntityName().'Type';
     }
 
-    protected function createEntityForm()
+    protected function getEntityFormBuilder()
     {
         $entityTypeClassName = $this->getEntityTypeClassName();
         $entityType = new $entityTypeClassName();
 
-        $this->entityForm = $this->get('form.factory')->create($entityType, $this->entity);
+        return $this->get('form.factory')->createBuilder($entityType, $this->entity);
+    }
+
+    protected function createEntityForm()
+    {
+        $this->entityForm = $this->getEntityFormBuilder()->getForm();
+    }
+
+    protected function saveFormEntity()
+    {
+        $em = $this->getEntityManager();
+        $em->persist($this->entity);
+        $em->flush();
+    }
+
+    protected function entityFormIsValid()
+    {
+        return $this->entityForm->isValid();
     }
 
 
@@ -129,19 +146,6 @@ abstract class AdminController extends EntityController
     }
 
 
-    
-    /*
-     *
-     */
-
-    protected function saveFormEntity()
-    {
-        $em = $this->getEntityManager();
-        $em->persist($this->entity);
-        $em->flush();
-    }
-
-
 
     /*
      *  Actions.
@@ -156,7 +160,7 @@ abstract class AdminController extends EntityController
         if ($request->getMethod() == 'POST') {
             $this->entityForm->bindRequest($request);
 
-            if ($this->entityForm->isValid()) {
+            if ($this->entityFormIsValid()) {
                 $this->saveFormEntity();
 
                 $this->get('session')->setFlash('notice', $this->getEntityName().' successfully modified.');

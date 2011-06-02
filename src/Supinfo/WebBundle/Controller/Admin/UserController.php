@@ -3,6 +3,7 @@
 namespace Supinfo\WebBundle\Controller\Admin;
 
 use Supinfo\WebBundle\Controller\AdminController;
+use Symfony\Component\Form\FormError;
 
 class UserController extends AdminController
 {
@@ -11,7 +12,27 @@ class UserController extends AdminController
         return 'User';
     }
 
+    protected function getEntityFormBuilder()
+    {
+        $builder = parent::getEntityFormBuilder();
 
+        if ($this->entity->getId() === null) {
+            $builder->get('plainpassword')->setRequired(true);
+        }
+
+        return $builder;
+    }
+
+    protected function entityFormIsValid()
+    {
+        if ($this->entity->getPassword() === null && strlen($this->entity->getPlainPassword()) < 1) {
+            $this->entityForm->get('plainpassword')->addError(new FormError('The password cannot be blank.'));
+
+            return false;
+        }
+
+        return $this->entityForm->isValid();
+    }
 
     protected function saveFormEntity()
     {

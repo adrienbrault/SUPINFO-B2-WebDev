@@ -1,13 +1,24 @@
 <div id="menu">
     <h1><a href="{{ path('homepage') }}">Supinfo backoffice</a></h1>
     <ul>
-        <li><a href="{{ path('homepage') }}">Home</a></li>
-        <li><a href="{{ path('Place_admin_list') }}">Place</a></li>
-        <li><a href="{{ path('Article_admin_list') }}">Article</a></li>
-        <li><a href="{{ path('Family_admin_list') }}">Family</a></li>
-        <li><a href="{{ path('SubFamily_admin_list') }}">SubFamily</a></li>
-        <li><a href="{{ path('Structure_admin_list') }}">Structure</a></li>
-        <li><a href="{{ path('SubFamilyField_admin_list') }}">SubFamilyField</a></li>
-        <li><a href="{{ path('User_admin_list') }}">User</a></li>
+        <li><a href="{{ path('homepage') }}">Home</a>
+
+        {% if not is_granted('ROLE_USER') %}
+            <li><a href="{{ path('login') }}">Login</a></li>
+        {% endif %}
+
+        {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('logout') }}">Logout</a></li>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('Place_admin_list') }}">Place</a></li>
+            <li><a href="{{ path('Article_admin_list') }}">Article</a></li>
+            <li><a href="{{ path('Family_admin_list') }}">Family</a></li>
+            <li><a href="{{ path('SubFamily_admin_list') }}">SubFamily</a></li>
+            <li><a href="{{ path('Structure_admin_list') }}">Structure</a></li>
+            <li><a href="{{ path('SubFamilyField_admin_list') }}">SubFamilyField</a></li>
+            <li><a href="{{ path('User_admin_list') }}">User</a></li>
+        {% endif %}
     </ul>
 </div>

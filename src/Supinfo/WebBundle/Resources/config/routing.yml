@@ -2,6 +2,18 @@ admin:
     resource: "@SupinfoWebBundle/Resources/config/routing_admin.yml"
     prefix: /admin
 
+
+login:
+    pattern: /login
+    defaults: { _controller: SupinfoWebBundle:Security:login }
+
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /logout
+
+
 homepage:
     pattern: /
     defaults:

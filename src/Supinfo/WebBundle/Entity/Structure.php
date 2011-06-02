@@ -52,4 +52,5 @@ class Structure
     {
         return $this->getName();
     }
+
 }

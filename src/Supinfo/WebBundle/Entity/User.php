@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Supinfo\WebBundle\Entity\User
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer $id
@@ -263,7 +263,9 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return 'ROLE_USER';
+        return array(
+            'ROLE_ADMIN'
+        );
     }
 
     public function eraseCredentials()
@@ -297,4 +299,43 @@ class User implements UserInterface
     {
         $this->plainPassword = $plainPassword;
     }
+
+
+
+    /*
+     *  Serializable.
+     *
+     *  Required by the Security Component.
+     */
+
+    public function serialize()
+    {
+        return serialize(array(
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->password,
+            'salt' => $this->salt,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'telephone' => $this->telephone,
+            'function' => $this->function,
+            'address' => $this->address,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        $array = unserialize($serialized);
+
+        $this->id = $array['id'];
+        $this->username = $array['username'];
+        $this->password = $array['password'];
+        $this->salt = $array['salt'];
+        $this->firstName = $array['firstName'];
+        $this->lastName = $array['lastName'];
+        $this->telephone = $array['telephone'];
+        $this->function = $array['function'];
+        $this->address = $array['address'];
+    }
+
 }

@@ -17,3 +17,8 @@ Supinfo\WebBundle\Entity\SubFamilyField:
             joinColumn:
                 name: sub_family_id
                 referencedColumnName: id
+    oneToMany:
+        fieldValues:
+            targetEntity: SubFamilyFieldValue
+            mappedBy: subFamilyField
+            cascade: ["persist"]

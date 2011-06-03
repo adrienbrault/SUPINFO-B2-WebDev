@@ -22,3 +22,6 @@ Supinfo\WebBundle\Entity\SubFamily:
         fields:
             targetEntity: SubFamilyField
             mappedBy: subFamily
+        articles:
+            targetEntity: Article
+            mappedBy: subFamily

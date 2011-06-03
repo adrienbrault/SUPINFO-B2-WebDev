@@ -77,4 +77,33 @@ class SubFamilyField
     {
         return $this->getName();
     }
+    /**
+     * @var Supinfo\WebBundle\Entity\SubFamilyFieldValue
+     */
+    private $fieldValues;
+
+    public function __construct()
+    {
+        $this->fieldValues = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add fieldValues
+     *
+     * @param Supinfo\WebBundle\Entity\SubFamilyFieldValue $fieldValues
+     */
+    public function addFieldValues(\Supinfo\WebBundle\Entity\SubFamilyFieldValue $fieldValues)
+    {
+        $this->fieldValues[] = $fieldValues;
+    }
+
+    /**
+     * Get fieldValues
+     *
+     * @return Doctrine\Common\Collections\Collection $fieldValues
+     */
+    public function getFieldValues()
+    {
+        return $this->fieldValues;
+    }
 }

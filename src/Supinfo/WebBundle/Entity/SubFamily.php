@@ -30,6 +30,7 @@ class SubFamily
     public function __construct()
     {
         $this->fields = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -105,5 +106,30 @@ class SubFamily
     public function __toString()
     {
         return $this->getName();
+    }
+    /**
+     * @var Supinfo\WebBundle\Entity\Article
+     */
+    private $articles;
+
+
+    /**
+     * Add articles
+     *
+     * @param Supinfo\WebBundle\Entity\Article $articles
+     */
+    public function addArticles(\Supinfo\WebBundle\Entity\Article $articles)
+    {
+        $this->articles[] = $articles;
+    }
+
+    /**
+     * Get articles
+     *
+     * @return Doctrine\Common\Collections\Collection $articles
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

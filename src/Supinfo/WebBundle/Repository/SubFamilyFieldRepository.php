@@ -10,4 +10,28 @@ namespace Supinfo\WebBundle\Repository;
  */
 class SubFamilyFieldRepository extends EntityRepository
 {
+
+    public function createSubFamilyFieldValues(\Supinfo\WebBundle\Entity\SubFamilyField $subFamilyField)
+    {
+        foreach ($subFamilyField->getSubFamily()->getArticles() as $article) {
+            foreach ($article->getFieldValues() as $fieldValue) {
+                foreach ($subFamilyField->getFieldValues() as $fieldValue) {
+                    if ($fieldValue->getSubFamilyField() == $subFamilyField) {
+                        break 2;
+                    }
+                }
+            }
+
+            $options = array(
+                'article' => $article,
+                'subFamilyField' => $subFamilyField,
+            );
+            $newFieldValue = new \Supinfo\WebBundle\Entity\SubFamilyFieldValue($options);
+
+            $subFamilyField->getFieldValues()->add($newFieldValue);
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
 }

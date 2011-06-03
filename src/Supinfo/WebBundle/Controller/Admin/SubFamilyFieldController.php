@@ -10,4 +10,13 @@ class SubFamilyFieldController extends AdminController
     {
         return 'SubFamilyField';
     }
+
+    protected function saveFormEntity()
+    {
+        parent::saveFormEntity();
+
+        if ($this->entity->getSubFamily() != $this->entityClone->getSubFamily()) {
+            $this->getEntityRepository()->createSubFamilyFieldValues($this->entity);
+        }
+    }
 }

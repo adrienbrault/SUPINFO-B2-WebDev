@@ -3,3 +3,5 @@
 web/uploads/*
 web/bundles/*
 *.DS_Store
+
+*~

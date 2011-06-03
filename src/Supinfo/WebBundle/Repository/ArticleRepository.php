@@ -10,4 +10,33 @@ namespace Supinfo\WebBundle\Repository;
  */
 class ArticleRepository extends EntityRepository
 {
+
+    public function checkArticleFieldValues(\Supinfo\WebBundle\Entity\Article $article)
+    {
+        // Add missing fieldValues
+        foreach ($article->getSubFamily()->getFields() as $field) {
+            foreach ($article->getFieldValues() as $fieldValue) {
+                if ($fieldValue->getSubFamilyField() == $field) {
+                    break 2;
+                }
+            }
+
+            $options = array(
+                'subFamilyField' => $field,
+                'article' => $article,
+            );
+            $newFieldValue = new \Supinfo\WebBundle\Entity\SubFamilyFieldValue($options);
+
+            $article->getFieldValues()->add($newFieldValue);
+        }
+
+        // We have to remove the field values corresponding to the wrong subFamily.
+        foreach ($article->getFieldValues() as $fieldValue) {
+            if ($fieldValue->getSubFamilyField()->getSubFamily() != $article->getSubFamily()) {
+                $article->getFieldValues()->removeElement($fieldValue);
+                $this->getEntityManager()->remove($fieldValue);
+            }
+        }
+    }
+
 }

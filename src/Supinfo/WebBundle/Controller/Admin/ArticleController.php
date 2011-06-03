@@ -24,15 +24,9 @@ class ArticleController extends AdminController
 
     protected function saveFormEntity()
     {
-        $this->entity->checkAndReplaceSubFamilyFields($this->getEntityManager());
+        //$this->entity->checkAndReplaceSubFamilyFields($this->getEntityManager());
+        $this->getEntityRepository()->checkArticleFieldValues($this->entity);
 
         parent::saveFormEntity();
-    }
-
-    protected function fetchEntity()
-    {
-        parent::fetchEntity();
-
-        $this->entity->checkAndReplaceSubFamilyFields($this->getEntityManager());
     }
 }

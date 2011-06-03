@@ -217,35 +217,7 @@ class Article
     {
         return sprintf('1%05s', $this->getId());
     }
-
-
-
-    public function checkAndReplaceSubFamilyFields(\Doctrine\ORM\EntityManager $em)
-    {
-        // Removing wrong field values.
-        foreach ($this->getFieldValues() as $fieldValue) {
-            if ($fieldValue->getSubFamilyField()->getSubFamily() != $this->getSubFamily()) {
-                $this->fieldValues->removeElement($fieldValue);
-                $em->remove($fieldValue);
-                
-                // We have to remove the FieldValue ourselves because orphanRemoval does not work in YAML schema file in Doctrine 2.0.5
-            }
-        }
-
-        // Creating missing field values.
-        foreach ($this->getSubFamily()->getFields() as $field) {
-            foreach ($this->getFieldValues() as $fieldValue) {
-                if ($fieldValue->getSubFamilyField()->getSubFamily()->getId() == $this->getSubFamily()->getId()) {
-                    break 2;
-                }
-            }
-
-            // If where are here, no fieldValue exists for the subfamily field.
-            $fieldValue = new SubFamilyFieldValue(array('article' => $this, 'subFamilyField' => $field));
-            $this->addFieldValues($fieldValue);
-        }
-    }
-
+    
 
 
     /*

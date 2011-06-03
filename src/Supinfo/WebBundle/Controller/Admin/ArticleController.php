@@ -24,7 +24,9 @@ class ArticleController extends AdminController
 
     protected function saveFormEntity()
     {
-        $this->getEntityRepository()->checkArticleFieldValues($this->entity);
+        if ($this->entityClone->getId() !== null) {
+            $this->getEntityRepository()->checkArticleFieldValues($this->entity);
+        }
 
         parent::saveFormEntity();
     }

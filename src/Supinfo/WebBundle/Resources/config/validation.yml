@@ -30,6 +30,7 @@ Supinfo\WebBundle\Entity\Family:
 Supinfo\WebBundle\Entity\Loan:
     properties:
         reason:
+            - NotBlank: ~
         dateStart:
             - Date: ~
         dateEnd:

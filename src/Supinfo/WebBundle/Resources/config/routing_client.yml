@@ -1,0 +1,4 @@
+client_Loan_new:
+    pattern: /loan/new
+    defaults:
+        _controller: 'SupinfoWebBundle:Loan:new'

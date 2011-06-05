@@ -5,7 +5,7 @@ namespace Supinfo\WebBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class LoanType extends AbstractType
+class NewLoanType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -13,9 +13,6 @@ class LoanType extends AbstractType
         $builder->add('reason');
         $builder->add('dateStart');
         $builder->add('dateEnd');
-
-        // Relations.
-        $builder->add('user');
     }
 
     public function getDefaultOptions(array $options)

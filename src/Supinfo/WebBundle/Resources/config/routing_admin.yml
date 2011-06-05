@@ -1,194 +1,166 @@
-Place_admin_new:
+admin_Place_new:
     pattern: /place/new
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Place:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Place:edit'
 
-Place_admin_edit:
+admin_Place_edit:
     pattern: /place/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Place:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Place:edit'
 
-Place_admin_delete:
+admin_Place_delete:
     pattern: /place/delete/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Place:admin'
-        _admin_type: "delete"
+        _controller: 'SupinfoWebBundle:Admin\Place:delete'
 
-Place_admin_list:
+admin_Place_list:
     pattern: /place/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Place:admin'
-        _admin_type: "list"
+        _controller: 'SupinfoWebBundle:Admin\Place:list'
         page: 1
     requirements:
         page: \d+
 
 
-Article_admin_new:
+admin_Article_new:
     pattern: /article/new
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Article:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Article:edit'
 
-Article_admin_edit:
+admin_Article_edit:
     pattern: /article/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Article:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Article:edit'
 
-Article_admin_delete:
+admin_Article_delete:
     pattern: /article/delete/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Article:admin'
-        _admin_type: "delete"
+        _controller: 'SupinfoWebBundle:Admin\Article:delete'
 
-Article_admin_list:
+admin_Article_list:
     pattern: /article/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Article:admin'
-        _admin_type: "list"
+        _controller: 'SupinfoWebBundle:Admin\Article:list'
         page: 1
     requirements:
         page: \d+
 
 
-Family_admin_new:
+admin_Family_new:
     pattern: /family/new
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Family:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Family:edit'
 
-Family_admin_edit:
+admin_Family_edit:
     pattern: /family/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Family:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Family:edit'
 
-Family_admin_delete:
+admin_Family_delete:
     pattern: /family/delete/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Family:admin'
-        _admin_type: "delete"
+        _controller: 'SupinfoWebBundle:Admin\Family:delete'
 
-Family_admin_list:
+admin_Family_list:
     pattern: /family/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Family:admin'
-        _admin_type: "list"
+        _controller: 'SupinfoWebBundle:Admin\Family:list'
         page: 1
     requirements:
         page: \d+
 
 
-SubFamily_admin_new:
+admin_SubFamily_new:
     pattern: /sub-family/new
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:edit'
 
-SubFamily_admin_edit:
+admin_SubFamily_edit:
     pattern: /sub-family/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:edit'
 
-SubFamily_admin_delete:
+admin_SubFamily_delete:
     pattern: /sub-family/delete/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
-        _admin_type: "delete"
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:delete'
 
-SubFamily_admin_list:
+admin_SubFamily_list:
     pattern: /sub-family/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamily:admin'
-        _admin_type: "list"
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:list'
         page: 1
     requirements:
         page: \d+
 
 
-Structure_admin_new:
+admin_Structure_new:
     pattern: /structure/new
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Structure:edit'
 
-Structure_admin_edit:
+admin_Structure_edit:
     pattern: /structure/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\Structure:edit'
 
-Structure_admin_delete:
+admin_Structure_delete:
     pattern: /structure/delete/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
-        _admin_type: "delete"
+        _controller: 'SupinfoWebBundle:Admin\Structure:delete'
 
-Structure_admin_list:
+admin_Structure_list:
     pattern: /structure/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\Structure:admin'
-        _admin_type: "list"
+        _controller: 'SupinfoWebBundle:Admin\Structure:list'
         page: 1
     requirements:
         page: \d+
 
 
-SubFamilyField_admin_new:
+admin_SubFamilyField_new:
     pattern: /sub-family-field/new
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:edit'
 
-SubFamilyField_admin_edit:
+admin_SubFamilyField_edit:
     pattern: /sub-family-field/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:edit'
 
-SubFamilyField_admin_delete:
+admin_SubFamilyField_delete:
     pattern: /sub-family-field/delete/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:admin'
-        _admin_type: "delete"
+        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:delete'
 
-SubFamilyField_admin_list:
+admin_SubFamilyField_list:
     pattern: /sub-family-field/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:admin'
-        _admin_type: "list"
+        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:list'
         page: 1
     requirements:
         page: \d+
 
 
-User_admin_new:
+admin_User_new:
     pattern: /user/new
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\User:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\User:edit'
 
-User_admin_edit:
+admin_User_edit:
     pattern: /user/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\User:admin'
-        _admin_type: "edit"
+        _controller: 'SupinfoWebBundle:Admin\User:edit'
 
-User_admin_delete:
+admin_User_delete:
     pattern: /user/delete/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\User:admin'
-        _admin_type: "delete"
+        _controller: 'SupinfoWebBundle:Admin\User:delete'
 
-User_admin_list:
+admin_User_list:
     pattern: /user/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Admin\User:admin'
-        _admin_type: "list"
+        _controller: 'SupinfoWebBundle:Admin\User:list'
         page: 1
     requirements:
         page: \d+

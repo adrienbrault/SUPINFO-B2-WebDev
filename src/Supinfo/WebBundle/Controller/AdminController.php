@@ -32,15 +32,6 @@ abstract class AdminController extends Controller
 
     abstract protected function getEntityName();
 
-    public function adminAction($_admin_type)
-    {
-        $response = call_user_func(array($this, $_admin_type.'Action'));
-
-        return $response ?
-            $response :
-            $this->renderAdminView($_admin_type);
-    }
-
 
 
     /*
@@ -187,10 +178,10 @@ abstract class AdminController extends Controller
     protected function getRoutes()
     {
         $adminRoutes = array(
-            'new' => $this->getEntityName().'_admin_new',
-            'edit' => $this->getEntityName().'_admin_edit',
-            'delete' => $this->getEntityName().'_admin_delete',
-            'list' => $this->getEntityName().'_admin_list',
+            'new' => 'admin_'.$this->getEntityName().'_new',
+            'edit' => 'admin_'.$this->getEntityName().'_edit',
+            'delete' => 'admin_'.$this->getEntityName().'_delete',
+            'list' => 'admin_'.$this->getEntityName().'_list',
         );
 
         return $adminRoutes;
@@ -225,7 +216,7 @@ abstract class AdminController extends Controller
      *  Actions.
      */
 
-    protected function editAction()
+    public function editAction()
     {
         $this->fetchEntity();
         $this->createEntityForm();
@@ -243,9 +234,11 @@ abstract class AdminController extends Controller
                 return $this->redirectToList();
             }
         }
+
+        return $this->renderAdminView('edit');
     }
 
-    protected function deleteAction()
+    public function deleteAction()
     {
         $this->fetchEntity();
 
@@ -259,9 +252,11 @@ abstract class AdminController extends Controller
         return $this->redirectToList();
     }
 
-    protected function listAction()
+    public function listAction()
     {
         $this->fetchEntities();
+
+        return $this->renderAdminView('list');
     }
     
 }

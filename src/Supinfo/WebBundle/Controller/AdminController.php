@@ -96,11 +96,14 @@ abstract class AdminController extends Controller
         $id = $this->get('request')->get('id');
 
         if (null !== $id) {
-            $qb = $this->getEntityRepository()->selectByIdQB($id);
-            $this->entity = $qb->getQuery()->getSingleResult();
-
-            if (!$this->entity) {
-               throw $this->createNotFoundException();
+            try {
+                $this->entity = $this
+                    ->getEntityRepository()
+                    ->selectByIdQB($id)
+                    ->getQuery()
+                    ->getSingleResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                throw $this->createNotFoundException();
             }
         } else {
             $this->entity = $this->getEntityRepository()->newEntity();

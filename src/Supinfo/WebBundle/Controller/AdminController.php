@@ -114,8 +114,10 @@ abstract class AdminController extends Controller
     {
         $this->initPaginator($this->getRoute('list'));
 
-        $qb = $this->paginator->getCurrentPageQB();
-        $this->entities = $qb->getQuery()->getResult();
+        $this->entities = $this->paginator
+            ->getCurrentPageQB()
+            ->getQuery()
+            ->getResult();
     }
 
 

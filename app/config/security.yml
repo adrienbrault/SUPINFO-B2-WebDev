@@ -8,10 +8,13 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        main:
+        main_provider:
+            providers: [user_db, in_memory]
+        user_db:
             entity:
                 class: 'Supinfo\WebBundle\Entity\User'
                 property: username
+        in_memory:
             users:
                 admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
@@ -25,6 +28,7 @@ security:
             security: false
 
         secured_area:
+            provider: main_provider
             pattern:    ^/
             anonymous: ~
             form_login: ~

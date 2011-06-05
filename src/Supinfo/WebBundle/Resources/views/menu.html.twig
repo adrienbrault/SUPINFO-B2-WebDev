@@ -1,7 +1,7 @@
 <div id="menu">
     <div class="login">
         {% if is_granted('ROLE_USER') %}
-            <p>Logged in as {{ app.security.token.user }}</p>
+            <p>Logged in as {{ app.security.token.user.username }}</p>
         {% endif %}
 
         <ul>

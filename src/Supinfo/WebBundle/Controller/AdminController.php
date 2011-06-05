@@ -96,13 +96,9 @@ abstract class AdminController extends Controller
         $id = $this->get('request')->get('id');
 
         if (null !== $id) {
-            try {
-                $this->entity = $this
-                    ->getEntityRepository()
-                    ->selectByIdQB($id)
-                    ->getQuery()
-                    ->getSingleResult();
-            } catch (\Doctrine\ORM\NoResultException $e) {
+            $this->entity = $this->getEntityRepository()->selectOneById($id);
+
+            if (!$this->entity) {
                 throw $this->createNotFoundException();
             }
         } else {
@@ -114,10 +110,7 @@ abstract class AdminController extends Controller
     {
         $this->initPaginator($this->getRoute('list'));
 
-        $this->entities = $this->paginator
-            ->getCurrentPageQB()
-            ->getQuery()
-            ->getResult();
+        $this->entities = $this->paginator->getCurrentPageResults();
     }
 
 

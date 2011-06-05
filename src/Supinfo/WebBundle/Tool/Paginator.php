@@ -114,7 +114,7 @@ class Paginator
             throw new InvalidArgumentException('Paginator: An entityRepository is required.');
         }
 
-        $this->resultsCount = $this->getEntityRepository()->countQB()->getQuery()->getSingleScalarResult();
+        $this->resultsCount = $this->getEntityRepository()->count();
         $this->maxPage = ceil($this->resultsCount / $this->getResultsPerPage());
 
         if ($this->maxPage == 0) {
@@ -149,6 +149,10 @@ class Paginator
             ->setMaxResults($this->getResultsPerPage());
 
         return $qb;
+    }
+
+    public function getCurrentPageResults() {
+        return $this->getCurrentPageQB()->getQuery()->getResult();
     }
 
 }

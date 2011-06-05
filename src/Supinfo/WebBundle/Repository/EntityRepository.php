@@ -40,6 +40,10 @@ class EntityRepository extends DoctrineEntityRepository
         return $qb;
     }
 
+    public function selectOneById($id) {
+        return current($this->selectByIdQB($id)->getQuery()->getResult());
+    }
+
     public function countQB()
     {
         $qb = $this->selectQB();
@@ -47,6 +51,10 @@ class EntityRepository extends DoctrineEntityRepository
         return $qb->select(
             $qb->expr()->count($this->getAlias())
         );
+    }
+
+    public function count() {
+        return $this->countQB()->getQuery()->getSingleScalarResult();
     }
 
     public function newEntity() {

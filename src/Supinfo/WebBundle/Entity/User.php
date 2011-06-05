@@ -301,7 +301,7 @@ class User implements UserInterface, \Serializable
                 break;
 
             default:
-                $role = 'ROLE_READ_ONLY';
+                $role = 'ROLE_USER';
                 break;
         }
 

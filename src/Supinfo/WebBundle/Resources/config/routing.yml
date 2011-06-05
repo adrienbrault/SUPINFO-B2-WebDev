@@ -2,6 +2,14 @@ admin:
     resource: "@SupinfoWebBundle/Resources/config/routing_admin.yml"
     prefix: /admin
 
+client:
+    resource: "@SupinfoWebBundle/Resources/config/routing_client.yml"
+    prefix: /client
+
+read_only:
+    resource: "@SupinfoWebBundle/Resources/config/routing_read_only.yml"
+    prefix: /read-only
+
 
 login:
     pattern: /login

@@ -5,21 +5,36 @@ namespace Supinfo\WebBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-abstract class AdminController extends EntityController
+abstract class AdminController extends Controller
 {
 
     /*
      *  Properties.
      */
 
+    protected $viewData = array();
+
+    protected $entity;
     protected $entityClone;
+    protected $entities;
+
+    protected $entityForm;
+
+    protected $paginator;
 
 
 
     /*
      * 
      */
+
+    abstract protected function getEntityName();
+
+    protected function getEntityClassName() {
+        return 'Supinfo\WebBundle\Entity\\'.$this->getEntityName();
+    }
 
     public function adminAction($_admin_type)
     {
@@ -45,9 +60,26 @@ abstract class AdminController extends EntityController
      *  View override.
      */
 
+    public function render($view, array $parameters = array(), Response $response = null)
+    {
+        $this->viewData['form'] = $this->entityForm;
+        $this->viewData['entity'] = $this->entity;
+        $this->viewData['entities'] = $this->entities;
+        $this->viewData['form'] = $this->entityForm instanceof Form ? $this->entityForm->createView() : null ;
+        $this->viewData['paginator'] = $this->paginator;
+        $this->viewData['routes'] = $this->getRoutes();
+        $this->viewData['entityName'] = $this->getEntityName();
+
+        return parent::render(
+            $view,
+            array_merge($this->viewData, $parameters),
+            $response
+        );
+    }
+
     protected function renderAdminView($admin_type)
     {
-        $viewFullName = $this->getViewFullName($admin_type);
+        $viewFullName = 'SupinfoWebBundle:Admin:'.$admin_type.'.html.twig';
 
         if (!$this->viewExists($viewFullName)) {
             $viewFullName = $this->getDefaultAdminViewFullName($admin_type);
@@ -59,17 +91,75 @@ abstract class AdminController extends EntityController
 
 
     /*
+     *  Doctrine.
+     */
+
+    protected function getEntityManager()
+    {
+        return $this->get('doctrine')->getEntityManager();
+    }
+
+    protected function getEntityRepository()
+    {
+        return $this->getEntityManager()->getRepository('SupinfoWebBundle:'.$this->getEntityName());
+    }
+
+    protected function fetchEntity()
+    {
+        $id = $this->get('request')->get('id');
+
+        if (null !== $id) {
+            $qb = $this->getEntityRepository()->selectByIdQB($id);
+            $this->entity = $qb->getQuery()->getSingleResult();
+
+            if (!$this->entity) {
+               throw $this->createNotFoundException();
+            }
+        } else {
+            $entityClassName = $this->getEntityClassName();
+            $this->entity = new $entityClassName();
+        }
+    }
+
+    protected function fetchEntities()
+    {
+        $this->initPaginator($this->getRoute('list'));
+
+        $qb = $this->paginator->getCurrentPageQB();
+        $this->entities = $qb->getQuery()->getResult();
+    }
+
+
+
+    /*
+     *
+     */
+
+    protected function initPaginator($route)
+    {
+        $page = $this->get('request')->get('page');
+
+        $this->paginator = new \Supinfo\WebBundle\Tool\Paginator();
+
+        $this->paginator
+            ->setEntityRepository($this->getEntityRepository())
+            ->setRoute($route)
+            ->setCurrentPage($page);
+
+        if (!$this->paginator->currentPageExists()) {
+            throw $this->createNotFoundException();
+        }
+    }
+
+
+
+    /*
      *  Form stuff.
      */
 
-    protected function getEntityTypeClassName()
-    {
-        return $this->getBundleNamespace().'\Form\\'.$this->getEntityName().'Type';
-    }
-
     protected function getEntityFormBuilder()
     {
-        $entityTypeClassName = $this->getEntityTypeClassName();
+        $entityTypeClassName = 'Supinfo\WebBundle\Form\\'.$this->getEntityName().'Type';
         $entityType = new $entityTypeClassName();
 
         return $this->get('form.factory')->createBuilder($entityType, $this->entity);
@@ -99,29 +189,9 @@ abstract class AdminController extends EntityController
      *  View stuff.
      */
 
-    protected function getViewFileName($admin_type)
+    protected function viewExists($viewName)
     {
-        return $admin_type.'.html.twig';
-    }
-
-    protected function getAdminViewFormat()
-    {
-        return $this->getBundleFormat().':Admin';
-    }
-
-    protected function getViewFormat()
-    {
-        return $this->getAdminViewFormat().'\\'.$this->getEntityName();
-    }
-
-    protected function getViewFullName($admin_type)
-    {
-        return $this->getViewFormat().':'.$this->getViewFileName($admin_type);
-    }
-
-    protected function getDefaultAdminViewFullName($admin_type)
-    {
-        return $this->getAdminViewFormat().':'.$admin_type.'.html.twig';
+        return $this->get('templating')->exists($viewName);
     }
 
 
@@ -139,7 +209,7 @@ abstract class AdminController extends EntityController
             'list' => $this->getEntityName().'_admin_list',
         );
 
-        return array_merge(parent::getRoutes(), $adminRoutes);
+        return $adminRoutes;
     }
 
     protected function redirectToList($page = null)
@@ -152,6 +222,17 @@ abstract class AdminController extends EntityController
     {
         $redirectUrl = $this->generateUrl($this->getRoute('edit'), array('id' => $this->entity->getId()));
         return $this->redirect($redirectUrl);
+    }
+
+    protected function getRoute($key)
+    {
+        $routes = $this->getRoutes();
+
+        if (!array_key_exists($key, $routes)) {
+            throw new Exception(sprintf('EntityController: route "%s" not found', key));
+        }
+
+        return $routes[$key];
     }
 
 
@@ -192,6 +273,11 @@ abstract class AdminController extends EntityController
 
         // Redirect to the list.
         return $this->redirectToList();
+    }
+
+    protected function listAction()
+    {
+        $this->fetchEntities();
     }
     
 }

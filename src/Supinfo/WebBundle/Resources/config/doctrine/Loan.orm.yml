@@ -22,3 +22,8 @@ Supinfo\WebBundle\Entity\Loan:
             joinColumn:
                 name: user_id
                 referencedColumnName: id
+    oneToMany:
+        articlesLoan:
+            targetEntity: ArticleLoan
+            mappedBy: loan
+            cascade: ["persist"]

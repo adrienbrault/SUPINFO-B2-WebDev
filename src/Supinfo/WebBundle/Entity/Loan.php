@@ -127,4 +127,38 @@ class Loan
     {
         return (string)$this->getId();
     }
+
+    public function getDisplayId()
+    {
+        return sprintf('5%05s', $this->getId());
+    }
+    /**
+     * @var Supinfo\WebBundle\Entity\ArticleLoan
+     */
+    private $articlesLoan;
+
+    public function __construct()
+    {
+        $this->articlesLoan = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add articlesLoan
+     *
+     * @param Supinfo\WebBundle\Entity\ArticleLoan $articlesLoan
+     */
+    public function addArticlesLoan(\Supinfo\WebBundle\Entity\ArticleLoan $articlesLoan)
+    {
+        $this->articlesLoan[] = $articlesLoan;
+    }
+
+    /**
+     * Get articlesLoan
+     *
+     * @return Doctrine\Common\Collections\Collection $articlesLoan
+     */
+    public function getArticlesLoan()
+    {
+        return $this->articlesLoan;
+    }
 }

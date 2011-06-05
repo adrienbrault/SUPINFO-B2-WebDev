@@ -20,7 +20,7 @@ class ArticleLoan
     /**
      * @var integer $quantity
      */
-    private $quantity;
+    private $quantity = 0;
 
     /**
      * @var Supinfo\WebBundle\Entity\Article
@@ -101,6 +101,7 @@ class ArticleLoan
     public function setArticle(\Supinfo\WebBundle\Entity\Article $article)
     {
         $this->article = $article;
+        $this->setArticleId($article->getId());
     }
 
     /**
@@ -121,6 +122,7 @@ class ArticleLoan
     public function setLoan(\Supinfo\WebBundle\Entity\Loan $loan)
     {
         $this->loan = $loan;
+        $this->setLoanId($loan->getId());
     }
 
     /**

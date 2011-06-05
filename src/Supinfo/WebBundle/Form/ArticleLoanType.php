@@ -11,10 +11,6 @@ class ArticleLoanType extends AbstractType
     {
         // Fields.
         $builder->add('quantity');
-
-        // Relations.
-        $builder->add('article');
-        $builder->add('loan');
     }
 
     public function getDefaultOptions(array $options)

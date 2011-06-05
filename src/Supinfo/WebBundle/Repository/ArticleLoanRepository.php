@@ -10,4 +10,20 @@ namespace Supinfo\WebBundle\Repository;
  */
 class ArticleLoanRepository extends EntityRepository
 {
+
+    public function countById($articleId, $loanId) {
+        $qb = $this->countQB();
+
+        $qb->andWhere(
+            $qb->expr()->eq($this->getAlias().'.articleId', ':article_id')
+        )->andWhere(
+            $qb->expr()->eq($this->getAlias().'.loanId', ':loan_id')
+        );
+
+        $qb->setParameter('article_id', $articleId);
+        $qb->setParameter('loan_id', $loanId);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 }

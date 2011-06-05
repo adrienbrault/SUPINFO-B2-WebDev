@@ -1,11 +1,23 @@
 {% extends 'SupinfoWebBundle::layout.html.twig' %}
 
 {% block content %}
-    <form action="{{ path('client_Loan_edit', {'id': loan.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('client_Loan_edit', { 'id': loan.id }) }}" method="post" {{ form_enctype(form) }}>
+        <h3>Loan</h3>
+
         {{ form_errors(form) }}
 
         {{ form_rest(form) }}
 
         <input type="submit" value="Save" />
+    </form>
+
+    <form action="{{ path('client_Loan_edit', { 'id': loan.id }) }}" method="post" {{ form_enctype(formAddArticle) }}>
+        <h3>Add Article</h3>
+
+        {{ form_errors(formAddArticle) }}
+
+        {{ form_rest(formAddArticle) }}
+
+        <input type="submit" value="Add" />
     </form>
 {% endblock %}

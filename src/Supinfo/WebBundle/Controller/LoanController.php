@@ -9,8 +9,11 @@ use Symfony\Component\Form\FormError;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Supinfo\WebBundle\Entity\Loan;
+use Supinfo\WebBundle\Entity\Article;
+use Supinfo\WebBundle\Entity\ArticleLoan;
 use Supinfo\WebBundle\Form\NewLoanType;
 use Supinfo\WebBundle\Form\EditLoanType;
+use Supinfo\WebBundle\Form\LoanAddArticleType;
 
 class LoanController extends Controller
 {
@@ -21,11 +24,12 @@ class LoanController extends Controller
 
         $loan = $entityRepository->newEntity();
 
-        $formBuilder = $this->get('form.factory')->createBuilder(new NewLoanType(), $loan);
-        $form = $formBuilder->getForm();
+        $form = $this->get('form.factory')
+            ->createBuilder(new NewLoanType(), $loan)
+            ->getForm();
 
         $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'POST' && $request->get($form->getName())) {
             $form->bindRequest($request);
 
             // Custom validation.
@@ -52,7 +56,7 @@ class LoanController extends Controller
         return $this->render(
             'SupinfoWebBundle:Client:loan_new.html.twig',
             array(
-                 'form' => $form->createView()
+                'form' => $form->createView()
             )
         );
     }
@@ -67,11 +71,16 @@ class LoanController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $formBuilder = $this->get('form.factory')->createBuilder(new EditLoanType(), $loan);
-        $form = $formBuilder->getForm();
+        $form = $this->get('form.factory')
+            ->createBuilder(new EditLoanType(), $loan)
+            ->getForm();
+
+        $formAddArticle = $this->get('form.factory')
+            ->createBuilder(new LoanAddArticleType())
+            ->getForm();
 
         $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'POST' && $request->get($form->getName())) {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
@@ -82,13 +91,49 @@ class LoanController extends Controller
 
                 return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $loan->getId())));
             }
+        } else if ($request->getMethod() == 'POST' && $request->get($formAddArticle->getName())) {
+            $formAddArticle->bindRequest($request);
+
+            if ($formAddArticle->isValid()) {
+                $articleId = $formAddArticle->get('id')->getData();
+                if (preg_match('/^5([0-9]{4})$/', $articleId, $matches)) {
+                    $articleId = $matches[1];
+                }
+
+                $article = $em->getRepository('SupinfoWebBundle:Article')
+                    ->selectOneById($articleId);
+
+                if ($article) {
+                    $articleLoanCount = $em
+                        ->getRepository('SupinfoWebBundle:ArticleLoan')
+                        ->countById($article->getId(), $loan->getId());
+
+                    if ($articleLoanCount > 0) {
+                        $formAddArticle->addError(new FormError('This article has already been added.'));
+                    } else {
+                        $articleLoan = new ArticleLoan();
+                        $articleLoan->setArticle($article);
+                        $articleLoan->setLoan($loan);
+
+                        $em->persist($articleLoan);
+                        $em->flush();
+
+                        $this->get('session')->setFlash('notice', 'Article added.');
+
+                        return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $loan->getId())));
+                    }
+                } else {
+                    $formAddArticle->addError(new FormError('Article does not exists.'));
+                }
+            }
         }
 
         return $this->render(
             'SupinfoWebBundle:Client:loan_edit.html.twig',
             array(
                 'form' => $form->createView(),
-                'loan' => $loan
+                'loan' => $loan,
+                'formAddArticle' => $formAddArticle->createView(),
             )
         );
     }

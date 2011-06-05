@@ -171,6 +171,7 @@ a, a:visited {
 
 .paginator-pages-list {
     list-style-type: none;
+    display: inline-block;
 }
 
 .paginator-pages-list li {

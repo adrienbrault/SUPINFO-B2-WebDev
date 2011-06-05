@@ -1,4 +1,5 @@
 {% block paginator_pages_list %}
+    Page{% if paginator.maxPage > 1 %}s{% endif %} :
     <ol class="paginator-pages-list">
         {% if paginator %}
             {% for pageNumber in range(1, paginator.maxPage) %}

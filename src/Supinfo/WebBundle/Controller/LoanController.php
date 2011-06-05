@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Supinfo\WebBundle\Entity\Loan;
 use Supinfo\WebBundle\Form\NewLoanType;
+use Supinfo\WebBundle\Form\EditLoanType;
 
 class LoanController extends Controller
 {
@@ -42,6 +43,8 @@ class LoanController extends Controller
                 $em->persist($loan);
                 $em->flush();
 
+                $this->get('session')->setFlash('notice', 'Loan successfully created.');
+
                 return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $loan->getId())));
             }
         }
@@ -50,6 +53,42 @@ class LoanController extends Controller
             'SupinfoWebBundle:Client:loan_new.html.twig',
             array(
                  'form' => $form->createView()
+            )
+        );
+    }
+
+    public function editAction($id) {
+        $em = $this->get('doctrine')->getEntityManager();
+        $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
+
+        try {
+            $loan = $entityRepository->selectByIdQB($id)->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            throw $this->createNotFoundException();
+        }
+
+        $formBuilder = $this->get('form.factory')->createBuilder(new EditLoanType(), $loan);
+        $form = $formBuilder->getForm();
+
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $em->persist($loan);
+                $em->flush();
+
+                $this->get('session')->setFlash('notice', 'Loan successfully edited.');
+
+                return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $loan->getId())));
+            }
+        }
+
+        return $this->render(
+            'SupinfoWebBundle:Client:loan_edit.html.twig',
+            array(
+                'form' => $form->createView(),
+                'loan' => $loan
             )
         );
     }

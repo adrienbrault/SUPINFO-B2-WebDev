@@ -4,7 +4,7 @@ namespace Supinfo\WebBundle\Form;
 
 use Symfony\Component\Form\FormBuilder;
 
-class NewLoanType extends LoanType
+class EditLoanType extends LoanType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {

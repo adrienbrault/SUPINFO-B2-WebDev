@@ -2,3 +2,10 @@ client_Loan_new:
     pattern: /loan/new
     defaults:
         _controller: 'SupinfoWebBundle:Loan:new'
+
+client_Loan_edit:
+    pattern: /loan/edit/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Loan:edit'
+    requirements:
+        id: \d+

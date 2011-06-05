@@ -36,6 +36,8 @@ Supinfo\WebBundle\Entity\User:
         address:
             type: text
             nullable: true
+        type:
+            type: integer
     manyToOne:
         structure:
             targetEntity: Structure

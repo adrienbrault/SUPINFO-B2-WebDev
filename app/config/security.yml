@@ -35,4 +35,10 @@ security:
             logout: ~
 
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN}
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/client, roles: ROLE_CLIENT }
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_CLIENT
+        ROLE_CLIENT: ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

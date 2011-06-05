@@ -17,6 +17,7 @@ class UserType extends AbstractType
         $builder->add('telephone');
         $builder->add('function');
         $builder->add('address');
+        $builder->add('type', 'choice', array('choices' => $this->getTypeChoices()));
 
         // Relations.
         $builder->add('structure');
@@ -27,5 +28,15 @@ class UserType extends AbstractType
         return array(
             'data_class' => 'Supinfo\WebBundle\Entity\User',
         );
+    }
+
+    protected function getTypeChoices()
+    {
+        $defaultOptions = $this->getDefaultOptions(array());
+
+        return call_user_func(array(
+            $defaultOptions['data_class'],
+            'getTypes'
+        ));
     }
 }

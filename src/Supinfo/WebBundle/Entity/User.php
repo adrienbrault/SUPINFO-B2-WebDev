@@ -59,6 +59,12 @@ class User implements UserInterface, \Serializable
      */
     private $structure;
 
+    /**
+     * @var integer $type
+     */
+    private $type;
+
+
 
     /**
      * Get id
@@ -250,6 +256,28 @@ class User implements UserInterface, \Serializable
         return $this->structure;
     }
 
+    /**
+     * Set type
+     *
+     * @param integer $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer $type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    
+
     public function __toString()
     {
         return $this->getUsername();
@@ -263,9 +291,21 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array(
-            'ROLE_ADMIN'
-        );
+        switch ($this->getType()) {
+            case 2:
+                $role = 'ROLE_ADMIN';
+                break;
+
+            case 1:
+                $role = 'ROLE_CLIENT';
+                break;
+
+            default:
+                $role = 'ROLE_READ_ONLY';
+                break;
+        }
+
+        return array($role);
     }
 
     public function eraseCredentials()
@@ -338,4 +378,13 @@ class User implements UserInterface, \Serializable
         $this->address = $array['address'];
     }
 
+
+
+    public static function getTypes() {
+        return array(
+            'Read Only',
+            'Client',
+            'Admin'
+        );
+    }
 }

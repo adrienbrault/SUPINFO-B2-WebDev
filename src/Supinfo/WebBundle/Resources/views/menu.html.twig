@@ -1,5 +1,5 @@
 <div id="menu">
-<div class="login">
+    <div class="login">
         {% if is_granted('ROLE_USER') %}
             <p>Logged in as {{ app.security.token.user }}</p>
         {% endif %}
@@ -16,6 +16,7 @@
     </div>
 
     <h1><a href="{{ path('homepage') }}">Supinfo backoffice</a></h1>
+    
     <ul>
         <li><a href="{{ path('homepage') }}">Home</a>
         {% if is_granted('ROLE_ADMIN') %}

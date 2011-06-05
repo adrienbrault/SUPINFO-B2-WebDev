@@ -1,16 +1,23 @@
 <div id="menu">
+<div class="login">
+        {% if is_granted('ROLE_USER') %}
+            <p>Logged in as {{ app.security.token.user }}</p>
+        {% endif %}
+
+        <ul>
+            {% if not is_granted('ROLE_USER') %}
+                <li><a href="{{ path('login') }}">Login</a></li>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                <li><a href="{{ path('logout') }}">Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
     <h1><a href="{{ path('homepage') }}">Supinfo backoffice</a></h1>
     <ul>
         <li><a href="{{ path('homepage') }}">Home</a>
-
-        {% if not is_granted('ROLE_USER') %}
-            <li><a href="{{ path('login') }}">Login</a></li>
-        {% endif %}
-
-        {% if is_granted('ROLE_USER') %}
-            <li><a href="{{ path('logout') }}">Logout</a></li>
-        {% endif %}
-
         {% if is_granted('ROLE_ADMIN') %}
             <li><a href="{{ path('Place_admin_list') }}">Place</a></li>
             <li><a href="{{ path('Article_admin_list') }}">Article</a></li>
@@ -21,4 +28,6 @@
             <li><a href="{{ path('User_admin_list') }}">User</a></li>
         {% endif %}
     </ul>
+
+
 </div>

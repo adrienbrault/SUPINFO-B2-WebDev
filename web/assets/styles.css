@@ -129,6 +129,24 @@ a, a:visited {
     color: #86A677;
 }
 
+#menu .login {
+    float: right;
+    display: inline-block;
+
+    margin-top: 10px;
+    padding-right: 20px;
+}
+
+#menu .login p {
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+}
+
+#menu .login ul {
+    display: inline-block;
+    margin-left: 0;
+}
 
 
 /* CONTENT

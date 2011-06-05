@@ -4,6 +4,7 @@ namespace Supinfo\WebBundle\Repository;
 
 use Doctrine\ORM\EntityRepository as DoctrineEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Supinfo\WebBundle\Entity;
 
 class EntityRepository extends DoctrineEntityRepository
 {
@@ -46,5 +47,10 @@ class EntityRepository extends DoctrineEntityRepository
         return $qb->select(
             $qb->expr()->count($this->getAlias())
         );
+    }
+
+    public function newEntity() {
+        $className = $this->getEntityName();
+        return new $className;
     }
 }

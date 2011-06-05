@@ -32,26 +32,13 @@ abstract class AdminController extends Controller
 
     abstract protected function getEntityName();
 
-    protected function getEntityClassName() {
-        return 'Supinfo\WebBundle\Entity\\'.$this->getEntityName();
-    }
-
     public function adminAction($_admin_type)
     {
-        $this->initialize();
-
         $response = call_user_func(array($this, $_admin_type.'Action'));
 
         return $response ?
             $response :
             $this->renderAdminView($_admin_type);
-    }
-
-    private function initialize()
-    {
-        if (!class_exists($this->getEntityClassName())) {
-            throw new \Exception('AdminController: Entity Class "'.$this->getEntityClassName().'" can not be found.');
-        }
     }
 
 
@@ -116,8 +103,7 @@ abstract class AdminController extends Controller
                throw $this->createNotFoundException();
             }
         } else {
-            $entityClassName = $this->getEntityClassName();
-            $this->entity = new $entityClassName();
+            $this->entity = $this->getEntityRepository()->newEntity();
         }
     }
 

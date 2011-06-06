@@ -57,10 +57,10 @@ abstract class AdminController extends Controller
 
     protected function renderAdminView($admin_type)
     {
-        $viewFullName = 'SupinfoWebBundle:Admin:'.$admin_type.'.html.twig';
+        $viewFullName = 'SupinfoWebBundle:Admin\\'.$this->getEntityName().':'.$admin_type.'.html.twig';
 
         if (!$this->viewExists($viewFullName)) {
-            $viewFullName = $this->getDefaultAdminViewFullName($admin_type);
+            $viewFullName = 'SupinfoWebBundle:Admin:'.$admin_type.'.html.twig';
         }
         
         return $this->render($viewFullName, $this->viewData);

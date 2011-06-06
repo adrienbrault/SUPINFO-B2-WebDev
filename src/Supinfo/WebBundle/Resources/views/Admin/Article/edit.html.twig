@@ -1,0 +1,17 @@
+{% extends 'SupinfoWebBundle:Admin:edit.html.twig' %}
+
+{% block form_fields %}
+    {% for key, formChild in form.children %}
+        {% if key is sameas('fieldValues') %}
+            {% if formChild.children %}
+                <div>Fields:</div>
+            {% endif %}
+
+            {% for item in formChild.children %}
+                {{ form_row(item.children['value'], {'label': item.all['value'].subFamilyField.name}) }}
+            {% endfor %}
+        {% else %}
+            {{ form_row (formChild) }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

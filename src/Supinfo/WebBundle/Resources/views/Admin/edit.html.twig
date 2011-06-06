@@ -5,7 +5,9 @@
         <form action="{% block form_action_url '' %}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
 
-            {{ form_rest(form) }}
+            {% block form_fields %}
+                {{ form_rest(form) }}
+            {% endblock %}
 
             <input type="submit" value="{% block form_submit_title 'Save' %}" />
         </form>

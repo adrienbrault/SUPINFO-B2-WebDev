@@ -39,9 +39,9 @@ class ArticleRepository extends EntityRepository
         }
     }
 
-    public function selectQB()
+    public function selectByIdQB($id)
     {
-        $qb = parent::selectQB();
+        $qb = parent::selectByIdQB($id);
 
         $qb->addSelect(
             'sf'

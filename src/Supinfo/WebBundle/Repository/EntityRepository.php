@@ -32,7 +32,7 @@ class EntityRepository extends DoctrineEntityRepository
         $qb = $this->selectQB();
 
         $qb ->andWhere(
-            $qb->expr()->eq($this->getAlias().'.id', ':id')
+            $qb->expr()->eq($qb->getRootAlias().'.id', ':id')
         );
 
         $qb->setParameter('id', $id);

@@ -46,7 +46,7 @@ class ArticleRepository extends EntityRepository
         $qb->addSelect(
             'sf'
         )->innerJoin(
-            $this->getAlias().'.subFamily',
+            $qb->getRootAlias().'.subFamily',
             'sf'
         );
 
@@ -60,7 +60,7 @@ class ArticleRepository extends EntityRepository
         $qb->addSelect(
             'fv'
         )->leftJoin(
-            $this->getAlias().'.fieldValues',
+            $qb->getRootAlias().'.fieldValues',
             'fv'
         );
 

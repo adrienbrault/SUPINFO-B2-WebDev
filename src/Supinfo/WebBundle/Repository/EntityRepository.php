@@ -46,10 +46,13 @@ class EntityRepository extends DoctrineEntityRepository
 
     public function countQB()
     {
-        $qb = $this->selectQB();
+        $qb = $this->createQB();
         
         return $qb->select(
             $qb->expr()->count($this->getAlias())
+        )->from(
+            $this->getEntityName(),
+            $this->getAlias()
         );
     }
 

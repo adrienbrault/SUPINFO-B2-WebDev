@@ -39,4 +39,32 @@ class ArticleRepository extends EntityRepository
         }
     }
 
+    public function selectQB()
+    {
+        $qb = parent::selectQB();
+
+        $qb->addSelect(
+            'sf'
+        )->innerJoin(
+            $this->getAlias().'.subFamily',
+            'sf'
+        );
+
+        $qb->addSelect(
+            'sff'
+        )->leftJoin(
+            'sf.fields',
+            'sff'
+        );
+
+        $qb->addSelect(
+            'fv'
+        )->leftJoin(
+            $this->getAlias().'.fieldValues',
+            'fv'
+        );
+
+        return $qb;
+    }
+
 }

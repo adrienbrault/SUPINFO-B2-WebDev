@@ -6,7 +6,24 @@
 
         {{ form_errors(form) }}
 
-        {{ form_rest(form) }}
+        {% for key, formChild in form.children %}
+            {% if key is not sameas('articlesLoan') %}
+                {{ form_row (formChild) }}
+            {% endif %}
+        {% endfor %}
+
+        {% if form.children['articlesLoan'] %}
+            <div>Fields:</div>
+
+            {% for formChild in form.children['articlesLoan'] %}
+                {% set fieldValue = formChild.all['value'] %}
+
+                <div>
+                    {{ form_row(formChild, {'label': fieldValue.article.description}) }}
+                    <a href="{{ path('client_Loan_delete_article', { 'loanId': loan.id, 'articleId': fieldValue.articleId}) }}">Delete</a>
+                </div>
+            {% endfor %}
+        {% endif %}
 
         <input type="submit" value="Save" />
     </form>

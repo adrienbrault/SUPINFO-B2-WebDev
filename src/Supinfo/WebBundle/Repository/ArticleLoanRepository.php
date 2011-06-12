@@ -26,4 +26,24 @@ class ArticleLoanRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function selectByIdsQB($articleId, $loanId)
+    {
+        $qb = $this->selectQB();
+
+        $qb ->andWhere(
+            $qb->expr()->eq($qb->getRootAlias().'.articleId', ':articleId')
+        )->andWhere(
+            $qb->expr()->eq($qb->getRootAlias().'.loanId', ':loanId')
+        );
+
+        $qb->setParameter('articleId', $articleId);
+        $qb->setParameter('loanId', $loanId);
+
+        return $qb;
+    }
+
+    public function selectOneByIds($articleId, $loanId) {
+        return current($this->selectByIdsQB($articleId, $loanId)->getQuery()->getResult());
+    }
+
 }

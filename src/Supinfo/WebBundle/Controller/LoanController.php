@@ -65,9 +65,9 @@ class LoanController extends Controller
         $em = $this->get('doctrine')->getEntityManager();
         $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
 
-        try {
-            $loan = $entityRepository->selectByIdQB($id)->getQuery()->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        $loan = $entityRepository->selectOneById($id);
+
+        if (!$loan) {
             throw $this->createNotFoundException();
         }
 
@@ -136,6 +136,25 @@ class LoanController extends Controller
                 'formAddArticle' => $formAddArticle->createView(),
             )
         );
+    }
+
+    public function deleteArticleLoanAction($loanId, $articleId)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        $entityRepository = $em->getRepository('SupinfoWebBundle:ArticleLoan');
+
+        $articleLoan = $entityRepository->selectOneByIds($articleId, $loanId);
+
+        if (!$articleLoan) {
+            throw $this->createNotFoundException();
+        }
+
+        $em->remove($articleLoan);
+        $em->flush();
+
+        $this->get('session')->setFlash('notice', 'Article successfully removed from Loan.');
+
+        return $this->redirect($this->generateUrl('client_Loan_edit', array('id' => $loanId)));
     }
 
 }

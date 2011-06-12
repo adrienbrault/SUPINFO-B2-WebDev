@@ -11,6 +11,8 @@ class ArticleLoanType extends AbstractType
     {
         // Fields.
         $builder->add('quantity');
+        $builder->add('dateStart');
+        $builder->add('dateEnd');
     }
 
     public function getDefaultOptions(array $options)

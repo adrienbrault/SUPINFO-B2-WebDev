@@ -114,6 +114,8 @@ class LoanController extends Controller
                         $articleLoan = new ArticleLoan();
                         $articleLoan->setArticle($article);
                         $articleLoan->setLoan($loan);
+                        $articleLoan->setDateStart($loan->getDateStart());
+                        $articleLoan->setDateEnd($loan->getDateEnd());
 
                         $em->persist($articleLoan);
                         $em->flush();

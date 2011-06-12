@@ -139,4 +139,54 @@ class ArticleLoan
     {
         return (string)$this->getLoanId().'_'.(string)$this->getArticleId();
     }
+    /**
+     * @var date $dateStart
+     */
+    private $dateStart;
+
+    /**
+     * @var date $dateEnd
+     */
+    private $dateEnd;
+
+
+    /**
+     * Set dateStart
+     *
+     * @param date $dateStart
+     */
+    public function setDateStart($dateStart)
+    {
+        $this->dateStart = $dateStart;
+    }
+
+    /**
+     * Get dateStart
+     *
+     * @return date $dateStart
+     */
+    public function getDateStart()
+    {
+        return $this->dateStart;
+    }
+
+    /**
+     * Set dateEnd
+     *
+     * @param date $dateEnd
+     */
+    public function setDateEnd($dateEnd)
+    {
+        $this->dateEnd = $dateEnd;
+    }
+
+    /**
+     * Get dateEnd
+     *
+     * @return date $dateEnd
+     */
+    public function getDateEnd()
+    {
+        return $this->dateEnd;
+    }
 }

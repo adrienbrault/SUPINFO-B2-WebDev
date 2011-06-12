@@ -16,6 +16,12 @@ Supinfo\WebBundle\Entity\ArticleLoan:
     fields:
         quantity:
             type: integer
+        dateStart:
+            type: date
+            column: date_start
+        dateEnd:
+            type: date
+            column: date_end
     manyToOne:
         article:
             targetEntity: Article

@@ -12,6 +12,12 @@ class SearchController extends Controller {
         $query = stripslashes($request->get('query'));
         $results = array();
 
+        $paths = array(
+            'User' => 'client_User_view',
+            'Loan' => 'client_Loan_view',
+            'Article' => 'client_Article_view'
+        );
+
         if (!empty($query)) {
             $em = $this->get('doctrine')->getEntityManager();
 
@@ -21,9 +27,19 @@ class SearchController extends Controller {
                 'Article' => $em->getRepository('SupinfoWebBundle:Article')
             );
 
-
             foreach ($repositories as $key => $repository) {
-                $results[$key] = $repository->search($query);
+                $repoResults = $repository->search($query);
+
+                if (count($repoResults) > 0) {
+                    $results[$key] = $repoResults;
+                }
+            }
+
+            if (count($results) == 1 && count(current($results)) == 1) {
+                $type = current(array_keys($results));
+                $result = current($results[$type]);
+
+                return $this->redirect($this->generateUrl($paths[$type], array('id' => $result->getId())));
             }
         }
 
@@ -31,7 +47,8 @@ class SearchController extends Controller {
             'SupinfoWebBundle:Client:search.html.twig',
             array(
                 'search_query' => $query,
-                'results' => $results
+                'results' => $results,
+                'paths' => $paths
             )
         );
     }

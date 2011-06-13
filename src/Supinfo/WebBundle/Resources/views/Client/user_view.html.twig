@@ -1,0 +1,30 @@
+{% extends 'SupinfoWebBundle::layout.html.twig' %}
+
+{% block content %}
+    <div>
+        Username: {{ user.username }}
+    </div>
+    <div>
+        Firstname: {{ user.firstName }}
+    </div>
+    <div>
+        Lastname: {{ user.lastName }}
+    </div>
+    <div>
+        Type: {{ user.typeString }}
+    </div>
+
+
+    <h3>Loans:</h3>
+    {% for loan in loans %}
+        <div>
+            <a href="{{ path('client_Loan_view', {'id': loan.id}) }}">{{ loan.displayId }} - {{ loan.reason }}</a>
+        </div>
+    {% else %}
+        {{ user.username }} has created no loan.
+    {% endfor %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_User_edit', {'id': user.id} ) }}">Edit</a>
+    {% endif %}
+{% endblock %}

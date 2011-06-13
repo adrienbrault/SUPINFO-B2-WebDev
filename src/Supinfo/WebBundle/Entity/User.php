@@ -380,11 +380,18 @@ class User implements UserInterface, \Serializable
 
 
 
-    public static function getTypes() {
+    public static function getTypes()
+    {
         return array(
             'Read Only',
             'Client',
             'Admin'
         );
+    }
+
+    public function getTypeString()
+    {
+        $types = self::getTypes();
+        return $types[$this->getType()];
     }
 }

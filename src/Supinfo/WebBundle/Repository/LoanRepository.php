@@ -3,6 +3,7 @@
 namespace Supinfo\WebBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
+use Supinfo\WebBundle\Entity\User;
 
 /**
  * LoanRepository
@@ -164,6 +165,27 @@ class LoanRepository extends EntityRepository
         );
 
         return $expr;
+    }
+
+    public function loansByQB(User $user)
+    {
+        $qb = $this->selectQB();
+
+        $qb->andWhere(
+            $qb->expr()->eq(
+                $qb->getRootAlias().'.user',
+                ':user'
+            )
+        );
+        
+        $qb->setParameter('user', $user);
+
+        return $qb;
+    }
+
+    public function loansBy(User $user)
+    {
+        return $this->loansByQB($user)->getQuery()->getResult();
     }
 
 }

@@ -10,6 +10,13 @@ client_Loan_edit:
     requirements:
         id: \d+
 
+client_Loan_view:
+    pattern: /loan/view/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Loan:view'
+    requirements:
+        id: \d+
+
 client_Loan_delete_article:
     pattern: /loan-article/delete/{loanId}/{articleId}
     defaults:
@@ -17,3 +24,11 @@ client_Loan_delete_article:
     requirements:
         id: \d+
         articleLoanId: \d+
+
+client_Loan_list:
+    pattern: /loan/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Loan:list'
+        page: 1
+    requirements:
+        page: \d+

@@ -3,5 +3,36 @@
 {% block content_title %}Homepage{% endblock %}
 
 {% block content %}
-    <p>Hello World.</p>
+    <p>Welcome.</p>
+
+    {% if is_granted('ROLE_CLIENT') %}
+        <ul>
+            <li><a href="{{ path('client_Loan_list') }}">Loan list.</a></li>
+            <li><a href="{{ path('client_Loan_new') }}">New loan.</a></li>
+        </ul>
+
+        <div>
+            <h3>5 next loans:</h3>
+
+            <ul>
+                {% for loan in nextLoans %}
+                    <li><a href="{{ path('client_Loan_view', { 'id': loan.id } ) }}">{{ loan.id }} - {{ loan.reason }}</a></li>
+                {% else %}
+                    <li>No loan.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div>
+            <h3>Current loans:</h3>
+
+            <ul>
+                {% for loan in currentLoans %}
+                    <li><a href="{{ path('client_Loan_view', { 'id': loan.id } ) }}">{{ loan.id }} - {{ loan.reason }}</a></li>
+                {% else %}
+                    <li>No loan.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}

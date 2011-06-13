@@ -10,7 +10,7 @@
 
     <ul>
         {% for loan in loans %}
-            {% include 'SupinfoWebBundle:Client:loan_list_li.html.twig' with {'loan': loan} %}
+            {% include 'SupinfoWebBundle:Client/Loan:list_li.html.twig' with {'loan': loan} %}
         {% else %}
             <li>No result found.</li>
         {% endfor %}

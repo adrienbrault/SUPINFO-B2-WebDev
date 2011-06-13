@@ -44,7 +44,7 @@ class SearchController extends Controller {
         }
 
         return $this->render(
-            'SupinfoWebBundle:Client:search.html.twig',
+            'SupinfoWebBundle:Client\Search:search.html.twig',
             array(
                 'search_query' => $query,
                 'results' => $results,

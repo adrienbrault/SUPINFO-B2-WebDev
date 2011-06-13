@@ -16,7 +16,7 @@
 
             <ul>
                 {% for loan in nextLoans %}
-                    {% include 'SupinfoWebBundle:Client:loan_list_li.html.twig' with {'loan': loan} %}
+                    {% include 'SupinfoWebBundle:Client/Loan:list_li.html.twig' with {'loan': loan} %}
                 {% else %}
                     <li>No loan.</li>
                 {% endfor %}
@@ -28,7 +28,7 @@
 
             <ul>
                 {% for loan in currentLoans %}
-                    {% include 'SupinfoWebBundle:Client:loan_list_li.html.twig' with {'loan': loan} %}
+                    {% include 'SupinfoWebBundle:Client/Loan:list_li.html.twig' with {'loan': loan} %}
                 {% else %}
                     <li>No loan.</li>
                 {% endfor %}

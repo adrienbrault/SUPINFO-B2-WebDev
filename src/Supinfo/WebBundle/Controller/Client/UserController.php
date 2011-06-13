@@ -21,7 +21,7 @@ class UserController extends Controller
         $loans = $em->getRepository('SupinfoWebBundle:Loan')->loansBy($user);
 
         return $this->render(
-            'SupinfoWebBundle:Client:user_view.html.twig',
+            'SupinfoWebBundle:Client\User:view.html.twig',
             array(
                 'user' => $user,
                 'loans' => $loans

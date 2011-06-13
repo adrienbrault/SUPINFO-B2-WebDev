@@ -73,7 +73,7 @@ class LoanController extends Controller
         }
 
         return $this->render(
-            'SupinfoWebBundle:Client:loan_new.html.twig',
+            'SupinfoWebBundle:Client\Loan:new.html.twig',
             array(
                 'form' => $form->createView()
             )
@@ -146,7 +146,7 @@ class LoanController extends Controller
         }
 
         return $this->render(
-            'SupinfoWebBundle:Client:loan_edit.html.twig',
+            'SupinfoWebBundle:Client\Loan:edit.html.twig',
             array(
                 'form' => $form->createView(),
                 'loan' => $loan,
@@ -217,7 +217,7 @@ class LoanController extends Controller
         $loans = $paginator->getCurrentPageResults();
 
         return $this->render(
-            'SupinfoWebBundle:Client:loan_list.html.twig',
+            'SupinfoWebBundle:Client\Loan:list.html.twig',
             array(
                 'filtersForm' => $filtersForm->createView(),
                 'paginator' => $paginator,
@@ -231,7 +231,7 @@ class LoanController extends Controller
         $loan = $this->getLoan($id);
 
         return $this->render(
-            'SupinfoWebBundle:Client:loan_view.html.twig',
+            'SupinfoWebBundle:Client\Loan:view.html.twig',
             array(
                 'loan' => $loan
             )
@@ -243,7 +243,7 @@ class LoanController extends Controller
         $loan = $this->getLoan($id);
 
         return $this->render(
-            'SupinfoWebBundle:Client:loan_print.html.twig',
+            'SupinfoWebBundle:Client\Loan:print.html.twig',
             array(
                 'loan' => $loan
             )

@@ -2,6 +2,8 @@
 
 namespace Supinfo\WebBundle\Repository;
 
+use Doctrine\Orm\QueryBuilder;
+
 /**
  * UserRepository
  *
@@ -23,6 +25,20 @@ class UserRepository extends EntityRepository
         $qb->setParameter('username',$username);
 
         return $qb->getQuery()->getSingleScalarResult() < 1;
+    }
+
+    public function getSearchExpr(QueryBuilder $qb)
+    {
+        $expr = parent::getSearchExpr($qb);
+
+        $expr->add(
+            $qb->expr()->like(
+                $qb->getRootAlias().'.username',
+                ':query'
+            )
+        );
+
+        return $expr;
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace Supinfo\WebBundle\Repository;
 
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * ArticleRepository
  *
@@ -65,6 +67,37 @@ class ArticleRepository extends EntityRepository
         );
 
         return $qb;
+    }
+
+    public function searchQB($query)
+    {
+        $qb = parent::searchQB($query);
+
+        $qb->setParameter('query_like', '%'.$query.'%');
+        $qb->setParameter('query_id', preg_match('/^1[0-9]{4}$/', $query) ? substr($query, 1) : $query);
+
+        return $qb;
+    }
+
+    public function getSearchExpr(QueryBuilder $qb)
+    {
+        $expr = parent::getSearchExpr($qb);
+
+        $expr->add(
+            $qb->expr()->like(
+                $qb->getRootAlias().'.description',
+                ':query_like'
+            )
+        );
+        
+        $expr->add(
+            $qb->expr()->eq(
+                $qb->getRootAlias().'.id',
+                ':query_id'
+            )
+        );
+
+        return $expr;
     }
 
 }

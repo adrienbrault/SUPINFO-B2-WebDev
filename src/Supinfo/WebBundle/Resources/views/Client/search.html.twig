@@ -1,0 +1,29 @@
+{% extends 'SupinfoWebBundle::layout.html.twig' %}
+
+{% block content %}
+    Search
+
+    {% include 'SupinfoWebBundle:Client:search_form.html.twig' %}
+
+    {% for type, res in results %}
+        {% for result in res %}
+            {% set result_url = '' %}
+            {% set result_label = '' %}
+
+            {% if type is sameas('User') %}
+                {% set result_url = path('client_User_view', {'id': result.id}) %}
+                {% set result_label = 'User - ' ~ result.id ~ ' - ' ~ result.username %}
+            {% elseif type is sameas('Loan') %}
+                {% set result_url = path('client_Loan_view', {'id': result.id}) %}
+                {% set result_label = 'Loan - ' ~ result.displayId ~ ' - ' ~ result.reason %}
+            {% elseif type is sameas('Article') %}
+                {% set result_url = path('client_Article_view', {'id': result.id}) %}
+                {% set result_label = 'Article - ' ~ result.displayId ~ ' - ' ~ result.description %}
+            {% endif %}
+
+            <div><a href="{{ result_url }}">{{ result_label }}</a></div>
+        {% endfor %}
+    {% else %}
+        <div>No Result</div>
+    {% endfor %}
+{% endblock %}

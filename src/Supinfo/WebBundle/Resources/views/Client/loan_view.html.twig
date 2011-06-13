@@ -21,4 +21,8 @@
     </div>
 
     <a href="{{ path('client_Loan_print', {'id': loan.id} ) }}" target="__blank">Print</a>
+
+    {% if is_granted('ROLE_CLIENT') %}
+        <a href="{{ path('client_Loan_edit', {'id': loan.id} ) }}">Edit</a>
+    {% endif %}
 {% endblock %}

@@ -56,12 +56,42 @@ class EntityRepository extends DoctrineEntityRepository
         );
     }
 
-    public function count() {
+    public function count()
+    {
         return $this->countQB()->getQuery()->getSingleScalarResult();
     }
 
-    public function newEntity() {
+    public function newEntity()
+    {
         $className = $this->getEntityName();
         return new $className;
+    }
+
+    public function searchQB($query)
+    {
+        $qb = $this->selectQB();
+
+        $qb->andWhere(
+            $this->getSearchExpr($qb)
+        );
+
+        $qb->setParameter('query', $query);
+
+        return $qb;
+    }
+
+    public function search($query)
+    {
+        return $this->searchQB($query)->getQuery()->getResult();
+    }
+
+    public function getSearchExpr(QueryBuilder $qb)
+    {
+        return $qb->expr()->orx(
+            $qb->expr()->eq(
+                $qb->getRootAlias().'.id',
+                ':query'
+            )
+        );
     }
 }

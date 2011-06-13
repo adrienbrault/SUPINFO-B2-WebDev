@@ -1,0 +1,6 @@
+{% block search_form %}
+    <form action="{{ path('client_search') }}" method="get">
+        <input type="text" name="query"{% if search_query is defined %} value="{{ search_query }}"{% endif %} />
+        <input type="submit" value="Search" />
+    </form>
+{% endblock %}

@@ -56,3 +56,15 @@ client_Article_view:
         _controller: 'SupinfoWebBundle:Client\Article:view'
     requirements:
         id: \d+
+
+client_User_view:
+    pattern: /user/view/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Client\User:view'
+    requirements:
+        id: \d+
+
+client_search:
+    pattern: /search
+    defaults:
+        _controller: 'SupinfoWebBundle:Client\Search:search'

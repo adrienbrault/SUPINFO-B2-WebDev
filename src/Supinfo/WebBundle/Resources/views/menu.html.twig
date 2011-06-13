@@ -19,6 +19,11 @@
     
     <ul>
         <li><a href="{{ path('homepage') }}">Home</a>
+
+        {% if is_granted('ROLE_CLIENT') %}
+            <li><a href="{{ path('client_Loan_list') }}">Loans</a></li>
+        {% endif %}
+
         {% if is_granted('ROLE_ADMIN') %}
             <li><a href="{{ path('admin_Place_list') }}">Place</a></li>
             <li><a href="{{ path('admin_Article_list') }}">Article</a></li>
@@ -30,5 +35,9 @@
         {% endif %}
     </ul>
 
-
+    <div>
+        {% if is_granted('ROLE_CLIENT') %}
+            {% include 'SupinfoWebBundle:Client:search_form.html.twig' %}
+        {% endif %}
+    </div>
 </div>

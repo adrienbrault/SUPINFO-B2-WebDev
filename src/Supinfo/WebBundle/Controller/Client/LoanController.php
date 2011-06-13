@@ -21,6 +21,22 @@ use Supinfo\WebBundle\Tool\Paginator;
 class LoanController extends Controller
 {
 
+    protected function getLoan($id)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
+
+        $loan = $entityRepository->selectOneById($id);
+
+        if (!$loan) {
+            throw $this->createNotFoundException();
+        }
+
+        return $loan;
+    }
+
+
+
     public function newAction() {
         $em = $this->get('doctrine')->getEntityManager();
         $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
@@ -68,11 +84,7 @@ class LoanController extends Controller
         $em = $this->get('doctrine')->getEntityManager();
         $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
 
-        $loan = $entityRepository->selectOneById($id);
-
-        if (!$loan) {
-            throw $this->createNotFoundException();
-        }
+        $loan = $this->getLoan($id);
 
         $form = $this->get('form.factory')
             ->createBuilder(new EditLoanType(), $loan)
@@ -210,6 +222,30 @@ class LoanController extends Controller
                 'filtersForm' => $filtersForm->createView(),
                 'paginator' => $paginator,
                 'loans' => $loans
+            )
+        );
+    }
+
+    public function viewAction($id)
+    {
+        $loan = $this->getLoan($id);
+
+        return $this->render(
+            'SupinfoWebBundle:Client:loan_view.html.twig',
+            array(
+                'loan' => $loan
+            )
+        );
+    }
+
+    public function printAction($id)
+    {
+        $loan = $this->getLoan($id);
+
+        return $this->render(
+            'SupinfoWebBundle:Client:loan_print.html.twig',
+            array(
+                'loan' => $loan
             )
         );
     }

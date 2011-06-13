@@ -1,0 +1,24 @@
+{% extends 'SupinfoWebBundle::layout.html.twig' %}
+
+{% block content %}
+    <div>ID: {{ loan.id }}</div>
+    <div>Reason: {{ loan.reason }}</div>
+    <div>Date start: {{ loan.dateStart|date() }}</div>
+    <div>Date end: {{ loan.dateEnd|date() }}</div>
+    <div>
+        Articles:
+        {% for articleLoan in loan.articlesLoan %}
+            {% set article = articleLoan.article %}
+
+            <div>
+                <a href="{{ path('client_Article_view', {'id': article.id} ) }}">{{ article.id }} - {{ article.description }}</a>
+                [Quantity : {{ articleLoan.quantity }}]
+                [{{ articleLoan.dateStart|date() }} - {{ articleLoan.dateEnd|date() }}]
+            </div>
+        {% else %}
+            There is not article in this loan.
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('client_Loan_print', {'id': loan.id} ) }}" target="__blank">Print</a>
+{% endblock %}

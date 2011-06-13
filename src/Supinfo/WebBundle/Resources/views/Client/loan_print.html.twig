@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/loan_print.css') }}" />
+{% endblock %}
+
+{% block title %}Loan Print{% endblock %}
+
+{% block body %}
+    <div>ID: {{ loan.id }}</div>
+    <div>Reason: {{ loan.reason }}</div>
+    <div>Date start: {{ loan.dateStart|date() }}</div>
+    <div>Date end: {{ loan.dateEnd|date() }}</div>
+    <div>
+        Articles:
+        {% for articleLoan in loan.articlesLoan %}
+            {% set article = articleLoan.article %}
+
+            <div>
+                {{ article.id }} - {{ article.description }}
+                [Quantity : {{ articleLoan.quantity }}]
+                [{{ articleLoan.dateStart|date() }} - {{ articleLoan.dateEnd|date() }}]
+            </div>
+        {% else %}
+            There is not article in this loan.
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('client_Loan_print', {'id': loan.id} ) }}">Imprimer</a>
+{% endblock %}

@@ -22,6 +22,27 @@ class LoanRepository extends EntityRepository
         return $qb;
     }
 
+    public function selectByIdQB($id)
+    {
+        $qb = parent::selectByIdQB($id);
+
+        $qb->addSelect(
+            'al'
+        )->leftJoin(
+            $qb->getRootAlias().'.articlesLoan',
+            'al'
+        );
+
+        $qb->addSelect(
+            'ala'
+        )->leftJoin(
+            'al.article',
+            'ala'
+        );
+
+        return $qb;
+    }
+
     public function get5NextLoansQB()
     {
         $qb = $this->selectQB();

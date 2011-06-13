@@ -17,6 +17,13 @@ client_Loan_view:
     requirements:
         id: \d+
 
+client_Loan_print:
+    pattern: /loan/print/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Client\Loan:print'
+    requirements:
+        id: \d+
+
 client_Loan_delete_article:
     pattern: /loan-article/delete/{loanId}/{articleId}
     defaults:
@@ -42,3 +49,10 @@ client_Article_list:
         page: 1
     requirements:
         page: \d+
+
+client_Article_view:
+    pattern: /article/view/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Client\Article:view'
+    requirements:
+        id: \d+

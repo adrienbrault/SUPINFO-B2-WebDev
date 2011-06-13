@@ -26,12 +26,14 @@ client_Loan_delete_article:
         articleLoanId: \d+
 
 client_Loan_list:
-    pattern: /loan/list/{page}
+    pattern: /loan/list/{filters}/{page}
     defaults:
         _controller: 'SupinfoWebBundle:Client\Loan:list'
         page: 1
+        filters: '1-2'
     requirements:
         page: \d+
+        filters: \d+(-\d+)*
 
 client_Article_list:
     pattern: /article/list/{page}

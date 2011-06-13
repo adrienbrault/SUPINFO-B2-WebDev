@@ -16,7 +16,7 @@
 
             <ul>
                 {% for loan in nextLoans %}
-                    <li><a href="{{ path('client_Loan_view', { 'id': loan.id } ) }}">{{ loan.id }} - {{ loan.reason }}</a></li>
+                    {% include 'SupinfoWebBundle:Client:loan_list_li.html.twig' with {'loan': loan} %}
                 {% else %}
                     <li>No loan.</li>
                 {% endfor %}
@@ -28,7 +28,7 @@
 
             <ul>
                 {% for loan in currentLoans %}
-                    <li><a href="{{ path('client_Loan_view', { 'id': loan.id } ) }}">{{ loan.id }} - {{ loan.reason }}</a></li>
+                    {% include 'SupinfoWebBundle:Client:loan_list_li.html.twig' with {'loan': loan} %}
                 {% else %}
                     <li>No loan.</li>
                 {% endfor %}

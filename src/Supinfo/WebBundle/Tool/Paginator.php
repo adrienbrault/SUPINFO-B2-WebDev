@@ -15,6 +15,8 @@ class Paginator
     private $route;
     private $resultsPerPage;
     private $currentPage;
+    private $routeParams = array();
+    private $selectQB;
 
     private $resultsCount;
     private $maxPage;
@@ -114,7 +116,19 @@ class Paginator
             throw new InvalidArgumentException('Paginator: An entityRepository is required.');
         }
 
-        $this->resultsCount = $this->getEntityRepository()->count();
+        if ($this->getSelectQB()) {
+            $qb = clone $this->getSelectQB(); // If we don't clone it, the currentPageQB will have the count
+            $qb->select(
+                $qb->expr()->count(
+                    $qb->getRootAlias()
+                )
+            );
+
+            $this->resultsCount = $qb->getQuery()->getSingleScalarResult();
+        } else {
+            $this->resultsCount = $this->getEntityRepository()->count();
+        }
+
         $this->maxPage = ceil($this->resultsCount / $this->getResultsPerPage());
 
         if ($this->maxPage == 0) {
@@ -143,7 +157,7 @@ class Paginator
             throw new Exception('Paginator: can\'t return currentPageQB as the page does not exists.');
         }
 
-        $qb = $this->getEntityRepository()->selectQB();
+        $qb = $this->getSelectQB() ? $this->getSelectQB() : $this->getEntityRepository()->selectQB();
 
         $qb ->setFirstResult($this->getOffset())
             ->setMaxResults($this->getResultsPerPage());
@@ -153,6 +167,28 @@ class Paginator
 
     public function getCurrentPageResults() {
         return $this->getCurrentPageQB()->getQuery()->getResult();
+    }
+
+    public function setRouteParams($routeParams)
+    {
+        $this->routeParams = $routeParams;
+        return $this;
+    }
+
+    public function getRouteParams()
+    {
+        return $this->routeParams;
+    }
+
+    public function setSelectQB($selectQB)
+    {
+        $this->selectQB = $selectQB;
+        return $this;
+    }
+
+    public function getSelectQB()
+    {
+        return $this->selectQB;
     }
 
 }

@@ -8,7 +8,7 @@
                         {% if pageNumber == paginator.currentPage %}
                             {{ pageNumber }}
                         {% else %}
-                            <a href="{{ path(paginator.route, { 'page': pageNumber }) }}">{{ pageNumber }}</a>
+                            <a href="{{ path(paginator.route, paginator.routeParams|merge({ 'page': pageNumber }) ) }}">{{ pageNumber }}</a>
                         {% endif %}
                     {% endblock %}
                 </li>

@@ -14,6 +14,9 @@ use Supinfo\WebBundle\Entity\ArticleLoan;
 use Supinfo\WebBundle\Form\NewLoanType;
 use Supinfo\WebBundle\Form\EditLoanType;
 use Supinfo\WebBundle\Form\LoanAddArticleType;
+use Supinfo\WebBundle\Entity\LoanListFilters;
+use Supinfo\WebBundle\Form\LoanListFiltersType;
+use Supinfo\WebBundle\Tool\Paginator;
 
 class LoanController extends Controller
 {
@@ -157,6 +160,58 @@ class LoanController extends Controller
         $this->get('session')->setFlash('notice', 'Article successfully removed from Loan.');
 
         return $this->redirect($this->generateUrl('client_Loan_edit', array('id' => $loanId)));
+    }
+
+    public function listAction($filters, $page)
+    {
+        // Managing filters.
+        $loanListFilters = new LoanListFilters($filters);
+
+        $filtersForm = $this->get('form.factory')
+            ->createBuilder(new LoanListFiltersType(), $loanListFilters)
+            ->getForm();
+
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') {
+            // The user changed the filters.
+
+            $filtersForm->bindRequest($request);
+
+            if ($filtersForm->isValid()) {
+                return $this->redirect($this->generateUrl('client_Loan_list', array('filters' => $loanListFilters->getFiltersURI())));
+            }
+        }
+
+        
+        // Managing page.
+        $paginator = new Paginator();
+
+        $em = $this->get('doctrine')->getEntityManager();
+        $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
+
+        $selectQB = $entityRepository->selectQBWithFilters($loanListFilters->getFilters());
+
+        $paginator
+            ->setEntityRepository($entityRepository)
+            ->setRoute('client_Loan_list')
+            ->setCurrentPage($page)
+            ->setRouteParams(array('filters' => $loanListFilters->getFiltersURI()))
+            ->setSelectQB($selectQB);
+
+        if (!$paginator->currentPageExists()) {
+            throw $this->createNotFoundException();
+        }
+
+        $loans = $paginator->getCurrentPageResults();
+
+        return $this->render(
+            'SupinfoWebBundle:Client:loan_list.html.twig',
+            array(
+                'filtersForm' => $filtersForm->createView(),
+                'paginator' => $paginator,
+                'loans' => $loans
+            )
+        );
     }
 
 }

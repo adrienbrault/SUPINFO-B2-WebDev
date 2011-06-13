@@ -1,0 +1,3 @@
+{% block loan_list_li %}
+    <li><a href="{{ path('client_Loan_view', { 'id': loan.id } ) }}">{{ loan.id }} - {{ loan.reason }}</a></li>
+{% endblock %}

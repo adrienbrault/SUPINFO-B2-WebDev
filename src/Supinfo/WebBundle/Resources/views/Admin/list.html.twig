@@ -22,6 +22,11 @@
                         </td>
                     {% endblock %}
                 </tr>
+            {% else %}
+                <tr>
+                    <td>No result found.</td>
+                    <td></td>
+                </tr>
             {% endfor %}
         </table>
     {% endblock %}

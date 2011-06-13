@@ -1,5 +1,20 @@
 {% extends 'SupinfoWebBundle::layout.html.twig' %}
 
 {% block content %}
-    
+    <form method="post">
+        {{ form_errors(filtersForm) }}
+        {{ form_rest(filtersForm) }}
+
+        <input type="submit" />
+    </form>
+
+    <ul>
+        {% for loan in loans %}
+            {% include 'SupinfoWebBundle:Client:loan_list_li.html.twig' with {'loan': loan} %}
+        {% else %}
+            <li>No result found.</li>
+        {% endfor %}
+    </ul>
+
+    {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' with { 'paginator': paginator } %}
 {% endblock %}

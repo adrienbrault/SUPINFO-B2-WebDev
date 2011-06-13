@@ -11,6 +11,17 @@ namespace Supinfo\WebBundle\Repository;
 class LoanRepository extends EntityRepository
 {
 
+    public function selectQB() {
+        $qb = parent::selectQB();
+
+        $qb->orderBy(
+            $qb->getRootAlias().'.dateStart',
+            'ASC'
+        );
+
+        return $qb;
+    }
+
     public function get5NextLoansQB()
     {
         $qb = $this->selectQB();
@@ -19,10 +30,7 @@ class LoanRepository extends EntityRepository
             $qb->getRootAlias().'.dateStart',
             'ASC'
         )->andWhere(
-            $qb->expr()->gt(
-                $qb->getRootAlias().'.dateStart',
-                'CURRENT_DATE()'
-            )
+            $this->getFilterExpr(2, $qb)
         )->setMaxResults(
             5
         );
@@ -39,16 +47,9 @@ class LoanRepository extends EntityRepository
     {
         $qb = $this->selectQB();
 
+        // andWhere does not work with Andx expr.
         $qb->andWhere(
-            $qb->expr()->lt(
-                $qb->getRootAlias().'.dateStart',
-                'CURRENT_DATE()'
-            )
-        )->andWhere(
-            $qb->expr()->gt(
-                $qb->getRootAlias().'.dateEnd',
-                'CURRENT_DATE()'
-            )
+            $this->getFilterExpr(1, $qb)->__toString()
         );
 
         return $qb;
@@ -57,6 +58,58 @@ class LoanRepository extends EntityRepository
     public function getCurrentLoans()
     {
         return $this->getCurrentLoansQB()->getQuery()->getResult();
+    }
+
+    public function selectQBWithFilters(array $filters)
+    {
+        $qb = $this->selectQB();
+
+        $orExpr = $qb->expr()->orx();
+        foreach ($filters as $filterKey) {
+            $orExpr->add($this->getFilterExpr($filterKey, $qb));
+        }
+        $qb->andWhere($orExpr);
+
+        return $qb;
+    }
+
+    public function getFilterExpr($filter, $qb)
+    {
+        $expr = null;
+
+        switch ($filter) {
+            case 0: // Ended
+            {
+                $expr = $qb->expr()->lt(
+                    $qb->getRootAlias().'.dateEnd',
+                    'CURRENT_DATE()'
+                );
+            } break;
+
+            case 1: // Ongoing
+            {
+                $expr = $qb->expr()->andx(
+                    $qb->expr()->lt(
+                        $qb->getRootAlias().'.dateStart',
+                        'CURRENT_DATE()'
+                    ),
+                    $qb->expr()->gt(
+                        $qb->getRootAlias().'.dateEnd',
+                        'CURRENT_DATE()'
+                    )
+                );
+            } break;
+
+            case 2: // Ucomming
+            {
+                $expr = $qb->expr()->gt(
+                    $qb->getRootAlias().'.dateStart',
+                    'CURRENT_DATE()'
+                );
+            } break;
+        }
+
+        return $expr;
     }
 
 }

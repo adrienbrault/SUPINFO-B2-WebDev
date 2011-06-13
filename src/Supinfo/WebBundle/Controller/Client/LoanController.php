@@ -1,6 +1,6 @@
 <?php
 
-namespace Supinfo\WebBundle\Controller;
+namespace Supinfo\WebBundle\Controller\Client;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;

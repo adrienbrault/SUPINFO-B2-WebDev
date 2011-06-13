@@ -1,26 +1,26 @@
 client_Loan_new:
     pattern: /loan/new
     defaults:
-        _controller: 'SupinfoWebBundle:Loan:new'
+        _controller: 'SupinfoWebBundle:Client\Loan:new'
 
 client_Loan_edit:
     pattern: /loan/edit/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Loan:edit'
+        _controller: 'SupinfoWebBundle:Client\Loan:edit'
     requirements:
         id: \d+
 
 client_Loan_view:
     pattern: /loan/view/{id}
     defaults:
-        _controller: 'SupinfoWebBundle:Loan:view'
+        _controller: 'SupinfoWebBundle:Client\Loan:view'
     requirements:
         id: \d+
 
 client_Loan_delete_article:
     pattern: /loan-article/delete/{loanId}/{articleId}
     defaults:
-        _controller: 'SupinfoWebBundle:Loan:deleteArticleLoan'
+        _controller: 'SupinfoWebBundle:Client\Loan:deleteArticleLoan'
     requirements:
         id: \d+
         articleLoanId: \d+
@@ -28,7 +28,15 @@ client_Loan_delete_article:
 client_Loan_list:
     pattern: /loan/list/{page}
     defaults:
-        _controller: 'SupinfoWebBundle:Loan:list'
+        _controller: 'SupinfoWebBundle:Client\Loan:list'
+        page: 1
+    requirements:
+        page: \d+
+
+client_Article_list:
+    pattern: /article/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Client\Article:list'
         page: 1
     requirements:
         page: \d+

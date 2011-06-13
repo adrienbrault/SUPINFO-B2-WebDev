@@ -2,7 +2,6 @@
 
 namespace Supinfo\WebBundle\Controller\Admin;
 
-use Supinfo\WebBundle\Controller\AdminController;
 use Symfony\Component\Form\FormError;
 
 class UserController extends AdminController

@@ -1,0 +1,13 @@
+{% extends 'SupinfoWebBundle::layout.html.twig' %}
+
+{% block content %}
+    <ul>
+        {% for entity in entities %}
+            <li><a href="{{ path('client_Article_view', {'id': entity.id}) }}">{{ entity.displayId }} - {{ entity.description }}</a></li>
+        {% else %}
+            <li>No result found.</li>
+        {% endfor %}
+    </ul>
+
+    {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' %}
+{% endblock %}

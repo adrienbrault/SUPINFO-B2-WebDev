@@ -1,0 +1,9 @@
+{% extends 'SupinfoWebBundle::layout.html.twig' %}
+
+{% block content %}
+    <div>ID: {{ entity.id }}</div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_Article_edit', {'id': entity.id} ) }}">Edit</a>
+    {% endif %}
+{% endblock %}

@@ -4,3 +4,11 @@
     <a href="{{ path('client_User_view', { 'id': entity.id }) }}">View</a>
     {{ parent() }}
 {% endblock %}
+
+{% block list_th %}
+    <th>Type</th>
+{% endblock %}
+
+{% block list_td %}
+    <td>{{ entity.typeString }}</td>
+{% endblock %}

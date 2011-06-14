@@ -4,3 +4,13 @@
     <a href="{{ path('client_Article_view', { 'id': entity.id }) }}">View</a>
     {{ parent() }}
 {% endblock %}
+
+{% block list_th %}
+    <th>Family</th>
+    <th>SubFamily</th>
+{% endblock %}
+
+{% block list_td %}
+    <td>{% if entity.subFamily %}{{ entity.subFamily.family }}{% endif %}</td>
+    <td>{% if entity.subFamily %}{{ entity.subFamily }}{% endif %}</td>
+{% endblock %}

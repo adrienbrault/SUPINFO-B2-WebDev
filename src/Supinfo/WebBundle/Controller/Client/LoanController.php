@@ -92,7 +92,7 @@ class LoanController extends EntityController
 
         if (!$this->get('security.context')->isGranted('ROLE_ADMIN')
             && $this->entity->getUser() != $this->get('security.context')->getToken()->getUser()) {
-            throw new AccessDeniedException('You must be the author of a Loan to edit it.');
+            throw new AccessDeniedException('You must be the owner of a Loan to edit it.');
         }
 
         $formBuilder = $this->get('form.factory')
@@ -182,6 +182,11 @@ class LoanController extends EntityController
 
         if (!$articleLoan) {
             throw $this->createNotFoundException();
+        }
+
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')
+            && $this->entity->getUser() != $this->get('security.context')->getToken()->getUser()) {
+            throw new AccessDeniedException('You must be the owner of a Loan to edit it.');
         }
 
         $this->getEntityManager()->remove($articleLoan);

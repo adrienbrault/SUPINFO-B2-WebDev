@@ -22,13 +22,6 @@ class LoanRepository extends EntityRepository
             'ASC'
         );
 
-        return $qb;
-    }
-
-    public function selectByIdQB($id)
-    {
-        $qb = parent::selectByIdQB($id);
-
         $qb->addSelect(
             'al'
         )->leftJoin(
@@ -46,14 +39,11 @@ class LoanRepository extends EntityRepository
         return $qb;
     }
 
-    public function get5NextLoansQB()
+    public function next5LoansQB()
     {
         $qb = $this->selectQB();
 
-        $qb->orderBy(
-            $qb->getRootAlias().'.dateStart',
-            'ASC'
-        )->andWhere(
+        $qb->andWhere(
             $this->getFilterExpr(2, $qb)
         )->setMaxResults(
             5
@@ -62,12 +52,12 @@ class LoanRepository extends EntityRepository
         return $qb;
     }
 
-    public function get5NextLoans()
+    public function next5Loans()
     {
-        return $this->get5NextLoansQB()->getQuery()->getResult();
+        return $this->next5LoansQB()->getQuery()->getResult();
     }
 
-    public function getCurrentLoansQB()
+    public function currentLoansQB()
     {
         $qb = $this->selectQB();
 
@@ -79,9 +69,9 @@ class LoanRepository extends EntityRepository
         return $qb;
     }
 
-    public function getCurrentLoans()
+    public function currentLoans()
     {
-        return $this->getCurrentLoansQB()->getQuery()->getResult();
+        return $this->currentLoansQB()->getQuery()->getResult();
     }
 
     public function selectQBWithFilters(array $filters)

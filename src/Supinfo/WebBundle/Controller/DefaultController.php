@@ -16,8 +16,8 @@ class DefaultController extends Controller
             $em = $em = $this->get('doctrine')->getEntityManager();
             $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
 
-            $nextLoans = $entityRepository->get5NextLoans();
-            $currentLoans = $entityRepository->getCurrentLoans();
+            $nextLoans = $entityRepository->next5Loans();
+            $currentLoans = $entityRepository->currentLoans();
         }
 
         return $this->render(

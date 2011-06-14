@@ -18,14 +18,12 @@
     </div>
 
 
-    <h3>Loans:</h3>
-    {% for loan in loans %}
-        <div>
-            <a href="{{ path('client_Loan_view', {'id': loan.id}) }}">{{ loan.displayId }} - {{ loan.reason }}</a>
-        </div>
-    {% else %}
-        {{ entity.entityname }} has created no loan.
-    {% endfor %}
+    <div>
+        <h3>Loans:</h3>
+        
+        {% include('SupinfoWebBundle:Client/Loan:table.html.twig') with {'loans': loans} %}
+    </div>
+
 
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_User_edit', {'id': entity.id} ) }}">Edit</a>

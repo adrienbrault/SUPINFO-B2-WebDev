@@ -1,0 +1,27 @@
+{% block loan_table %}
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Reason</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Owner</th>
+            <th>Articles count</th>
+            <th>Action</th>
+        </tr>
+
+        {% for loan in loans %}
+            <tr>
+                <td>{{ loan.displayId }}</td>
+                <td>{{ loan.reason }}</td>
+                <td>{{ loan.dateStart|date() }}</td>
+                <td>{{ loan.dateEnd|date() }}</td>
+                <td><a href="{{ path('client_User_view', {'id': loan.user.id}) }}">{{ loan.user }}</a></td>
+                <td>{{ loan.articlesLoan.count }}</td>
+                <td><a href="{{ path('client_Loan_view', {'id': loan.id}) }}">View</a></td>
+            </tr>
+        {% else %}
+            <tr><td>No Result found</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

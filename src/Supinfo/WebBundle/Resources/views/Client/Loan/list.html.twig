@@ -8,13 +8,7 @@
         <input type="submit" />
     </form>
 
-    <ul>
-        {% for loan in entities %}
-            {% include 'SupinfoWebBundle:Client/Loan:list_li.html.twig' with {'loan': loan} %}
-        {% else %}
-            <li>No result found.</li>
-        {% endfor %}
-    </ul>
+    {% include('SupinfoWebBundle:Client/Loan:table.html.twig') with {'loans': entities} %}
 
     {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' %}
 {% endblock %}

@@ -17,25 +17,13 @@
         <div>
             <h3>5 next loans:</h3>
 
-            <ul>
-                {% for loan in nextLoans %}
-                    {% include 'SupinfoWebBundle:Client/Loan:list_li.html.twig' with {'loan': loan} %}
-                {% else %}
-                    <li>No loan.</li>
-                {% endfor %}
-            </ul>
+            {% include('SupinfoWebBundle:Client/Loan:table.html.twig') with {'loans': nextLoans} %}
         </div>
 
         <div>
             <h3>Current loans:</h3>
 
-            <ul>
-                {% for loan in currentLoans %}
-                    {% include 'SupinfoWebBundle:Client/Loan:list_li.html.twig' with {'loan': loan} %}
-                {% else %}
-                    <li>No loan.</li>
-                {% endfor %}
-            </ul>
+            {% include('SupinfoWebBundle:Client/Loan:table.html.twig') with {'loans': currentLoans} %}
         </div>
     {% endif %}
 {% endblock %}

@@ -30,3 +30,4 @@ Supinfo\WebBundle\Entity\SubFamilyFieldValue:
             joinColumn:
                 name: article_id
                 referencedColumnName: id
+                onDelete: "CASCADE"

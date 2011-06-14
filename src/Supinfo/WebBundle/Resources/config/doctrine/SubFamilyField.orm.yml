@@ -17,6 +17,7 @@ Supinfo\WebBundle\Entity\SubFamilyField:
             joinColumn:
                 name: sub_family_id
                 referencedColumnName: id
+                onDelete: "CASCADE"
     oneToMany:
         fieldValues:
             targetEntity: SubFamilyFieldValue

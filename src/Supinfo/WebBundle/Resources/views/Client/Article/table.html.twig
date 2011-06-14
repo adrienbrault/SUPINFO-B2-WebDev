@@ -1,0 +1,23 @@
+{% block article_table %}
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Family</th>
+            <th>SubFamily</th>
+            <th>Action</th>
+        </tr>
+
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.displayId }}</td>
+                <td>{{ article.description }}</td>
+                <td>{% if article.subFamily %}{{ article.subFamily.family }}{% endif %}</td>
+                <td>{% if article.subFamily %}{{ article.subFamily }}{% endif %}</td>
+                <td><a href="{{ path('client_Article_view', {'id': article.id}) }}">View</a></td>
+            </tr>
+        {% else %}
+            <tr><td>No Result found</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

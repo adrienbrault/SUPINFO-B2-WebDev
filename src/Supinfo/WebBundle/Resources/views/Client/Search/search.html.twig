@@ -5,25 +5,36 @@
 
     {% include 'SupinfoWebBundle:Client/Search:form.html.twig' %}
 
-    {% for type, res in results %}
-        {% for result in res %}
-            {% set result_url = '' %}
-            {% set result_label = '' %}
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
 
-            {% if type is sameas('User') %}
-                {% set result_url = path(paths[type], {'id': result.id}) %}
-                {% set result_label = 'User - ' ~ result.id ~ ' - ' ~ result.username %}
-            {% elseif type is sameas('Loan') %}
-                {% set result_url = path(paths[type], {'id': result.id}) %}
-                {% set result_label = 'Loan - ' ~ result.displayId ~ ' - ' ~ result.reason %}
-            {% elseif type is sameas('Article') %}
-                {% set result_url = path(paths[type], {'id': result.id}) %}
-                {% set result_label = 'Article - ' ~ result.displayId ~ ' - ' ~ result.description %}
-            {% endif %}
+        {% for type, res in results %}
+            {% for result in res %}
+                {% if type is sameas('User') %}
+                    {% set result_url = path(paths[type], {'id': result.id}) %}
+                    {% set result_label = result.username %}
+                {% elseif type is sameas('Loan') %}
+                    {% set result_url = path(paths[type], {'id': result.id}) %}
+                    {% set result_label = result.reason %}
+                {% elseif type is sameas('Article') %}
+                    {% set result_url = path(paths[type], {'id': result.id}) %}
+                    {% set result_label = result.description %}
+                {% endif %}
 
-            <div><a href="{{ result_url }}">{{ result_label }}</a></div>
+                <tr>
+                    <td>{{ type }}</td>
+                    <td>{{ result.displayId is defined ? result.displayId : result.id }}</td>
+                    <td>{{ result_label }}</td>
+                    <td><a href="{{ result_url }}">View</a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td>No result</td></tr>
         {% endfor %}
-    {% else %}
-        <div>No Result</div>
-    {% endfor %}
+    </table>
 {% endblock %}

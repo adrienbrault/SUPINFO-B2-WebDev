@@ -9,7 +9,7 @@ class SearchController extends Controller {
     public function searchAction()
     {
         $request = $this->get('request');
-        $query = stripslashes($request->get('query'));
+        $query = $request->get('query');
         $results = array();
 
         $paths = array(

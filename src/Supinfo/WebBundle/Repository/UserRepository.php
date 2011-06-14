@@ -27,6 +27,15 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult() < 1;
     }
 
+    public function searchQB($query)
+    {
+        $qb = parent::searchQB($query);
+
+        $qb->setParameter('query_id', preg_match('/^4[0-9]{4}$/', $query) ? substr($query, 1) : $query);
+
+        return $qb;
+    }
+
     public function getSearchExpr(QueryBuilder $qb)
     {
         $expr = parent::getSearchExpr($qb);
@@ -35,6 +44,13 @@ class UserRepository extends EntityRepository
             $qb->expr()->like(
                 $qb->getRootAlias().'.username',
                 ':query'
+            )
+        );
+
+        $expr->add(
+            $qb->expr()->eq(
+                $qb->getRootAlias().'.id',
+                ':query_id'
             )
         );
 

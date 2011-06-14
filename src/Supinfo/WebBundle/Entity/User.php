@@ -394,4 +394,9 @@ class User implements UserInterface, \Serializable
         $types = self::getTypes();
         return $types[$this->getType()];
     }
+
+    public function getDisplayId()
+    {
+        return sprintf('4%05s', $this->getId());
+    }
 }

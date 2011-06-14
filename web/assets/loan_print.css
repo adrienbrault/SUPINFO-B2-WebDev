@@ -55,7 +55,7 @@ table.client tr td + td {
 }
 
 table.dates {
-    width: 70%;
+    width: 100%;
     margin-bottom: 0.3cm;
 }
 
@@ -64,6 +64,10 @@ table.dates {
     float: right;
 
     width: 40%;
+}
+
+.contact {
+    height: 2cm;
 }
 
 .loan_number {

@@ -24,8 +24,6 @@
         {{ entity.entityname }} has created no loan.
     {% endfor %}
 
-    {% if is_granted() %}
-
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_User_edit', {'id': entity.id} ) }}">Edit</a>
     {% endif %}

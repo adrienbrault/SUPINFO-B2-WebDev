@@ -6,13 +6,11 @@
     <p>Welcome.</p>
 
     {% if is_granted('ROLE_USER') %}
-        <ul>
-            <li><a href="{{ path('client_Loan_list') }}">Loan list.</a></li>
+        <a href="{{ path('client_Loan_list') }}">Loan list</a>
 
-            {% if is_granted('ROLE_CLIENT') %}
-                <li><a href="{{ path('client_Loan_new') }}">New loan.</a></li>
-            {% endif %}
-        </ul>
+        {% if is_granted('ROLE_CLIENT') %}
+            <a href="{{ path('client_Loan_new') }}">New loan</a>
+        {% endif %}
 
         <div>
             <h3>5 next loans:</h3>

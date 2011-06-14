@@ -123,30 +123,6 @@ admin_Structure_list:
         page: \d+
 
 
-admin_SubFamilyField_new:
-    pattern: /sub-family-field/new
-    defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:edit'
-
-admin_SubFamilyField_edit:
-    pattern: /sub-family-field/edit/{id}
-    defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:edit'
-
-admin_SubFamilyField_delete:
-    pattern: /sub-family-field/delete/{id}
-    defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:delete'
-
-admin_SubFamilyField_list:
-    pattern: /sub-family-field/list/{page}
-    defaults:
-        _controller: 'SupinfoWebBundle:Admin\SubFamilyField:list'
-        page: 1
-    requirements:
-        page: \d+
-
-
 admin_User_new:
     pattern: /user/new
     defaults:

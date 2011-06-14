@@ -16,6 +16,16 @@
         {% endfor %}
     </div>
 
+    {% if is_granted('ROLE_CLIENT') %}
+        <h3>Add Article to Loan:</h3>
+        <form action="" method="post">
+            {{ form_errors(form) }}
+            {{ form_rest(form) }}
+
+            <input type="submit" />
+        </form>
+    {% endif %}
+
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_Article_edit', {'id': entity.id} ) }}">Edit</a>
     {% endif %}

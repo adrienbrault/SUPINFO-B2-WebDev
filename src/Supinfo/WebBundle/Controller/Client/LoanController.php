@@ -127,7 +127,7 @@ class LoanController extends EntityController
 
             if ($formAddArticle->isValid()) {
                 $articleId = $formAddArticle->get('id')->getData();
-                if (preg_match('/^5([0-9]{4})$/', $articleId)) {
+                if (preg_match('/^1([0-9]{4})$/', $articleId)) {
                     $articleId = substr($articleId, 1);
                 }
 

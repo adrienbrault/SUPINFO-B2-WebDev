@@ -232,4 +232,10 @@ class Article
             'To repair',
         );
     }
+
+    public function getStateString()
+    {
+        $states = self::getStates();
+        return $states[$this->getState()];
+    }
 }

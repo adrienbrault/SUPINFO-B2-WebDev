@@ -2,6 +2,19 @@
 
 {% block content %}
     <div>ID: {{ entity.id }}</div>
+    <div>Description: {{ entity.description }}</div>
+    <div>Code: {{ entity.code }}</div>
+    <div>State: {{ entity.stateString }}</div>
+    <div>Quantity: {{ entity.quantity }}</div>
+    <div>Place: {{ entity.place }}</div>
+    <div>SubFamily: {{ entity.subFamily }}</div>
+    <div>Family: {{ entity.subFamily.family }}</div>
+
+    <div>SubFamily fields:
+        {% for fieldValue in entity.fieldValues %}
+            <div>{{ fieldValue.subFamilyField }}: {{ fieldValue.value }}</div>
+        {% endfor %}
+    </div>
 
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_Article_edit', {'id': entity.id} ) }}">Edit</a>

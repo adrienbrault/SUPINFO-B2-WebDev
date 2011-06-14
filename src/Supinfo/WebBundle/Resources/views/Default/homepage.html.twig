@@ -5,10 +5,13 @@
 {% block content %}
     <p>Welcome.</p>
 
-    {% if is_granted('ROLE_CLIENT') %}
+    {% if is_granted('ROLE_USER') %}
         <ul>
             <li><a href="{{ path('client_Loan_list') }}">Loan list.</a></li>
-            <li><a href="{{ path('client_Loan_new') }}">New loan.</a></li>
+
+            {% if is_granted('ROLE_CLIENT') %}
+                <li><a href="{{ path('client_Loan_new') }}">New loan.</a></li>
+            {% endif %}
         </ul>
 
         <div>

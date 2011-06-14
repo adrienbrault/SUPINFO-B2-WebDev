@@ -20,52 +20,55 @@ class ArticleController extends EntityController
     {
         $this->fetchEntity(array('id' => $id));
 
-        $form = $formBuilder = $this->get('form.factory')
-            ->createBuilder(new LoanAddArticleType())
-            ->getForm();
+        $form = null;
+        if ($this->get('security.context')->isGranted('ROLE_CLIENT')) {
+                $form = $formBuilder = $this->get('form.factory')
+                ->createBuilder(new LoanAddArticleType())
+                ->getForm();
 
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $request = $this->get('request');
+            if ($request->getMethod() == 'POST') {
+                $form->bindRequest($request);
 
-            if ($form->isValid()) {
-                $loanId = $form->get('id')->getData();
-                if (preg_match('/^5([0-9]{4})$/', $loanId)) {
-                    $loanId = substr($loanId, 1);
-                }
+                if ($form->isValid()) {
+                    $loanId = $form->get('id')->getData();
+                    if (preg_match('/^5([0-9]{4})$/', $loanId)) {
+                        $loanId = substr($loanId, 1);
+                    }
 
-                $loan = $this->getEntityManager()
-                    ->getRepository('SupinfoWebBundle:Loan')
-                    ->selectOneById($loanId);
+                    $loan = $this->getEntityManager()
+                        ->getRepository('SupinfoWebBundle:Loan')
+                        ->selectOneById($loanId);
 
-                if (!$loan) {
-                    $form->addError(new FormError('Loan does not exists.'));
-                } else {
-                    $articleLoanCount = $this->getEntityManager()
-                        ->getRepository('SupinfoWebBundle:ArticleLoan')
-                        ->countById($this->entity->getId(), $loan->getId());
-
-                    if ($articleLoanCount > 0) {
-                        $form->addError(new FormError('This article has already been added.'));
-                    } else if (!$this->get('security.context')->isGranted('ROLE_ADMIN')
-                            && $loan->getUser() != $this->get('security.context')->getToken()->getUser()) {
-                        $form->addError(new FormError('You must be the owner of a loan to add an article to it.'));
+                    if (!$loan) {
+                        $form->addError(new FormError('Loan does not exists.'));
                     } else {
-                        $articleLoan = new ArticleLoan();
-                        $articleLoan->setArticle($this->entity);
-                        $articleLoan->setLoan($loan);
-                        $articleLoan->setDateStart($loan->getDateStart());
-                        $articleLoan->setDateEnd($loan->getDateEnd());
+                        $articleLoanCount = $this->getEntityManager()
+                            ->getRepository('SupinfoWebBundle:ArticleLoan')
+                            ->countById($this->entity->getId(), $loan->getId());
 
-                        $this->getEntityManager()->persist($articleLoan);
-                        $this->getEntityManager()->flush();
+                        if ($articleLoanCount > 0) {
+                            $form->addError(new FormError('This article has already been added.'));
+                        } else if (!$this->get('security.context')->isGranted('ROLE_ADMIN')
+                                && $loan->getUser() != $this->get('security.context')->getToken()->getUser()) {
+                            $form->addError(new FormError('You must be the owner of a loan to add an article to it.'));
+                        } else {
+                            $articleLoan = new ArticleLoan();
+                            $articleLoan->setArticle($this->entity);
+                            $articleLoan->setLoan($loan);
+                            $articleLoan->setDateStart($loan->getDateStart());
+                            $articleLoan->setDateEnd($loan->getDateEnd());
 
-                        $this->get('session')->setFlash('notice', 'Article added to loan.');
+                            $this->getEntityManager()->persist($articleLoan);
+                            $this->getEntityManager()->flush();
 
-                        return new RedirectResponse($this->generateUrl(
-                            'client_Loan_edit',
-                            array('id' => $loan->getId())
-                        ));
+                            $this->get('session')->setFlash('notice', 'Article added to loan.');
+
+                            return new RedirectResponse($this->generateUrl(
+                                'client_Loan_edit',
+                                array('id' => $loan->getId())
+                            ));
+                        }
                     }
                 }
             }
@@ -74,7 +77,7 @@ class ArticleController extends EntityController
         return $this->render(
             'SupinfoWebBundle:Client\Article:view.html.twig',
             array(
-                'form' => $form->createView()
+                'form' => $form ? $form->createView() : null
             )
         );
     }

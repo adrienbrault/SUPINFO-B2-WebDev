@@ -1,5 +1,7 @@
 {% extends 'SupinfoWebBundle::layout.html.twig' %}
 
+{% block content_title %}Articles List{% endblock %}
+
 {% block content %}
     {% include('SupinfoWebBundle:Client/Article:table.html.twig') with {'articles': entities} %}
 

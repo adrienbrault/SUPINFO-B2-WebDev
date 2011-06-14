@@ -1,5 +1,7 @@
 {% extends 'SupinfoWebBundle::layout.html.twig' %}
 
+{% block content_title %}Edit Loan{% endblock %}
+
 {% block content %}
     <form action="{{ path('client_Loan_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
         <h3>Loan</h3>

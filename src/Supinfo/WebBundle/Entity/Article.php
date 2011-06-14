@@ -238,4 +238,29 @@ class Article
         $states = self::getStates();
         return $states[$this->getState()];
     }
+
+    public function __get($property)
+    {
+        if ($property == 'id') {
+            return $this->getId();
+        } else if ($property == 'code') {
+            return $this->getCode();
+        } else if ($property == 'description') {
+            return $this->getDescription();
+        } else if ($property == 'state') {
+            return $this->getState();
+        } else if ($property == 'quantity') {
+            return $this->getQuantity();
+        } else if ($property == 'fieldValues') {
+            return $this->getFieldValues();
+        } else if ($property == 'place') {
+            return $this->getPlace();
+        } else if ($property == 'subFamily') {
+            return $this->getSubFamily();
+        } else if ($property == 'family') {
+            return $this->getSubFamily()->getFamily();
+        }
+
+        throw new \Exception(sprintf('Property "%s" does not exists', $property));
+    }
 }

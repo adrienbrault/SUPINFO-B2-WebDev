@@ -57,6 +57,14 @@ client_Article_view:
     requirements:
         id: \d+
 
+client_Article_csv:
+    pattern: /article/excel.{_format}
+    defaults:
+        _controller: 'SupinfoWebBundle:Client\Article:exportCSV'
+        _format: csv
+    requirements:
+        _format: csv
+
 client_User_view:
     pattern: /user/view/{id}
     defaults:

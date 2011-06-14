@@ -4,6 +4,7 @@ namespace Supinfo\WebBundle\Controller\Client;
 
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 use Supinfo\WebBundle\Form\LoanAddArticleType;
 use Supinfo\WebBundle\Entity\ArticleLoan;
@@ -92,6 +93,46 @@ class ArticleController extends EntityController
 
         return $this->render(
             'SupinfoWebBundle:Client\Article:list.html.twig'
+        );
+    }
+
+    public function exportCSVAction()
+    {
+        $articles = $this->getEntityRepository()->selectAll();
+
+        $properties = array(
+            'Family' => 'family',
+            'SubFamily' => 'subFamily',
+            'Code' => 'code',
+            'Description' => 'description',
+            'Quantity' => 'quantity',
+        );
+
+        $separator = ';';
+        $line_separator = "\n";
+
+        $engine = $this->container->get('templating');
+        $content = $engine->render(
+            'SupinfoWebBundle:Client\Article:export.csv.twig',
+            array(
+                'articles' => $articles,
+                'properties' => $properties,
+                'separator' => ';',
+                'line_separator' => $line_separator,
+                'escaping' => array(
+                    $separator => ' ',
+                    $line_separator => ' '
+                )
+            )
+        );
+
+        return new Response(
+            utf8_decode($content),
+            200,
+            array(
+                'Content-Type' => 'text/csv; charset=UTF-8',
+                'Content-Disposition' => 'attachment; filename="export.csv"'
+            )
         );
     }
 

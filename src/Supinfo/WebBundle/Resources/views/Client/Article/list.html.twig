@@ -10,4 +10,8 @@
     </ul>
 
     {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' %}
+
+    <div>
+        <a href="{{ path('client_Article_csv') }}">Export Excel (CSV)</a>
+    </div>
 {% endblock %}

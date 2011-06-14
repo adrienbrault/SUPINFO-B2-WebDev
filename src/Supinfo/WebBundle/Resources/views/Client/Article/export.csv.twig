@@ -1,0 +1,17 @@
+{% autoescape false %}
+    {%- for propertyName, property in properties -%}
+        {{- propertyName|replace(escaping) -}}
+        {%- if not loop.last -%}
+            {{- separator -}}
+        {%- endif -%}
+    {%- endfor -%}{{- line_separator -}}
+    {%- for article in articles -%}
+        {%- for key, property in properties -%}
+            {{- article.__get(property)|replace(escaping) -}}
+            {%- if not loop.last -%}
+                {{- separator -}}
+            {%- endif -%}
+        {%- endfor -%}
+        {{- line_separator -}}
+    {%- endfor -%}
+{% endautoescape %}

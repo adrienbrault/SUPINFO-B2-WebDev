@@ -21,5 +21,11 @@ $(document).ready(function() {
         });
         event.preventDefault();
     });
+
+    $('.delete_confirm').click(function(event) {
+        if (!confirm("Are you sure you want to delete this item ?")) {
+            event.preventDefault();
+        }
+    });
     
 });

@@ -6,21 +6,25 @@
     {% block list %}
         <table class="list">
             <tr>
+                <th>Name</th>
                 {% block list_th %}
-                    <th>Name</th>
-                    <th>Actions</th>
+
                 {% endblock %}
+                <th>Actions</th>
             </tr>
 
             {% for entity in entities %}
                 <tr>
+                    <td>{{ entity }}</td>
                     {% block list_td %}
-                        <td>{{ entity }}</td>
-                        <td>
-                            <a href="{{ path(routes.edit, { 'id': entity.id }) }}">Edit</a>
-                            <a href="{{ path(routes.delete, { 'id': entity.id }) }}">Delete</a>
-                        </td>
+
                     {% endblock %}
+                    <td>
+                        {% block list_td_actions %}
+                            <a href="{{ path(routes.edit, { 'id': entity.id }) }}">Edit</a>
+                            <a class="delete_confirm" href="{{ path(routes.delete, { 'id': entity.id }) }}">Delete</a>
+                        {% endblock %}
+                    </td>
                 </tr>
             {% else %}
                 <tr>

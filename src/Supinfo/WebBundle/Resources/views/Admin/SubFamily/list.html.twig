@@ -1,0 +1,9 @@
+{% extends 'SupinfoWebBundle:Admin:list.html.twig' %}
+
+{% block list_th %}
+    <th>Family</th>
+{% endblock %}
+
+{% block list_td %}
+    <td>{{ entity.family.name }}</td>
+{% endblock %}

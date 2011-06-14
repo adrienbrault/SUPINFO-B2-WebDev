@@ -1,0 +1,6 @@
+{% extends 'SupinfoWebBundle:Admin:list.html.twig' %}
+
+{% block list_td_actions %}
+    <a href="{{ path('client_User_view', { 'id': entity.id }) }}">View</a>
+    {{ parent() }}
+{% endblock %}

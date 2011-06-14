@@ -1,0 +1,85 @@
+body {
+    font-family: Verdana;
+    font-size: 10pt;
+
+    
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 0.5cm;
+}
+
+.header img {
+    width: 80%;
+}
+
+.border {
+    border: 3px solid black;
+}
+
+table.articles {
+    border-collapse: collapse;
+
+    width: 100%;
+}
+
+table.articles td,
+table.articles th {
+    border: 1px solid black;
+    border-right: 2px solid black;
+    height: 0.40cm;
+}
+
+table.articles th {
+    border-bottom: 2px solid black;
+}
+
+table.articles .empty {
+    width: 10%;
+}
+
+table.client,
+.lender {
+    width: 50%;
+}
+
+table.client tr td {
+    text-align: right;
+    width: 40%;
+}
+
+table.client tr td + td {
+    text-align: left;
+    width: 65%;
+}
+
+table.dates {
+    width: 70%;
+    margin-bottom: 0.3cm;
+}
+
+.contact,
+.borrower {
+    float: right;
+
+    width: 40%;
+}
+
+.loan_number {
+    width: 100;
+    text-align: center;
+    margin-bottom: 0.3cm;
+}
+
+.bottom {
+    margin-top: 0.5cm;
+}
+
+.bottom > div {
+    height: 2cm;
+}
+
+.client_contact {
+    margin-bottom: 0.4cm;
+}

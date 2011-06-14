@@ -27,5 +27,14 @@ $(document).ready(function() {
             event.preventDefault();
         }
     });
-    
+
+    $('.trigger_print').click(function(event) {
+        print();
+        event.preventDefault();
+    });
+
+    if ($('.auto_print').size()) {
+        print();
+    }
+
 });

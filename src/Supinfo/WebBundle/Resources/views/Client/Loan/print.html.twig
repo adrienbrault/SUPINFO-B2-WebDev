@@ -1,30 +1,109 @@
-{% extends '::base.html.twig' %}
+{% extends 'SupinfoWebBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/entity_print.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/loan_print.css') }}" />
 {% endblock %}
 
 {% block title %}Loan Print{% endblock %}
 
 {% block body %}
-    <div>ID: {{ entity.id }}</div>
-    <div>Reason: {{ entity.reason }}</div>
-    <div>Date start: {{ entity.dateStart|date() }}</div>
-    <div>Date end: {{ entity.dateEnd|date() }}</div>
-    <div>
-        Articles:
-        {% for articleLoan in entity.articlesLoan %}
-            {% set article = articleLoan.article %}
+    <div class="auto_print"></div>
 
-            <div>
-                {{ article.id }} - {{ article.description }}
-                [Quantity : {{ articleLoan.quantity }}]
-                [{{ articleLoan.dateStart|date() }} - {{ articleLoan.dateEnd|date() }}]
-            </div>
-        {% else %}
-            There is not article in this entity.
-        {% endfor %}
+    <div class="header">
+        <img src="{{ asset('img/header.png') }}" alt="header" />
     </div>
 
-    <a href="{{ path('client_Loan_print', {'id': entity.id} ) }}">Imprimer</a>
+    <div class="loan_number">Loan N°{{ entity.displayId }}</div>
+
+    <div class="client_contact">
+        <div class="contact border">
+            <strong>Contact:</strong><br />
+            zz<br />
+            zz
+        </div>
+
+        <table class="client border">
+            <tr>
+                <td>Id</td>
+                <td>{{ entity.user.displayId }}</td>
+            </tr>
+            <tr>
+                <td>LastName</td>
+                <td>{{ entity.user.lastName }}</td>
+            </tr>
+            <tr>
+                <td>FirstName</td>
+                <td>{{ entity.user.firstName }}</td>
+            </tr>
+            <tr>
+                <td>Structure</td>
+                <td>{{ entity.user.structure }}</td>
+            </tr>
+            <tr>
+                <td>Telephone</td>
+                <td>{{ entity.user.telephone }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="dates border">
+        <tr>
+            <td>Date start:</td>
+            <td>{{ entity.dateStart|date() }}</td>
+            <td>Date end:</td>
+            <td>{{ entity.dateEnd|date() }}</td>
+        </tr>
+    </table>
+
+    <table class="articles border">
+        <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th class="empty"></th>
+            <th class="empty"></th>
+            <th class="empty"></th>
+        </tr>
+
+        {% set max_rows = 23%}
+        {% set max_rows = entity.articlesLoan.count > max_rows ? entity.articlesLoan : max_rows %}
+        {% for i in 0..max_rows %}
+            {% if entity.articlesLoan[i] is defined %}
+                {% set articleLoan = entity.articlesLoan[i] %}
+                {% set article = articleLoan.article %}
+
+                <tr>
+                    <td>{{ article.code }}</td>
+                    <td>{{ article.description }}</td>
+                    <td>{{ articleLoan.quantity }}</td>
+                    <td>{{ articleLoan.dateStart|date() }} - {{ articleLoan.dateEnd|date() }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+
+        {% endfor %}
+    </table>
+
+    <div class="bottom">
+        <div class="borrower border">
+            <strong>Borrower:</strong>
+        </div>
+
+        <div class="lender border">
+            <strong>Lender:</strong>
+        </div>
+    </div>
 {% endblock %}

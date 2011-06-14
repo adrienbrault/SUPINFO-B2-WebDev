@@ -17,7 +17,7 @@ Supinfo\WebBundle\Entity\ArticleLoan:
     properties:
         quantity:
             - NotBlank: ~
-            - Min: 1
+            - Min: 0
             - Max: 100000
 
 Supinfo\WebBundle\Entity\Family:

@@ -28,8 +28,10 @@ Supinfo\WebBundle\Entity\ArticleLoan:
             joinColumn:
                 name: article_id
                 referencedColumnName: id
+                onDelete: "CASCADE"
         loan:
             targetEntity: Loan
             joinColumn:
                 name: loan_id
                 referencedColumnName: id
+                onDelete: "CASCADE"

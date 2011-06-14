@@ -14,6 +14,13 @@ class SubFamilyType extends AbstractType
 
         // Relations.
         $builder->add('family');
+
+        // Collection.
+        $builder->add('fields', 'collection', array(
+            'type' => new SimpleSubFamilyFieldType(),
+            'allow_add' => false,
+            'allow_delete' => true,
+        ));
     }
 
     public function getDefaultOptions(array $options)

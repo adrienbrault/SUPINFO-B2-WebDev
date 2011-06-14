@@ -75,7 +75,7 @@ class SubFamilyField
 
     public function __toString()
     {
-        return $this->getName();
+        return ''.$this->getName();
     }
     /**
      * @var Supinfo\WebBundle\Entity\SubFamilyFieldValue

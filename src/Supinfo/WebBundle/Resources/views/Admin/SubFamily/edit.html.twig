@@ -1,0 +1,30 @@
+{% extends 'SupinfoWebBundle:Admin:edit.html.twig' %}
+
+{% block form_fields %}
+    {% for key, formChild in form.children %}
+        {% if key is not sameas('fields') %}
+            {{ form_row (formChild) }}
+        {% endif %}
+    {% endfor %}
+
+    {% if form.children['fields'].count %}
+        <div>Fields:</div>
+
+        {% for formChild in form.children['fields'] %}
+            {% set fieldValue = formChild.all['value'] %}
+            
+            <div>
+                {{ form_errors(formChild) }}
+                {{ form_widget(formChild) }}
+                <a href="" class="remove">Remove</a>
+            </div>
+            
+        {% endfor %}
+    {% endif %}
+
+    {% if entity.id %}
+        <div>
+            <a href="{{ path('admin_SubFamily_edit_new_field', {'id': entity.id}) }}">Add field.</a>
+        </div>
+    {% endif %}
+{% endblock %}

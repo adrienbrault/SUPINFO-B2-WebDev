@@ -80,6 +80,11 @@ admin_SubFamily_edit:
     defaults:
         _controller: 'SupinfoWebBundle:Admin\SubFamily:edit'
 
+admin_SubFamily_edit_new_field:
+    pattern: /sub-family/edit/{id}/new-field
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\SubFamily:editNewField'
+
 admin_SubFamily_delete:
     pattern: /sub-family/delete/{id}
     defaults:

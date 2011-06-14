@@ -132,4 +132,15 @@ class SubFamily
     {
         return $this->articles;
     }
+
+    public function setFields($fields)
+    {
+        if (empty($fields)) {
+            $this->fields->clear();
+        } else {
+            foreach ($fields as $field) {
+                $this->fields->add($field);
+            }
+        }
+    }
 }

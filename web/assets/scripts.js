@@ -14,5 +14,12 @@ $(document).ready(function() {
             article_fieldValues.hide();
         }
     });
+
+    $('.remove').live('click', function(event) {
+        $(this).parent().slideUp('medium', function() {
+            $(this).remove();
+        });
+        event.preventDefault();
+    });
     
 });

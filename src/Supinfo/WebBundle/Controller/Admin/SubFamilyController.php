@@ -49,6 +49,10 @@ class SubFamilyController extends AdminController
         $em->persist($field);
         $em->flush();
 
+        $this->getEntityManager()
+            ->getRepository('SupinfoWebBundle:SubFamilyField')
+            ->createSubFamilyFieldValues($field);
+
         return $this->redirectToEdit();
     }
 

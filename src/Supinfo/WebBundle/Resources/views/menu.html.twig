@@ -1,7 +1,7 @@
 <div id="menu">
     <div class="login">
         {% if is_granted('ROLE_USER') %}
-            <p>Logged in as {{ app.security.token.user.username }}</p>
+            <p>Logged in as <a href="{{ path('client_User_view', {'id': app.security.token.user.id}) }}">{{ app.security.token.user.username }}</a></p>
         {% endif %}
 
         <ul>

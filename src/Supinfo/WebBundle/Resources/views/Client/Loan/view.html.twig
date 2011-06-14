@@ -5,6 +5,7 @@
     <div>Reason: {{ entity.reason }}</div>
     <div>Date start: {{ entity.dateStart|date() }}</div>
     <div>Date end: {{ entity.dateEnd|date() }}</div>
+    <div>User: <a href="{{ path('client_User_view', {'id': entity.user.id }) }}">{{ entity.user.username }}</a></div>
     <div>
         Articles:
         {% for articleLoan in entity.articlesLoan %}

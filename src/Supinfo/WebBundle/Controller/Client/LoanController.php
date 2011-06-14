@@ -31,9 +31,25 @@ class LoanController extends EntityController
     public function newAction() {
         $this->entity = $this->getEntityRepository()->newEntity();
 
-        $form = $this->get('form.factory')
-            ->createBuilder(new NewLoanType(), $this->entity)
-            ->getForm();
+        $formBuilder = $this->get('form.factory')
+            ->createBuilder(new NewLoanType(), $this->entity);
+
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $userRepository = $this->getEntityManager()->getRepository('SupinfoWebBundle:User');
+
+            $formBuilder->add('user', 'entity', array(
+                'query_builder' => $userRepository->selectClientsQB(),
+                'class' => 'Supinfo\WebBundle\Entity\User'
+            ));
+        }
+
+        $form = $formBuilder->getForm();
+
+        $userInSession = $this->get('security.context')->getToken()->getUser();
+        if ($userInSession instanceof User
+            && $this->get('security.context')->isGranted('ROLE_CLIENT')) {
+            $this->entity->setUser($userInSession);
+        }
 
         $request = $this->get('request');
         if ($request->getMethod() == 'POST' && $request->get($form->getName())) {
@@ -44,17 +60,11 @@ class LoanController extends EntityController
                 $form->addError(new FormError('DateEnd must be after DateStart.'));
             }
 
-            if (!$this->get('security.context')->isGranted('ROLE_CLIENT')) {
-                $form->addError(new FormError('You must be a client to create a loan.'));
-            }
-
-            if (!$this->get('security.context')->getToken()->getUser() instanceof User) {
-                $form->addError(new FormError('You can\'t create a loan with the default admin user.'));
+            if (!$this->entity->getUser() instanceof User) {
+                $form->addError(new FormError('You must choose a database user to create a loan.'));
             }
 
             if ($form->isValid()) {
-                $this->entity->setUser($this->get('security.context')->getToken()->getUser());
-
                 $this->getEntityManager()->persist($this->entity);
                 $this->getEntityManager()->flush();
 
@@ -85,9 +95,17 @@ class LoanController extends EntityController
             throw new AccessDeniedException('You must be the author of a Loan to edit it.');
         }
 
-        $form = $this->get('form.factory')
-            ->createBuilder(new EditLoanType(), $this->entity)
-            ->getForm();
+        $formBuilder = $this->get('form.factory')
+            ->createBuilder(new EditLoanType(), $this->entity);
+
+        $userRepository = $this->getEntityManager()->getRepository('SupinfoWebBundle:User');
+        $formBuilder->add('user', 'entity', array(
+            'query_builder' => $userRepository->selectClientsQB(),
+            'class' => 'Supinfo\WebBundle\Entity\User',
+            'read_only' => !$this->get('security.context')->isGranted('ROLE_ADMIN')
+        ));
+
+        $form = $formBuilder->getForm();
 
         $formAddArticle = $this->get('form.factory')
             ->createBuilder(new LoanAddArticleType())

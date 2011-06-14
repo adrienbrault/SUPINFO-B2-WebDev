@@ -41,4 +41,23 @@ class UserRepository extends EntityRepository
         return $expr;
     }
 
+    public function selectClientsQB()
+    {
+        $qb = $this->selectQB();
+
+        $qb->andWhere(
+            $qb->expr()->in(
+                $qb->getRootAlias().'.type',
+                array(1, 2)
+            )
+        );
+
+        return $qb;
+    }
+
+    public function selectClients()
+    {
+        return $this->selectClientsQB()->getQuery()->getResult();
+    }
+
 }

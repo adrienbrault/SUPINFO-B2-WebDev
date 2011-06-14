@@ -198,6 +198,8 @@ class LoanController extends EntityController
             'route_params' => array('filters' => $loanListFilters->getFiltersURI())
         ));
 
+        $this->entities = $this->paginator->getCurrentPageResults();
+
         return $this->render(
             'SupinfoWebBundle:Client\Loan:list.html.twig',
             array(

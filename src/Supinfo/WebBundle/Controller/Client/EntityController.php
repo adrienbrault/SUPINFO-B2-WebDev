@@ -105,8 +105,6 @@ abstract class EntityController extends Controller
         if (!$this->paginator->currentPageExists()) {
             throw $this->createNotFoundException();
         }
-
-        $this->entities = $this->paginator->getCurrentPageResults();
     }
 
     

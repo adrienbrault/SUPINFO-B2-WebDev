@@ -20,7 +20,9 @@ class ArticleType extends AbstractType
         $builder->add('place');
         $builder->add('subFamily');
 
-        $builder->add('fieldValues', 'collection', array('type' => new SubFamilyFieldValueType()));
+        $builder->add('fieldValues', 'collection', array(
+            'type' => new SubFamilyFieldValueType()
+        ));
     }
 
     public function getDefaultOptions(array $options)

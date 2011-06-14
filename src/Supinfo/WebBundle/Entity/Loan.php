@@ -161,4 +161,9 @@ class Loan
     {
         return $this->articlesLoan;
     }
+
+    public function setArticlesLoan($articlesLoan)
+    {
+        $this->articlesLoan = $articlesLoan;
+    }
 }

@@ -1,19 +1,19 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/loan_print.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/entity_print.css') }}" />
 {% endblock %}
 
 {% block title %}Loan Print{% endblock %}
 
 {% block body %}
-    <div>ID: {{ loan.id }}</div>
-    <div>Reason: {{ loan.reason }}</div>
-    <div>Date start: {{ loan.dateStart|date() }}</div>
-    <div>Date end: {{ loan.dateEnd|date() }}</div>
+    <div>ID: {{ entity.id }}</div>
+    <div>Reason: {{ entity.reason }}</div>
+    <div>Date start: {{ entity.dateStart|date() }}</div>
+    <div>Date end: {{ entity.dateEnd|date() }}</div>
     <div>
         Articles:
-        {% for articleLoan in loan.articlesLoan %}
+        {% for articleLoan in entity.articlesLoan %}
             {% set article = articleLoan.article %}
 
             <div>
@@ -22,9 +22,9 @@
                 [{{ articleLoan.dateStart|date() }} - {{ articleLoan.dateEnd|date() }}]
             </div>
         {% else %}
-            There is not article in this loan.
+            There is not article in this entity.
         {% endfor %}
     </div>
 
-    <a href="{{ path('client_Loan_print', {'id': loan.id} ) }}">Imprimer</a>
+    <a href="{{ path('client_Loan_print', {'id': entity.id} ) }}">Imprimer</a>
 {% endblock %}

@@ -24,6 +24,45 @@ class Paginator
 
 
     /*
+     *
+     */
+
+    public function __construct(array $parameters = array())
+    {
+        $parameters = array_merge(
+            array(
+                'results_per_page' => 10,
+                'current_page' => 1,
+            ),
+            $parameters
+        );
+
+        if (array_key_exists('entity_repository', $parameters)) {
+            $this->setEntityRepository($parameters['entity_repository']);
+        }
+
+        if (array_key_exists('route', $parameters)) {
+            $this->setRoute($parameters['route']);
+        }
+
+        if (array_key_exists('results_per_page', $parameters)) {
+            $this->setResultsPerPage($parameters['results_per_page']);
+        }
+
+        if (array_key_exists('current_page', $parameters)) {
+            $this->setCurrentPage($parameters['current_page']);
+        }
+
+        if (array_key_exists('route_params', $parameters)) {
+            $this->setRouteParams($parameters['route_params']);
+        }
+
+        if (array_key_exists('select_qb', $parameters)) {
+            $this->setSelectQB($parameters['select_qb']);
+        }
+    }
+
+    /*
      *  Getters and setters.
      */
 
@@ -90,18 +129,6 @@ class Paginator
     public function getOffset()
     {
         return ($this->getCurrentPage() - 1) * $this->getResultsPerPage();
-    }
-
-
-
-    /*
-     *  Defaults.
-     */
-
-    public function __construct()
-    {
-        $this->setResultsPerPage(10);
-        $this->setCurrentPage(1);
     }
 
 

@@ -2,16 +2,16 @@
 
 {% block content %}
     <div>
-        Username: {{ user.username }}
+        Username: {{ entity.username }}
     </div>
     <div>
-        Firstname: {{ user.firstName }}
+        Firstname: {{ entity.firstName }}
     </div>
     <div>
-        Lastname: {{ user.lastName }}
+        Lastname: {{ entity.lastName }}
     </div>
     <div>
-        Type: {{ user.typeString }}
+        Type: {{ entity.typeString }}
     </div>
 
 
@@ -21,10 +21,10 @@
             <a href="{{ path('client_Loan_view', {'id': loan.id}) }}">{{ loan.displayId }} - {{ loan.reason }}</a>
         </div>
     {% else %}
-        {{ user.username }} has created no loan.
+        {{ entity.entityname }} has created no loan.
     {% endfor %}
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_User_edit', {'id': user.id} ) }}">Edit</a>
+        <a href="{{ path('admin_User_edit', {'id': entity.id} ) }}">Edit</a>
     {% endif %}
 {% endblock %}

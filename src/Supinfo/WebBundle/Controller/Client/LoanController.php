@@ -6,45 +6,33 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Supinfo\WebBundle\Entity\Loan;
 use Supinfo\WebBundle\Entity\Article;
 use Supinfo\WebBundle\Entity\ArticleLoan;
+use Supinfo\WebBundle\Entity\User;
 use Supinfo\WebBundle\Form\NewLoanType;
 use Supinfo\WebBundle\Form\EditLoanType;
 use Supinfo\WebBundle\Form\LoanAddArticleType;
 use Supinfo\WebBundle\Entity\LoanListFilters;
 use Supinfo\WebBundle\Form\LoanListFiltersType;
-use Supinfo\WebBundle\Tool\Paginator;
 
-class LoanController extends Controller
+class LoanController extends EntityController
 {
 
-    protected function getLoan($id)
+    public function getEntityName()
     {
-        $em = $this->get('doctrine')->getEntityManager();
-        $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
-
-        $loan = $entityRepository->selectOneById($id);
-
-        if (!$loan) {
-            throw $this->createNotFoundException();
-        }
-
-        return $loan;
+        return 'Loan';
     }
 
 
 
     public function newAction() {
-        $em = $this->get('doctrine')->getEntityManager();
-        $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
-
-        $loan = $entityRepository->newEntity();
+        $this->entity = $this->getEntityRepository()->newEntity();
 
         $form = $this->get('form.factory')
-            ->createBuilder(new NewLoanType(), $loan)
+            ->createBuilder(new NewLoanType(), $this->entity)
             ->getForm();
 
         $request = $this->get('request');
@@ -52,7 +40,7 @@ class LoanController extends Controller
             $form->bindRequest($request);
 
             // Custom validation.
-            if ($loan->getDateStart() >= $loan->getDateEnd()) {
+            if ($this->entity->getDateStart() >= $this->entity->getDateEnd()) {
                 $form->addError(new FormError('DateEnd must be after DateStart.'));
             }
 
@@ -60,15 +48,24 @@ class LoanController extends Controller
                 $form->addError(new FormError('You must be a client to create a loan.'));
             }
 
-            if ($form->isValid()) {
-                $loan->setUser($this->get('security.context')->getToken()->getUser());
+            if (!$this->get('security.context')->getToken()->getUser() instanceof User) {
+                $form->addError(new FormError('You can\'t create a loan with the default admin user.'));
+            }
 
-                $em->persist($loan);
-                $em->flush();
+            if ($form->isValid()) {
+                $this->entity->setUser($this->get('security.context')->getToken()->getUser());
+
+                $this->getEntityManager()->persist($this->entity);
+                $this->getEntityManager()->flush();
 
                 $this->get('session')->setFlash('notice', 'Loan successfully created.');
 
-                return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $loan->getId())));
+                return new RedirectResponse($this->generateUrl(
+                    'client_Loan_edit',
+                    array(
+                         'id' => $this->entity->getId()
+                    )
+                ));
             }
         }
 
@@ -81,13 +78,15 @@ class LoanController extends Controller
     }
 
     public function editAction($id) {
-        $em = $this->get('doctrine')->getEntityManager();
-        $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
+        $this->fetchEntity(array('id' => $id));
 
-        $loan = $this->getLoan($id);
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')
+            && $this->entity->getUser() != $this->get('security.context')->getToken()->getUser()) {
+            throw new AccessDeniedException('You must be the author of a Loan to edit it.');
+        }
 
         $form = $this->get('form.factory')
-            ->createBuilder(new EditLoanType(), $loan)
+            ->createBuilder(new EditLoanType(), $this->entity)
             ->getForm();
 
         $formAddArticle = $this->get('form.factory')
@@ -99,48 +98,51 @@ class LoanController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $em->persist($loan);
-                $em->flush();
+                $this->getEntityManager()->flush();
 
                 $this->get('session')->setFlash('notice', 'Loan successfully edited.');
 
-                return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $loan->getId())));
+                return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $this->entity->getId())));
             }
         } else if ($request->getMethod() == 'POST' && $request->get($formAddArticle->getName())) {
             $formAddArticle->bindRequest($request);
 
             if ($formAddArticle->isValid()) {
                 $articleId = $formAddArticle->get('id')->getData();
-                if (preg_match('/^5([0-9]{4})$/', $articleId, $matches)) {
-                    $articleId = $matches[1];
+                if (preg_match('/^5([0-9]{4})$/', $articleId)) {
+                    $articleId = substr($articleId, 1);
                 }
 
-                $article = $em->getRepository('SupinfoWebBundle:Article')
+                $article = $this->getEntityManager()
+                    ->getRepository('SupinfoWebBundle:Article')
                     ->selectOneById($articleId);
 
-                if ($article) {
-                    $articleLoanCount = $em
+                if (!$article) {
+                    $formAddArticle->addError(new FormError('Article does not exists.'));
+                } else {
+                    $articleLoanCount = $this->getEntityManager()
                         ->getRepository('SupinfoWebBundle:ArticleLoan')
-                        ->countById($article->getId(), $loan->getId());
+                        ->countById($article->getId(), $this->entity->getId());
 
                     if ($articleLoanCount > 0) {
                         $formAddArticle->addError(new FormError('This article has already been added.'));
                     } else {
                         $articleLoan = new ArticleLoan();
                         $articleLoan->setArticle($article);
-                        $articleLoan->setLoan($loan);
-                        $articleLoan->setDateStart($loan->getDateStart());
-                        $articleLoan->setDateEnd($loan->getDateEnd());
+                        $articleLoan->setLoan($this->entity);
+                        $articleLoan->setDateStart($this->entity->getDateStart());
+                        $articleLoan->setDateEnd($this->entity->getDateEnd());
 
-                        $em->persist($articleLoan);
-                        $em->flush();
+                        $this->getEntityManager()->persist($articleLoan);
+                        $this->getEntityManager()->flush();
 
                         $this->get('session')->setFlash('notice', 'Article added.');
 
-                        return new RedirectResponse($this->generateUrl('client_Loan_edit', array('id' => $loan->getId())));
+                        return new RedirectResponse($this->generateUrl(
+                            'client_Loan_edit',
+                            array('id' => $this->entity->getId())
+                        ));
                     }
-                } else {
-                    $formAddArticle->addError(new FormError('Article does not exists.'));
                 }
             }
         }
@@ -149,16 +151,14 @@ class LoanController extends Controller
             'SupinfoWebBundle:Client\Loan:edit.html.twig',
             array(
                 'form' => $form->createView(),
-                'loan' => $loan,
                 'formAddArticle' => $formAddArticle->createView(),
             )
         );
     }
-
+    
     public function deleteArticleLoanAction($loanId, $articleId)
     {
-        $em = $this->get('doctrine')->getEntityManager();
-        $entityRepository = $em->getRepository('SupinfoWebBundle:ArticleLoan');
+        $entityRepository = $this->getEntityManager()->getRepository('SupinfoWebBundle:ArticleLoan');
 
         $articleLoan = $entityRepository->selectOneByIds($articleId, $loanId);
 
@@ -166,14 +166,14 @@ class LoanController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $em->remove($articleLoan);
-        $em->flush();
+        $this->getEntityManager()->remove($articleLoan);
+        $this->getEntityManager()->flush();
 
         $this->get('session')->setFlash('notice', 'Article successfully removed from Loan.');
 
         return $this->redirect($this->generateUrl('client_Loan_edit', array('id' => $loanId)));
     }
-
+    
     public function listAction($filters, $page)
     {
         // Managing filters.
@@ -185,8 +185,6 @@ class LoanController extends Controller
 
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
-            // The user changed the filters.
-
             $filtersForm->bindRequest($request);
 
             if ($filtersForm->isValid()) {
@@ -194,59 +192,35 @@ class LoanController extends Controller
             }
         }
 
-        
-        // Managing page.
-        $paginator = new Paginator();
-
-        $em = $this->get('doctrine')->getEntityManager();
-        $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
-
-        $selectQB = $entityRepository->selectQBWithFilters($loanListFilters->getFilters());
-
-        $paginator
-            ->setEntityRepository($entityRepository)
-            ->setRoute('client_Loan_list')
-            ->setCurrentPage($page)
-            ->setRouteParams(array('filters' => $loanListFilters->getFiltersURI()))
-            ->setSelectQB($selectQB);
-
-        if (!$paginator->currentPageExists()) {
-            throw $this->createNotFoundException();
-        }
-
-        $loans = $paginator->getCurrentPageResults();
+        $this->initPaginator(array(
+            'current_page' => $page,
+            'select_qb' => $this->getEntityRepository()->selectQBWithFilters($loanListFilters->getFilters()),
+            'route_params' => array('filters' => $loanListFilters->getFiltersURI())
+        ));
 
         return $this->render(
             'SupinfoWebBundle:Client\Loan:list.html.twig',
             array(
-                'filtersForm' => $filtersForm->createView(),
-                'paginator' => $paginator,
-                'loans' => $loans
+                'filtersForm' => $filtersForm->createView()
             )
         );
     }
 
     public function viewAction($id)
     {
-        $loan = $this->getLoan($id);
+        $this->fetchEntity(array('id' => $id));
 
         return $this->render(
-            'SupinfoWebBundle:Client\Loan:view.html.twig',
-            array(
-                'loan' => $loan
-            )
+            'SupinfoWebBundle:Client\Loan:view.html.twig'
         );
     }
 
     public function printAction($id)
     {
-        $loan = $this->getLoan($id);
+        $this->fetchEntity(array('id' => $id));
 
         return $this->render(
-            'SupinfoWebBundle:Client\Loan:print.html.twig',
-            array(
-                'loan' => $loan
-            )
+            'SupinfoWebBundle:Client\Loan:print.html.twig'
         );
     }
 

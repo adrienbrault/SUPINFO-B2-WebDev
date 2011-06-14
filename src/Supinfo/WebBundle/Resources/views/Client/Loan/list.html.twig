@@ -9,12 +9,12 @@
     </form>
 
     <ul>
-        {% for loan in loans %}
+        {% for loan in entities %}
             {% include 'SupinfoWebBundle:Client/Loan:list_li.html.twig' with {'loan': loan} %}
         {% else %}
             <li>No result found.</li>
         {% endfor %}
     </ul>
 
-    {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' with { 'paginator': paginator } %}
+    {% include 'SupinfoWebBundle:Paginator:pages_list.html.twig' %}
 {% endblock %}

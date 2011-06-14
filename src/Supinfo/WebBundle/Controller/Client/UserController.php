@@ -2,28 +2,23 @@
 
 namespace Supinfo\WebBundle\Controller\Client;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-class UserController extends Controller
+class UserController extends EntityController
 {
+
+    public function getEntityName()
+    {
+        return 'User';
+    }
 
     public function viewAction($id)
     {
-        $em = $this->get('doctrine')->getEntityManager();
-        $entityRepository = $em->getRepository('SupinfoWebBundle:User');
+        $this->fetchEntity(array('id' => $id));
 
-        $user = $entityRepository->selectOneById($id);
-
-        if (!$user) {
-            throw $this->createNotFoundException();
-        }
-
-        $loans = $em->getRepository('SupinfoWebBundle:Loan')->loansBy($user);
+        $loans = $this->getEntityManager()->getRepository('SupinfoWebBundle:Loan')->loansBy($this->entity);
 
         return $this->render(
             'SupinfoWebBundle:Client\User:view.html.twig',
             array(
-                'user' => $user,
                 'loans' => $loans
             )
         );

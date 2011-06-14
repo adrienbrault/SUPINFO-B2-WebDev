@@ -1,13 +1,13 @@
 {% extends 'SupinfoWebBundle::layout.html.twig' %}
 
 {% block content %}
-    <div>ID: {{ loan.id }}</div>
-    <div>Reason: {{ loan.reason }}</div>
-    <div>Date start: {{ loan.dateStart|date() }}</div>
-    <div>Date end: {{ loan.dateEnd|date() }}</div>
+    <div>ID: {{ entity.id }}</div>
+    <div>Reason: {{ entity.reason }}</div>
+    <div>Date start: {{ entity.dateStart|date() }}</div>
+    <div>Date end: {{ entity.dateEnd|date() }}</div>
     <div>
         Articles:
-        {% for articleLoan in loan.articlesLoan %}
+        {% for articleLoan in entity.articlesLoan %}
             {% set article = articleLoan.article %}
 
             <div>
@@ -16,13 +16,13 @@
                 [{{ articleLoan.dateStart|date() }} - {{ articleLoan.dateEnd|date() }}]
             </div>
         {% else %}
-            There is not article in this loan.
+            There is not article in this entity.
         {% endfor %}
     </div>
 
-    <a href="{{ path('client_Loan_print', {'id': loan.id} ) }}" target="__blank">Print</a>
+    <a href="{{ path('client_Loan_print', {'id': entity.id} ) }}" target="__blank">Print</a>
 
-    {% if is_granted('ROLE_CLIENT') %}
-        <a href="{{ path('client_Loan_edit', {'id': loan.id} ) }}">Edit</a>
+    {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_CLIENT') and entity.user is sameas(app.security.token.user)) %}
+        <a href="{{ path('client_Loan_edit', {'id': entity.id} ) }}">Edit</a>
     {% endif %}
 {% endblock %}

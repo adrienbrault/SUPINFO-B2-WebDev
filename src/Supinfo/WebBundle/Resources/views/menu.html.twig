@@ -22,6 +22,7 @@
 
         {% if is_granted('ROLE_CLIENT') %}
             <li><a href="{{ path('client_Loan_list') }}">Loans</a></li>
+            <li><a href="{{ path('client_Article_list') }}">Articles</a></li>
         {% endif %}
 
         {% if is_granted('ROLE_ADMIN') %}

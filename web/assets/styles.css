@@ -1,26 +1,3 @@
-/*
-    COLORS:
-
-    http://kuler.adobe.com/#create/fromacolor
-
-    #33262E
-    #733230
-    #CC5539
-    #E5D27F
-    #86A677
-*/
-
-#STYLES_COLOR {
-    color: #33262E;
-    color: #733230;
-    color: #CC5539;
-    color: #E5D27F;
-    color: #86A677;
-
-    color: #E3D2A2;
-}
-
-
 /*  CSS RESET
 ****************/
 
@@ -35,135 +12,17 @@
 ****************/
 
 body {
-    font-family: Helvetica, Arial;
+    font-family: "Lucida Grande", Helvetica, Arial;
 }
 
 #container {
     width: 960px;
     min-height: 1000px;
-    background-color: #ddd;
 
     margin:  auto;
+
+    background-color: #ddd;
 }
-
-#header {
-    width: 100%;
-    
-    text-align: center;
-}
-
-
-
-/* COMMON
-**********/
-
-a, a:visited {
-    color: #33262E;
-    font-weight: bold;
-}
-
-.clear {
-    clear: both;
-}
-
-
-/* MENU
-********/
-
-#menu {
-    background-color: #86A677;
-
-    padding: 10px 0px;
-}
-
-#menu > * {
-    display: inline-block;
-}
-
-#menu a,
-#menu a:visited {
-    color: white;
-    text-decoration: none;
-}
-
-#menu h1 {
-    background-color: white;
-
-    margin-left: 10px;
-
-    padding: 5px 15px;
-
-    border-radius: 10px;
-}
-
-#menu h1 a,
-#menu h1 a:visited {
-    color: #86A677;
-}
-
-#menu ul {
-    list-style-type: none;
-    margin-left: 30px;
-}
-
-#menu ul li {
-    font-size: 1.3em;
-
-    margin-left: 10px;
-    display: inline-block;
-
-    background-color: white;
-
-    border-radius: 5px;
-
-    box-shadow: 0 0 10px -2px black;
-}
-
-#menu ul li a {
-    display: block;
-    padding: 5px 3px;
-}
-
-#menu ul li a,
-#menu ul li a:visited {
-    color: #86A677;
-}
-
-#menu .login {
-    float: right;
-    display: inline-block;
-
-    margin-top: 10px;
-    padding-right: 20px;
-}
-
-#menu .login p {
-    color: white;
-    font-weight: bold;
-    display: inline-block;
-}
-
-#menu .login ul {
-    display: inline-block;
-    margin-left: 0;
-}
-
-
-/* CONTENT
-**********/
-
-#contentTitle {
-    color: #CC5539;
-    
-    padding: 5px 20px;
-
-    text-shadow: 0 0 3px white;
-}
-
-#content {
-    padding: 15px;
-}
-
 
 
 /* PAGINATOR
@@ -176,4 +35,50 @@ a, a:visited {
 
 .paginator-pages-list li {
     display: inline-block;
+}
+
+
+/* MENU
+*******/
+
+#search {
+    float: right;
+}
+
+#menu div:first-child {
+    margin-bottom: 20px;
+}
+
+#menu ul {
+    list-style: none;
+}
+
+#menu li {
+    display: inline-block;
+    border-right: 2px solid black;
+    padding: 0px 10px;
+}
+
+#menu li:last-child {
+    border-right: none;
+}
+
+#menu {
+    border: 2px solid black;
+}
+
+
+/*
+*****/
+
+table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+td, th {
+    border: 1px solid black;
+    text-align: center;
 }

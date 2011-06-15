@@ -3,9 +3,9 @@
 {% block title %}DSGF - {{ block('content_title') }}{% endblock %}
 
 {% block body %}
-    {% include 'SupinfoWebBundle::menu.html.twig' %}
-
     <div id="container">
+        {% include 'SupinfoWebBundle::menu.html.twig' %}
+
         <h1 id="contentTitle">{% block content_title %}{% endblock %}</h1>
 
         {% if app.session.hasFlash('notice') %}

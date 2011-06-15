@@ -3,20 +3,54 @@
 {% block content_title %}Article View{% endblock %}
 
 {% block content %}
-    <div>ID: {{ entity.id }}</div>
-    <div>Description: {{ entity.description }}</div>
-    <div>Code: {{ entity.code }}</div>
-    <div>State: {{ entity.stateString }}</div>
-    <div>Quantity: {{ entity.quantity }}</div>
-    <div>Place: {{ entity.place }}</div>
-    <div>SubFamily: {{ entity.subFamily }}</div>
-    <div>Family: {{ entity.subFamily.family }}</div>
+    <table class="key_val">
+        <tr>
+            <td>ID</td>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{ entity.description }}</td>
+        </tr>
+        <tr>
+            <td>Code</td>
+            <td>{{ entity.code }}</td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td>{{ entity.stateString }}</td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td>{{ entity.quantity }}</td>
+        </tr>
+        <tr>
+            <td>Place</td>
+            <td>{{ entity.place }}</td>
+        </tr>
+        <tr>
+            <td>SubFamily</td>
+            <td>{{ entity.subFamily }}</td>
+        </tr>
+        <tr>
+            <td>Family</td>
+            <td>{{ entity.subFamily.family }}</td>
+        </tr>
 
-    <div>SubFamily fields:
-        {% for fieldValue in entity.fieldValues %}
-            <div>{{ fieldValue.subFamilyField }}: {{ fieldValue.value }}</div>
-        {% endfor %}
-    </div>
+        <tr>
+            <td>SubFamily Fields</td>
+            <td>
+                <table>
+                    {% for fieldValue in entity.fieldValues %}
+                        <tr>
+                            <td>{{ fieldValue.subFamilyField }}</td>
+                            <td>{{ fieldValue.value }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
 
     {% if is_granted('ROLE_CLIENT') %}
         <h3>Add Article to Loan:</h3>

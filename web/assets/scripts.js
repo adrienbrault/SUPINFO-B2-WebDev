@@ -15,6 +15,10 @@ $(document).ready(function() {
         }
     });
 
+
+
+    // REMOVE
+
     $('.remove').live('click', function(event) {
         $(this).parent().slideUp('medium', function() {
             $(this).remove();
@@ -27,6 +31,10 @@ $(document).ready(function() {
             event.preventDefault();
         }
     });
+
+
+
+    // PRINT
 
     $('.trigger_print').click(function(event) {
         print();

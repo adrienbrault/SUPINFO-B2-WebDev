@@ -3,7 +3,7 @@
 {% block content_title %}New Loan{% endblock %}
 
 {% block content %}
-    <form action="{{ path('client_Loan_new') }}" method="post" {{ form_enctype(form) }}>
+    <form class="form" action="{{ path('client_Loan_new') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
 
         {{ form_rest(form) }}

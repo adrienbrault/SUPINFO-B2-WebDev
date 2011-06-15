@@ -3,25 +3,53 @@
 {% block content_title %}Loan View{% endblock %}
 
 {% block content %}
-    <div>ID: {{ entity.id }}</div>
-    <div>Reason: {{ entity.reason }}</div>
-    <div>Date start: {{ entity.dateStart|date() }}</div>
-    <div>Date end: {{ entity.dateEnd|date() }}</div>
-    <div>User: <a href="{{ path('client_User_view', {'id': entity.user.id }) }}">{{ entity.user.username }}</a></div>
-    <div>
-        Articles:
-        {% for articleLoan in entity.articlesLoan %}
-            {% set article = articleLoan.article %}
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <td>Reason</td>
+            <td>{{ entity.reason }}</td>
+        </tr>
+        <tr>
+            <td>Date start</td>
+            <td>{{ entity.dateStart|date() }}</td>
+        </tr>
+        <tr>
+            <td>Date end</td>
+            <td>{{ entity.dateEnd|date() }}</td>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td><a href="{{ path('client_User_view', {'id': entity.user.id }) }}">{{ entity.user.username }}</a></td>
+        </tr>
+        <tr>
+            <td>Articles</td>
+            <td>
+                <table>
+                    <tr>
+                        <th>Article</th>
+                        <th>Quantity</th>
+                        <th>Date start</th>
+                        <th>Date end</th>
+                    </tr>
+                    {% for articleLoan in entity.articlesLoan %}
+                        {% set article = articleLoan.article %}
 
-            <div>
-                <a href="{{ path('client_Article_view', {'id': article.id} ) }}">{{ article.id }} - {{ article.description }}</a>
-                [Quantity : {{ articleLoan.quantity }}]
-                [{{ articleLoan.dateStart|date() }} - {{ articleLoan.dateEnd|date() }}]
-            </div>
-        {% else %}
-            There is not article in this entity.
-        {% endfor %}
-    </div>
+                        <tr>
+                            <td><a href="{{ path('client_Article_view', {'id': article.id} ) }}">{{ article.id }} - {{ article.description }}</a></td>
+                            <td>{{ articleLoan.quantity }}</td>
+                            <td>{{ articleLoan.dateStart|date() }}</td>
+                            <td>{{ articleLoan.dateEnd|date() }}</td>
+                        </tr>
+                    {% else %}
+                        <tr><td>There is not article in this loan.</td></tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
 
     <a href="{{ path('client_Loan_print', {'id': entity.id} ) }}" target="__blank">Print</a>
 

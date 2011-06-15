@@ -3,7 +3,7 @@
 {% block content_title %}Edit Loan{% endblock %}
 
 {% block content %}
-    <form action="{{ path('client_Loan_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form class="form" action="{{ path('client_Loan_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
         <h3>Loan</h3>
 
         {{ form_errors(form) }}
@@ -15,12 +15,12 @@
         {% endfor %}
 
         {% if form.children['articlesLoan'] %}
-            <div>Fields:</div>
+            <label>Articles:</label>
 
             {% for formChild in form.children['articlesLoan'] %}
                 {% set fieldValue = formChild.all['value'] %}
 
-                <div>
+                <div class="form_row">
                     {{ form_row(formChild, {'label': fieldValue.article.description}) }}
                     <a href="{{ path('client_Loan_delete_article', { 'loanId': entity.id, 'articleId': fieldValue.articleId}) }}">Delete</a>
                 </div>
@@ -30,7 +30,7 @@
         <input type="submit" value="Save" />
     </form>
 
-    <form action="{{ path('client_Loan_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(formAddArticle) }}>
+    <form class="form" action="{{ path('client_Loan_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(formAddArticle) }}>
         <h3>Add Article</h3>
 
         {{ form_errors(formAddArticle) }}

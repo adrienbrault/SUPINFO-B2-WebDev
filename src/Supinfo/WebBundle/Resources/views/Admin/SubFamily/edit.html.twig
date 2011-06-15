@@ -13,7 +13,7 @@
         {% for formChild in form.children['fields'] %}
             {% set fieldValue = formChild.all['value'] %}
             
-            <div>
+            <div class="form_row">
                 {{ form_errors(formChild) }}
                 {{ form_widget(formChild) }}
                 <a href="" class="remove">Remove</a>

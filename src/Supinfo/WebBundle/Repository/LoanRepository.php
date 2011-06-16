@@ -184,32 +184,6 @@ class LoanRepository extends EntityRepository
 
         $ra = $qb->getRootAlias();
 
-        $qb->andWhere(
-            $qb->expr()->orx(
-                $qb->expr()->andx(
-                    $qb->expr()->lte(
-                        $ra.'.dateStart',
-                        ':date_start'
-                    ),
-                    $qb->expr()->lt(
-                        ':date_start',
-                        $ra.'.dateEnd'
-                    )
-                ),
-                $qb->expr()->andx(
-                    $qb->expr()->lt(
-                        $ra.'.dateStart',
-                        ':date_end'
-                    ),
-                    $qb->expr()->lte(
-                        ':date_end',
-                        $ra.'.dateEnd'
-                    )
-                )
-            )
-        );
-
-        /* Same as above. But the QueryBuilder version is sexier.
         $qb->andWhere("
         (
             (
@@ -226,7 +200,6 @@ class LoanRepository extends EntityRepository
             )
         )
         ");
-        */
 
         $qb->setParameter('date_start', $start, \Doctrine\DBAL\Types\Type::DATETIME);
         $qb->setParameter('date_end', $end, \Doctrine\DBAL\Types\Type::DATETIME);

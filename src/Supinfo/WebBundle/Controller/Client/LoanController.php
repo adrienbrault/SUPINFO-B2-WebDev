@@ -218,7 +218,8 @@ class LoanController extends EntityController
         $this->initPaginator(array(
             'current_page' => $page,
             'select_qb' => $this->getEntityRepository()->selectQBWithFilters($loanListFilters->getFilters()),
-            'route_params' => array('filters' => $loanListFilters->getFiltersURI())
+            'route_params' => array('filters' => $loanListFilters->getFiltersURI()),
+            'results_per_page' => 20
         ));
 
         $this->entities = $this->paginator->getCurrentPageResults();

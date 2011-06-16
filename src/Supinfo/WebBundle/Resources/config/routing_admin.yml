@@ -145,3 +145,9 @@ admin_User_list:
         page: 1
     requirements:
         page: \d+
+
+
+admin_Stats:
+    pattern: /stats
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Stats:stats'

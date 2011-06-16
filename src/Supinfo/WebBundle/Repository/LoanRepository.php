@@ -178,4 +178,60 @@ class LoanRepository extends EntityRepository
         return $this->loansByQB($user)->getQuery()->getResult();
     }
 
+    public function loanCountFromTo(\DateTime $start, \DateTime $end)
+    {
+        $qb = $this->countQB();
+
+        $ra = $qb->getRootAlias();
+
+        $qb->andWhere(
+            $qb->expr()->orx(
+                $qb->expr()->andx(
+                    $qb->expr()->lte(
+                        $ra.'.dateStart',
+                        ':date_start'
+                    ),
+                    $qb->expr()->lt(
+                        ':date_start',
+                        $ra.'.dateEnd'
+                    )
+                ),
+                $qb->expr()->andx(
+                    $qb->expr()->lt(
+                        $ra.'.dateStart',
+                        ':date_end'
+                    ),
+                    $qb->expr()->lte(
+                        ':date_end',
+                        $ra.'.dateEnd'
+                    )
+                )
+            )
+        );
+
+        /* Same as above. But the QueryBuilder version is sexier.
+        $qb->andWhere("
+        (
+            (
+                $ra.dateStart <= :date_start
+            ) AND (
+                :date_start < $ra.dateEnd
+            )
+        )
+        OR (
+            (
+                $ra.dateStart < :date_end
+            ) AND (
+                :date_end <= $ra.dateEnd
+            )
+        )
+        ");
+        */
+
+        $qb->setParameter('date_start', $start, \Doctrine\DBAL\Types\Type::DATETIME);
+        $qb->setParameter('date_end', $end, \Doctrine\DBAL\Types\Type::DATETIME);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 }

@@ -1,0 +1,31 @@
+{% extends 'SupinfoWebBundle:Admin:admin.html.twig' %}
+
+{% block content_title %}Admin - Stats{% endblock %}
+
+{% block content %}
+    <h2>Loan count per month.</h2>
+
+    <div class="admin">
+        <form method="post" action="">
+            {{ form_errors(form) }}
+
+            {{ form_rest(form) }}
+
+            <input type="submit" />
+        </form>
+    </div>
+
+    <table>
+        <tr>
+            <th>Month</th>
+            <th>Count</th>
+        </tr>
+
+        {% for result in results %}
+            <tr>
+                <td>{{ result.from|date("F Y") }}</td>
+                <td>{{ result.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

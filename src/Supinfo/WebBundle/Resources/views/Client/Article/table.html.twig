@@ -14,7 +14,10 @@
                 <td>{{ article.description }}</td>
                 <td>{% if article.subFamily %}{{ article.subFamily.family }}{% endif %}</td>
                 <td>{% if article.subFamily %}{{ article.subFamily }}{% endif %}</td>
-                <td><a href="{{ path('client_Article_view', {'id': article.id}) }}">View</a></td>
+                <td>
+                    <a href="{{ path('client_Article_view', {'id': article.id}) }}">View</a>
+                    <a href="{{ path('client_Article_availability', {'id': article.id}) }}">Availability</a>
+                </td>
             </tr>
         {% else %}
             <tr><td>No Result found</td></tr>

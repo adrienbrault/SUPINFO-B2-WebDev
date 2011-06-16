@@ -128,3 +128,8 @@ form.form label {
     min-width: 400px;
     min-height: 100px;
 }
+
+.redB {
+    color: red;
+    font-weight: bold;
+}

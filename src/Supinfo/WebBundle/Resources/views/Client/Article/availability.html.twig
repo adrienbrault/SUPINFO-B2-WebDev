@@ -1,0 +1,36 @@
+{% extends 'SupinfoWebBundle::layout.html.twig' %}
+
+{% block content_title %}Article Avaibility{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>{{ entity.displayId }}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{ entity.description }}</td>
+        </tr>
+    </table>
+
+    <a href="{{ path('client_Article_view', {'id': entity.id}) }}">View</a>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Quantity</th>
+        </tr>
+
+        {% for result in results %}
+            <tr>
+                <td>{{ result.date|date() }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td{% if result.quantity < 0 %} class="redB" {% endif %}>{{ result.quantity }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

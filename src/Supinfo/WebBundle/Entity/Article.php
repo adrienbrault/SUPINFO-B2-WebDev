@@ -263,4 +263,29 @@ class Article
 
         throw new \Exception(sprintf('Property "%s" does not exists', $property));
     }
+    /**
+     * @var Supinfo\WebBundle\Entity\ArticleLoan
+     */
+    private $articleLoans;
+
+
+    /**
+     * Add articleLoans
+     *
+     * @param Supinfo\WebBundle\Entity\ArticleLoan $articleLoans
+     */
+    public function addArticleLoans(\Supinfo\WebBundle\Entity\ArticleLoan $articleLoans)
+    {
+        $this->articleLoans[] = $articleLoans;
+    }
+
+    /**
+     * Get articleLoans
+     *
+     * @return Doctrine\Common\Collections\Collection $articleLoans
+     */
+    public function getArticleLoans()
+    {
+        return $this->articleLoans;
+    }
 }

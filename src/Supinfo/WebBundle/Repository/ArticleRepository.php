@@ -4,6 +4,8 @@ namespace Supinfo\WebBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
 
+use Supinfo\WebBundle\Entity\Article;
+
 /**
  * ArticleRepository
  *
@@ -98,6 +100,77 @@ class ArticleRepository extends EntityRepository
         );
 
         return $expr;
+    }
+
+
+    /**
+     * Returns an array containing loan aware quantities for each date the quantity changes.
+     */
+    public function getAvailability(Article $article)
+    {
+        $articleLoans = $article->getArticleLoans();
+
+        $results = array();
+        $results[1] = $article->getQuantity();
+
+        foreach ($articleLoans as $articleLoan) {
+            $dateStart = $articleLoan->getDateStart()->getTimestamp();
+            $dateEnd = $articleLoan->getDateEnd()->getTimestamp();
+
+            // Create start in array
+            if (isset($results[$dateStart])) {
+                $results[$dateStart] -= $articleLoan->getQuantity();
+            } else {
+                // Get the previous quantity.
+
+                $results[$dateStart] = $this->getPreviousTimestampQuantity($results, $dateStart) - $articleLoan->getQuantity();
+            }
+
+            $dateStartPreviousQuantity = $results[$dateStart] + $articleLoan->getQuantity();
+
+
+            // Adjust each value between start and end
+            foreach ($results as $resultTimeStamp => $quantity) {
+                if ($resultTimeStamp > $dateStart && $resultTimeStamp < $dateEnd) {
+                    $results[$resultTimeStamp] -= $articleLoan->getQuantity();
+                }
+            }
+
+
+            // Create end in array if necessary
+            if (!isset($results[$dateEnd])) {
+                $results[$dateEnd] = $dateStartPreviousQuantity;
+            }
+        }
+
+        // Creating result array with DateTime instances.
+        ksort($results);
+        $resultsDateTime = array();
+        foreach ($results as $resultTimeStamp => $quantity) {
+            $dt = new \DateTime();
+            $dt->setTimestamp($resultTimeStamp);
+
+            $resultsDateTime[] = array(
+                'quantity' => $quantity,
+                'date' => $dt
+            );
+        }
+
+        return $resultsDateTime;
+    }
+
+    private function getPreviousTimestampQuantity($results, $timestamp) {
+        $previousTimestamp = null;
+        $previousDiff = null;
+        foreach ($results as $resultTimestamp => $quantity) {
+            $diff = $timestamp - $resultTimestamp;
+            if ($previousDiff === null || ($diff > 0 && $diff < $previousDiff)) {
+                $previousDiff = $diff;
+                $previousTimestamp = $resultTimestamp;
+            }
+        }
+
+        return $results[$previousTimestamp];
     }
 
 }

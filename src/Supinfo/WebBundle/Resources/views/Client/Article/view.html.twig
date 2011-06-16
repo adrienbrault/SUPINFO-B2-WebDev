@@ -65,4 +65,6 @@
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_Article_edit', {'id': entity.id} ) }}">Edit</a>
     {% endif %}
+
+    <a href="{{ path('client_Article_availability', {'id': article.id}) }}">Availability</a>
 {% endblock %}

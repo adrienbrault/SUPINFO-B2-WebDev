@@ -38,3 +38,6 @@ Supinfo\WebBundle\Entity\Article:
             mappedBy: article
             cascade: ["persist"]
             orphanRemoval: true
+        articleLoans:
+            targetEntity: ArticleLoan
+            mappedBy: article

@@ -33,6 +33,7 @@
                         <th>Quantity</th>
                         <th>Date start</th>
                         <th>Date end</th>
+                        <th>Action</th>
                     </tr>
                     {% for articleLoan in entity.articlesLoan %}
                         {% set article = articleLoan.article %}
@@ -42,6 +43,7 @@
                             <td>{{ articleLoan.quantity }}</td>
                             <td>{{ articleLoan.dateStart|date() }}</td>
                             <td>{{ articleLoan.dateEnd|date() }}</td>
+                            <td><a href="{{ path('client_Article_availability', {'id': article.id}) }}">Check Availability</a></td>
                         </tr>
                     {% else %}
                         <tr><td>There is not article in this loan.</td></tr>

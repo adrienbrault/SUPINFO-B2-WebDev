@@ -136,4 +136,18 @@ class ArticleController extends EntityController
         );
     }
 
+    public function availabilityAction($id)
+    {
+        $this->fetchEntity(array('id' => $id));
+
+        $results = $this->getEntityRepository()->getAvailability($this->entity);
+
+        return $this->render(
+            'SupinfoWebBundle:Client/Article:availability.html.twig',
+            array(
+                'results' => $results
+            )
+        );
+    }
+
 }

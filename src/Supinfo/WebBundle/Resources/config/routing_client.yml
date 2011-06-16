@@ -57,6 +57,13 @@ client_Article_view:
     requirements:
         id: \d+
 
+client_Article_availability:
+    pattern: /article/availability/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Client\Article:availability'
+    requirements:
+        id: \d+
+
 client_Article_csv:
     pattern: /article/excel.{_format}
     defaults:

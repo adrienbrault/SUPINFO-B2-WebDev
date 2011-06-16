@@ -72,11 +72,14 @@ class StatsController extends Controller
 
         // VIEW
 
+        $canvasSize = max(900, count($results) * 50);
+
         return $this->render(
             'SupinfoWebBundle:Admin/Stats:stats.html.twig',
             array(
                 'form' => $form->createView(),
-                'results' => $results
+                'results' => $results,
+                'canvasSize' => $canvasSize
             )
         );
     }

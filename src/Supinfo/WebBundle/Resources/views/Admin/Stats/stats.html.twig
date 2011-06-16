@@ -2,6 +2,44 @@
 
 {% block content_title %}Admin - Stats{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/lib/RGraph/libraries/RGraph.common.core.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/lib/RGraph/libraries/RGraph.bar.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            {% set graph_data = '' %}
+            {% set graph_labels = '' %}
+            {% for result in results %}
+                {% set graph_data = graph_data ~ result.count %}
+                {% set graph_labels = graph_labels ~ "'" ~ result.from|date("M y")|raw ~ "'" %}
+                {% if not loop.last %}
+                    {% set graph_data = graph_data ~ ', ' %}
+                    {% set graph_labels = graph_labels ~ ', ' %}
+                {% endif %}
+            {% endfor %}
+
+            var data = [{{ graph_data }}];
+            var labels = [{{ graph_labels|raw }}];
+
+            var bar = new RGraph.Bar('stats_bar', data);
+            bar.Set('chart.labels', labels);
+            bar.Set('chart.gutter.left', 45);
+            bar.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
+            bar.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
+            bar.Set('chart.background.grid', true);
+            bar.Set('chart.background.grid.vsize', 565);
+            bar.Set('shadow', true);
+            bar.Set('chart.colors', ['rgba(255,0,0,1)']);
+            bar.Set('chart.labels.above', true);
+            bar.Set('chart.labels.above.size', 12);
+            bar.Set('chart.text.size', 8);
+            bar.Draw();
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <h2>Loan count per month.</h2>
 
@@ -15,6 +53,12 @@
         </form>
     </div>
 
+    <h3>Graph:</h3>
+    <div style="overflow-x:scroll; width: 100%;">
+        <canvas id="stats_bar" width="{{ canvasSize }}" height="350">[Please wait...]</canvas>
+    </div>
+
+    <h3>Text:</h3>
     <table>
         <tr>
             <th>Month</th>

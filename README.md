@@ -4,9 +4,9 @@ Installation
 PHP
 ---
 
-Dans un terminal et à la racine des sources du projet executez:
+Ouvrez un terminal et placez vous dans le dossier contenant les sources du projet:
 
-1) Assurez vous que cette commande ne renvoie aucun "major problem". Corrigez les si besoin.:
+1) Assurez vous que la commande suivante ne renvoie aucun "major problem". Corrigez les si besoin. Vous pouvez ignorer les erreurs à propos de app/cache/ car les dossiers seront créés automatiquement plus tard.
 
     $ php app/check.php
 
@@ -15,7 +15,7 @@ Dans un terminal et à la racine des sources du projet executez:
 SYMFONY2
 --------
 
-3) Vous devez installez le Framework symfony pour continuer:
+3) Vous devez installez le Framework Symfony pour continuer:
 
     $ php bin/vendors.php --reinstall
 
@@ -23,15 +23,15 @@ SYMFONY2
 DATABASE
 --------
 
-4) Entrez les informations de votre base de donnée dans le fichier suivant:
+4) Entrez les informations de votre base de donnée MySQL dans le fichier suivant:
 
     app/config/parameters.ini
 
-5) Si la base de donnée dédié au projet n'est pas déjà créée vous pouvez executez la commande suivante:
+5) Si la base de donnée dédié au projet n'est pas déjà créée vous pouvez exécutez la commande suivante:
 
     $ php app/console doctrine:database:create
 
-6) Pour créér les tables executez cette commande:
+6) Pour créer les tables executez cette commande:
 
     $ php app/console doctrine:schema:create
 

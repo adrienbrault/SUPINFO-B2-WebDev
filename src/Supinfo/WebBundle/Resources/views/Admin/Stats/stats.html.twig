@@ -26,13 +26,15 @@
             var bar = new RGraph.Bar('stats_bar', data);
             bar.Set('chart.labels', labels);
             bar.Set('chart.gutter.left', 45);
-            bar.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
-            bar.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
             bar.Set('chart.background.grid', true);
             bar.Set('chart.background.grid.vsize', 565);
             bar.Set('shadow', true);
-            bar.Set('chart.colors', ['rgba(255,0,0,1)']);
+            bar.Set('chart.colors', ['#0485b4']);
+            bar.Set('chart.strokecolor', '#e6f3f8');
+            bar.Set('chart.background.grid.color', '#fff');
             bar.Set('chart.labels.above', true);
+            bar.Set('chart.text.color', '#034963');
+            bar.Set('chart.variant', 'glass');
             bar.Set('chart.labels.above.size', 12);
             bar.Set('chart.text.size', 8);
             bar.Draw();

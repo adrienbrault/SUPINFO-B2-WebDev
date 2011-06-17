@@ -35,6 +35,11 @@ DATABASE
 
     $ php app/console doctrine:schema:create
 
+Si vous obtenez une erreur pour la création des tables, c'est que votre PHP n'est pas totalement configuré pour l'utilisation en ligne de commande.
+Vous pouvez trouvez un script.sql permettant de créer la base de donnée:
+
+    $ cat ./database_a490c4c04be105e85d8a492e5c5b90619d5b6bb6.sql
+
 7) Il est ensuite conseillé d'executer cette commande afin que Symfony2 déploie ses fichiers statiques:
 
     $ php app/console assets:install web/

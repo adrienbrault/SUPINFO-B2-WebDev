@@ -2,6 +2,8 @@
 
 {% block title %}DSGF - {{ block('content_title') }}{% endblock %}
 
+{% set date_format = date_format is defined ? date_format : 'd M Y' %}
+
 {% block body %}
     <div id="container">
         {% include 'SupinfoWebBundle::menu.html.twig' %}

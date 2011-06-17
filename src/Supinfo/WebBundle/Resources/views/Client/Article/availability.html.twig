@@ -24,7 +24,7 @@
 
         {% for result in results %}
             <tr>
-                <td>{{ result.date|date() }}</td>
+                <td>{{ result.date|date(date_format) }}</td>
                 <td></td>
             </tr>
             <tr>

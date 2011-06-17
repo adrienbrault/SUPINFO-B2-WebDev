@@ -6,7 +6,7 @@
     <table class="key_val">
         <tr>
             <td>ID</td>
-            <td>{{ entity.id }}</td>
+            <td>{{ entity.displayId }}</td>
         </tr>
         <tr>
             <td>Description</td>
@@ -66,5 +66,5 @@
         <a href="{{ path('admin_Article_edit', {'id': entity.id} ) }}">Edit</a>
     {% endif %}
 
-    <a href="{{ path('client_Article_availability', {'id': article.id}) }}">Availability</a>
+    <a href="{{ path('client_Article_availability', {'id': entity.id}) }}">Availability</a>
 {% endblock %}

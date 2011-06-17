@@ -3,21 +3,28 @@
 {% block content_title %}User View{% endblock %}
 
 {% block content %}
-    <div>
-        Id: {{ entity.displayId }}
-    </div>
-    <div>
-        Username: {{ entity.username }}
-    </div>
-    <div>
-        Firstname: {{ entity.firstName }}
-    </div>
-    <div>
-        Lastname: {{ entity.lastName }}
-    </div>
-    <div>
-        Type: {{ entity.typeString }}
-    </div>
+    <table class="key_val">
+        <tr>
+            <td>Id</td>
+            <td>{{ entity.displayId }}</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>{{ entity.username }}</td>
+        </tr>
+        <tr>
+            <td>Firstname</td>
+            <td>{{ entity.firstname }}</td>
+        </tr>
+        <tr>
+            <td>Lastname</td>
+            <td>{{ entity.lastname }}</td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>{{ entity.typeString }}</td>
+        </tr>
+    </table>
 
 
     <div>

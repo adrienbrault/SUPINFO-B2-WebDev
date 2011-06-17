@@ -3,7 +3,7 @@
 {% block content_title %}Loan View{% endblock %}
 
 {% block content %}
-    <table>
+    <table class="key_val">
         <tr>
             <td>ID</td>
             <td>{{ entity.id }}</td>
@@ -46,7 +46,7 @@
                             <td><a href="{{ path('client_Article_availability', {'id': article.id}) }}">Check Availability</a></td>
                         </tr>
                     {% else %}
-                        <tr><td>There is not article in this loan.</td></tr>
+                        <tr><td colspan="5">There is not article in this loan.</td></tr>
                     {% endfor %}
                 </table>
             </td>

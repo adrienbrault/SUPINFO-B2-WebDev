@@ -4,7 +4,7 @@
 
 {% block content %}
     <div>Welcome.</div>
-
+    
     {% if is_granted('ROLE_USER') %}
         <div>
             <a href="{{ path('client_Loan_list') }}">Loan list</a>

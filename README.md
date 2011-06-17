@@ -10,7 +10,7 @@ Ouvrez un terminal et placez vous dans le dossier contenant les sources du proje
 
     $ php app/check.php
 
-2) Monter le dossier web/ comme dossier root de votre serveur apache. Affichez la page http://localhost/config.php (ou équivalent) et corrigez les "major problems".
+2) Montez le dossier web/ comme dossier root de votre serveur apache. Affichez la page http://localhost/config.php (ou équivalent) et corrigez les "major problems".
 
 SYMFONY2
 --------

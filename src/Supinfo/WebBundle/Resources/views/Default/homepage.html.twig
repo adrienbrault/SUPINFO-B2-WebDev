@@ -3,14 +3,17 @@
 {% block content_title %}Homepage{% endblock %}
 
 {% block content %}
-    <p>Welcome.</p>
+    <div>Welcome.</div>
 
     {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('client_Loan_list') }}">Loan list</a>
+        <div>
+            <a href="{{ path('client_Loan_list') }}">Loan list</a>
 
-        {% if is_granted('ROLE_CLIENT') %}
-            <a href="{{ path('client_Loan_new') }}">New loan</a>
-        {% endif %}
+            {% if is_granted('ROLE_CLIENT') %}
+                - <a href="{{ path('client_Loan_new') }}">New loan</a>
+            {% endif %}
+        </div>
+
 
         <div>
             <h3>5 next loans:</h3>

@@ -6,6 +6,9 @@
     padding:  0;
 }
 
+.clear {
+    clear: both;
+}
 
 
 /*  MAIN STYLES
@@ -13,6 +16,25 @@
 
 body {
     font-family: "Lucida Grande", Helvetica, Arial;
+    background-color: #022330;
+
+    color: #333333;
+
+    font-size: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: black;
+    margin-bottom: 15px;
+}
+
+a, a:hover, a:visited {
+    color: #0485b4;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 #container {
@@ -20,8 +42,29 @@ body {
     min-height: 1000px;
 
     margin:  auto;
+}
 
-    background-color: #ddd;
+#content {
+    background-color: #adccd9;
+}
+
+#contentTitle {
+    padding-left: 30px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#flash-notice {
+    color: green;
+    font-weight: bold;
+    background-color: #e6f3f8;
+    padding: 10px 20px;
+    margin: 10px 20px;
+    border: 1px solid #c3e2ee;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 
@@ -31,6 +74,8 @@ body {
 .paginator-pages-list {
     list-style-type: none;
     display: inline-block;
+
+    margin: 10px 7px;
 }
 
 .paginator-pages-list li {
@@ -45,8 +90,49 @@ body {
     float: right;
 }
 
-#menu div:first-child {
-    margin-bottom: 20px;
+input {
+    padding: 5px;
+    font-size: 1em;
+
+    color: #222;
+}
+
+textarea,
+input {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    border: 1px solid #a2a2a2;
+
+    color: #222;
+}
+
+input:focus {
+    border: 1px solid #333333;
+}
+
+input[type="submit"] {
+    background-color: #f5f5f5;
+    color: #0485b4;
+    padding:  5px 10px;
+    border: 1px solid #333333;
+    font-weight: bold;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+    background-color: #fff;
+    border: 2px solid #333333;
+    padding:  4px 9px;
+
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+#menu > div:first-child {
+    margin-top: 20px;
 }
 
 #menu ul {
@@ -55,7 +141,7 @@ body {
 
 #menu li {
     display: inline-block;
-    border-right: 2px solid black;
+    border-right: 2px solid #647075;
     padding: 0px 10px;
 }
 
@@ -64,7 +150,31 @@ body {
 }
 
 #menu {
-    border: 2px solid black;
+    
+}
+
+#menu > div {
+    background-color: #adccd9;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+#menu > div,
+#content {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#content {
+    padding-bottom: 30px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#content > div {
+    margin-bottom: 20px;
 }
 
 
@@ -72,7 +182,7 @@ body {
 *****/
 
 table {
-    width: 90%;
+    width: 95%;
     margin: auto;
     border-collapse: collapse;
     border: 2px solid black;
@@ -80,16 +190,32 @@ table {
 
 table table {
     width: 100%;
-    border: none;
 }
 
 td, th {
     border: 1px solid black;
     text-align: center;
+
+    padding: 5px 3px;
+}
+
+td {
+    font-size: 0.9em;
+}
+
+th {
+    border-bottom: 2px solid black;
+    padding: 10px 5px;
+    font-size: 1.1em;
 }
 
 table.key_val tr > td {
     width: 30%;
+
+    border-bottom: 2px solid black;
+    padding:  8px 3px;
+
+    font-size: 1.1em;
 }
 
 table.key_val tr > td + td {
@@ -106,7 +232,6 @@ table.key_val tr > td:first-child {
 form.form {
     width: 95%;
     margin: auto;
-    padding-left: 20px;
     
     margin-bottom: 30px;
 }
@@ -114,14 +239,16 @@ form.form {
 .form .form_row {
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.form .form_row .form_row {
     padding-left: 20px;
-    
 }
 
 form.form label {
     font-weight: bold;
-    text-decoration: underline;
     display: block;
+    margin-bottom: 5px;
 }
 
 .form textarea {
@@ -132,4 +259,18 @@ form.form label {
 .redB {
     color: red;
     font-weight: bold;
+}
+
+.filters label {
+    margin-right: 20px;
+}
+
+.filters label[for="loanlistfilters_filters"] {
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.filters .form_row {
+    margin-bottom: 10px;
 }

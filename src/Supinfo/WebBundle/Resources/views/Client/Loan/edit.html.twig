@@ -23,7 +23,7 @@
                 <div class="form_row">
                     {{ form_row(formChild, {'label': fieldValue.article.description}) }}
                     <a href="{{ path('client_Article_availability', {'id': fieldValue.articleId}) }}">Check Availability</a>
-                    <a href="{{ path('client_Loan_delete_article', { 'loanId': entity.id, 'articleId': fieldValue.articleId}) }}">Delete</a>
+                    - <a href="{{ path('client_Loan_delete_article', { 'loanId': entity.id, 'articleId': fieldValue.articleId}) }}">Delete</a>
                 </div>
             {% endfor %}
         {% endif %}

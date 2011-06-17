@@ -166,4 +166,16 @@ class Loan
     {
         $this->articlesLoan = $articlesLoan;
     }
+
+    public function getDateState()
+    {
+        $now = new \DateTime('now');
+        if ($this->getDateEnd() < $now) {
+            return 'Ended';
+        } else if ($this->getDateStart() > $now) {
+            return 'Upcoming';
+        }
+
+        return 'Ongoing';
+    }
 }

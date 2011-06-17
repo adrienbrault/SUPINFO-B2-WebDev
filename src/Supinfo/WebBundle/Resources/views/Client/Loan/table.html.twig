@@ -7,6 +7,7 @@
             <th>End</th>
             <th>Owner</th>
             <th>Articles count</th>
+            <th>State</th>
             <th>Action</th>
         </tr>
 
@@ -18,11 +19,12 @@
                 <td>{{ loan.dateEnd|date(date_format) }}</td>
                 <td><a href="{{ path('client_User_view', {'id': loan.user.id}) }}">{{ loan.user }}</a></td>
                 <td>{{ loan.articlesLoan.count }}</td>
+                <td>{{ loan.dateState }}</td>
                 <td>
                     <a href="{{ path('client_Loan_view', {'id': loan.id}) }}">View</a>
 
                     {% if is_granted('ROLE_ADMIN') or app.security.token.user is sameas(loan.user) %}
-                        <a href="{{ path('client_Loan_edit', {'id': loan.id}) }}">Edit</a>
+                        - <a href="{{ path('client_Loan_edit', {'id': loan.id}) }}">Edit</a>
                     {% endif %}
                 </td>
             </tr>

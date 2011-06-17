@@ -3,12 +3,14 @@
 {% block content_title %}Loans List{% endblock %}
 
 {% block content %}
-    <form method="post">
-        {{ form_errors(filtersForm) }}
-        {{ form_rest(filtersForm) }}
+    <div>
+        <form method="post" class="filters">
+            {{ form_errors(filtersForm) }}
+            {{ form_rest(filtersForm) }}
 
-        <input type="submit" />
-    </form>
+            <input type="submit" />
+        </form>
+    </div>
 
     {% include('SupinfoWebBundle:Client/Loan:table.html.twig') with {'loans': entities} %}
 

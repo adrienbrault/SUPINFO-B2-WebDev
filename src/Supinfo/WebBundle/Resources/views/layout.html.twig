@@ -8,17 +8,17 @@
     <div id="container">
         {% include 'SupinfoWebBundle::menu.html.twig' %}
 
-        <h1 id="contentTitle">{% block content_title %}{% endblock %}</h1>
-
-        {% if app.session.hasFlash('notice') %}
-            {% block flash_notice %}
-                <div id="flash-notice">
-                    {{ app.session.flash('notice') }}
-                </div>
-            {% endblock %}
-        {% endif %}
-
         <div id="content">
+            <h1 id="contentTitle">{% block content_title %}{% endblock %}</h1>
+
+            {% if app.session.hasFlash('notice') %}
+                {% block flash_notice %}
+                    <div id="flash-notice">
+                        {{ app.session.flash('notice') }}
+                    </div>
+                {% endblock %}
+            {% endif %}
+
             {% block content %}{% endblock %}
         </div>
     </div>

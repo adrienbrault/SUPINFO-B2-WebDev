@@ -16,7 +16,10 @@
                 <td>{% if article.subFamily %}{{ article.subFamily }}{% endif %}</td>
                 <td>
                     <a href="{{ path('client_Article_view', {'id': article.id}) }}">View</a>
-                    <a href="{{ path('client_Article_availability', {'id': article.id}) }}">Availability</a>
+                    - <a href="{{ path('client_Article_availability', {'id': article.id}) }}">Availability</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        - <a href="{{ path('admin_Article_edit', {'id': article.id}) }}">Edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

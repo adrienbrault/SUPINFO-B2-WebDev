@@ -3,68 +3,76 @@
 {% block content_title %}Article View{% endblock %}
 
 {% block content %}
-    <table class="key_val">
-        <tr>
-            <td>ID</td>
-            <td>{{ entity.displayId }}</td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td>{{ entity.description }}</td>
-        </tr>
-        <tr>
-            <td>Code</td>
-            <td>{{ entity.code }}</td>
-        </tr>
-        <tr>
-            <td>State</td>
-            <td>{{ entity.stateString }}</td>
-        </tr>
-        <tr>
-            <td>Quantity</td>
-            <td>{{ entity.quantity }}</td>
-        </tr>
-        <tr>
-            <td>Place</td>
-            <td>{{ entity.place }}</td>
-        </tr>
-        <tr>
-            <td>SubFamily</td>
-            <td>{{ entity.subFamily }}</td>
-        </tr>
-        <tr>
-            <td>Family</td>
-            <td>{{ entity.subFamily.family }}</td>
-        </tr>
+    <div>
+        <table class="key_val">
+            <tr>
+                <td>ID</td>
+                <td>{{ entity.displayId }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ entity.description }}</td>
+            </tr>
+            <tr>
+                <td>Code</td>
+                <td>{{ entity.code }}</td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>{{ entity.stateString }}</td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td>{{ entity.quantity }}</td>
+            </tr>
+            <tr>
+                <td>Availability</td>
+                <td><a href="{{ path('client_Article_availability', {'id': entity.id}) }}">Check Availability</a></td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td>{{ entity.place }}</td>
+            </tr>
+            <tr>
+                <td>SubFamily</td>
+                <td>{{ entity.subFamily }}</td>
+            </tr>
+            <tr>
+                <td>Family</td>
+                <td>{{ entity.subFamily.family }}</td>
+            </tr>
 
-        <tr>
-            <td>SubFamily Fields</td>
-            <td>
-                <table>
-                    {% for fieldValue in entity.fieldValues %}
-                        <tr>
-                            <td>{{ fieldValue.subFamilyField }}</td>
-                            <td>{{ fieldValue.value }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </td>
-        </tr>
-    </table>
+            <tr>
+                <td>SubFamily Fields</td>
+                <td>
+                    <table>
+                        {% for fieldValue in entity.fieldValues %}
+                            <tr>
+                                <td>{{ fieldValue.subFamilyField }}</td>
+                                <td>{{ fieldValue.value }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     {% if is_granted('ROLE_CLIENT') %}
-        <h3>Add Article to Loan:</h3>
-        <form action="" method="post">
-            {{ form_errors(form) }}
-            {{ form_rest(form) }}
+        <div>
+            <h3>Add Article to Loan:</h3>
+            <form class="form" action="" method="post">
+                {{ form_errors(form) }}
+                {{ form_rest(form) }}
 
-            <input type="submit" />
-        </form>
+                <input type="submit" />
+            </form>
+        </div>
     {% endif %}
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_Article_edit', {'id': entity.id} ) }}">Edit</a>
+        <div>
+            <a href="{{ path('admin_Article_edit', {'id': entity.id} ) }}">Edit</a>
+        </div>
     {% endif %}
-
-    <a href="{{ path('client_Article_availability', {'id': entity.id}) }}">Availability</a>
 {% endblock %}

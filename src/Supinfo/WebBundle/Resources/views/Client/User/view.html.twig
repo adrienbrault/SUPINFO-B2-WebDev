@@ -3,28 +3,30 @@
 {% block content_title %}User View{% endblock %}
 
 {% block content %}
-    <table class="key_val">
-        <tr>
-            <td>Id</td>
-            <td>{{ entity.displayId }}</td>
-        </tr>
-        <tr>
-            <td>Username</td>
-            <td>{{ entity.username }}</td>
-        </tr>
-        <tr>
-            <td>Firstname</td>
-            <td>{{ entity.firstname }}</td>
-        </tr>
-        <tr>
-            <td>Lastname</td>
-            <td>{{ entity.lastname }}</td>
-        </tr>
-        <tr>
-            <td>Type</td>
-            <td>{{ entity.typeString }}</td>
-        </tr>
-    </table>
+    <div>
+        <table class="key_val">
+            <tr>
+                <td>Id</td>
+                <td>{{ entity.displayId }}</td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>{{ entity.username }}</td>
+            </tr>
+            <tr>
+                <td>Firstname</td>
+                <td>{{ entity.firstname }}</td>
+            </tr>
+            <tr>
+                <td>Lastname</td>
+                <td>{{ entity.lastname }}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>{{ entity.typeString }}</td>
+            </tr>
+        </table>
+    </div>
 
 
     <div>
@@ -35,6 +37,8 @@
 
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('admin_User_edit', {'id': entity.id} ) }}">Edit</a>
+        <div>
+            <a href="{{ path('admin_User_edit', {'id': entity.id} ) }}">Edit {{ entity.username }}</a>
+        </div>
     {% endif %}
 {% endblock %}

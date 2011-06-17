@@ -22,7 +22,7 @@
                     <td>
                         {% block list_td_actions %}
                             <a href="{{ path(routes.edit, { 'id': entity.id }) }}">Edit</a>
-                            <a class="delete_confirm" href="{{ path(routes.delete, { 'id': entity.id }) }}">Delete</a>
+                            - <a class="delete_confirm" href="{{ path(routes.delete, { 'id': entity.id }) }}">Delete</a>
                         {% endblock %}
                     </td>
                 </tr>

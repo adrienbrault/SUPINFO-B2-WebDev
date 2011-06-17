@@ -25,7 +25,7 @@ DATABASE
 
 4) Entrez les informations de votre base de donnée dans le fichier suivant:
 
-        app/config/parameters.ini
+    app/config/parameters.ini
 
 5) Si la base de donnée dédié au projet n'est pas déjà créée vous pouvez executez la commande suivante:
 

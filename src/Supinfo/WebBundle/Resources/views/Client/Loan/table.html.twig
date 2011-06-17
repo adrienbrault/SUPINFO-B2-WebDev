@@ -26,10 +26,14 @@
                     {% if is_granted('ROLE_ADMIN') or app.security.token.user is sameas(loan.user) %}
                         - <a href="{{ path('client_Loan_edit', {'id': loan.id}) }}">Edit</a>
                     {% endif %}
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                        - <a class="delete_confirm" href="{{ path('admin_Loan_delete', {'id': loan.id}) }}">Delete</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
-            <tr><td colspan="7">No Result found</td></tr>
+            <tr><td colspan="100">No Result found</td></tr>
         {% endfor %}
     </table>
 {% endblock %}

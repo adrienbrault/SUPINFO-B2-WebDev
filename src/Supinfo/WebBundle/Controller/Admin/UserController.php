@@ -57,4 +57,23 @@ class UserController extends AdminController
 
         parent::saveFormEntity();
     }
+
+    public function deleteAction()
+    {
+        $this->fetchEntity();
+
+        if ($this->get('security.context')->getToken()->getUser() == $this->entity) {
+            $this->get('session')->setFlash('notice', 'You can delete yourself.');
+            return $this->redirectToList();
+        }
+
+        $em = $this->getEntityManager();
+        $em->remove($this->entity);
+        $em->flush();
+
+        $this->get('session')->setFlash('notice', $this->getEntityName().' successfully deleted.');
+
+        // Redirect to the list.
+        return $this->redirectToList();
+    }
 }

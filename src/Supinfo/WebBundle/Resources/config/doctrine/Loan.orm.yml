@@ -22,6 +22,7 @@ Supinfo\WebBundle\Entity\Loan:
             joinColumn:
                 name: user_id
                 referencedColumnName: id
+                onDelete: "CASCADE"
     oneToMany:
         articlesLoan:
             targetEntity: ArticleLoan

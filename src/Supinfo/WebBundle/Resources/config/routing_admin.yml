@@ -151,3 +151,17 @@ admin_Stats:
     pattern: /stats
     defaults:
         _controller: 'SupinfoWebBundle:Admin\Stats:stats'
+
+
+admin_Loan_delete:
+    pattern: /loan/delete/{id}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Loan:delete'
+
+admin_Loan_list:
+    pattern: /loan/list/{page}
+    defaults:
+        _controller: 'SupinfoWebBundle:Admin\Loan:list'
+        page: 1
+    requirements:
+        page: \d+

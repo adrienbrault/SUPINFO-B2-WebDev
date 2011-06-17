@@ -44,3 +44,4 @@ Supinfo\WebBundle\Entity\User:
             joinColumn:
                 name: structure_id
                 referencedColumnName: id
+                onDelete: "SET NULL"

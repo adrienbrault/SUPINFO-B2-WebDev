@@ -33,7 +33,7 @@ DATABASE
 
 6) Pour créér les tables executez cette commande:
 
-    $ php app/console doctrine:schema:create --force
+    $ php app/console doctrine:schema:create
 
 7) Il est ensuite conseillé d'executer cette commande afin que Symfony2 déploie ses fichiers statiques:
 

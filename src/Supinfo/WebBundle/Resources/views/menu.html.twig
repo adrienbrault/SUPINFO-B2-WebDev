@@ -25,11 +25,11 @@
 
     <div>
         <ul>
-            <li><a href="{{ path('homepage') }}">Home</a>
+            <li{% if '/' is sameas(app.request.pathInfo) %} class="current"{% endif %}><a href="{{ path('homepage') }}">Home</a>
 
             {% if is_granted('ROLE_USER') %}
-                <li><a href="{{ path('client_Loan_list') }}">Loans</a></li>
-                <li><a href="{{ path('client_Article_list') }}">Articles</a></li>
+                <li{% if '/client/loan' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('client_Loan_list') }}">Loans</a></li>
+                <li{% if '/client/article' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('client_Article_list') }}">Articles</a></li>
             {% endif %}
         </ul>
     </div>
@@ -37,13 +37,13 @@
     {% if is_granted('ROLE_ADMIN') %}
         <div>
             <ul>
-                <li><a href="{{ path('admin_Place_list') }}">Place</a></li>
-                <li><a href="{{ path('admin_Article_list') }}">Article</a></li>
-                <li><a href="{{ path('admin_Family_list') }}">Family</a></li>
-                <li><a href="{{ path('admin_SubFamily_list') }}">SubFamily</a></li>
-                <li><a href="{{ path('admin_Structure_list') }}">Structure</a></li>
-                <li><a href="{{ path('admin_User_list') }}">User</a></li>
-                <li><a href="{{ path('admin_Stats') }}">Stats</a></li>
+                <li{% if '/admin/place' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('admin_Place_list') }}">Place</a></li>
+                <li{% if '/admin/article' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('admin_Article_list') }}">Article</a></li>
+                <li{% if '/admin/family' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('admin_Family_list') }}">Family</a></li>
+                <li{% if '/admin/sub-family' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('admin_SubFamily_list') }}">SubFamily</a></li>
+                <li{% if '/admin/structure' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('admin_Structure_list') }}">Structure</a></li>
+                <li{% if '/admin/user' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('admin_User_list') }}">User</a></li>
+                <li{% if '/admin/stats' in app.request.pathInfo %} class="current"{% endif %}><a href="{{ path('admin_Stats') }}">Stats</a></li>
             </ul>
         </div>
     {% endif %}

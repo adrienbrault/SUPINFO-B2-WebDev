@@ -107,7 +107,7 @@ form.form {
     width: 95%;
     margin: auto;
     padding-left: 20px;
-    border-left: 5px solid black;
+    
     margin-bottom: 30px;
 }
 
@@ -115,7 +115,7 @@ form.form {
     margin-top: 10px;
     margin-bottom: 20px;
     padding-left: 20px;
-    border-left: 2px solid black;
+    
 }
 
 form.form label {

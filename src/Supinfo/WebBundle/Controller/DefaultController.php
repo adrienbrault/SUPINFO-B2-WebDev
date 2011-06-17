@@ -12,8 +12,8 @@ class DefaultController extends Controller
         $nextLoans = null;
         $currentLoans = null;
 
-        if ($this->get('security.context')->isGranted('ROLE_CLIENT')) {
-            $em = $em = $this->get('doctrine')->getEntityManager();
+        if ($this->get('security.context')->isGranted('ROLE_USER')) {
+            $em = $this->get('doctrine')->getEntityManager();
             $entityRepository = $em->getRepository('SupinfoWebBundle:Loan');
 
             $nextLoans = $entityRepository->next5Loans();

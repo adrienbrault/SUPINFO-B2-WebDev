@@ -23,7 +23,7 @@ SYMFONY2
 DATABASE
 --------
 
-4) Entrez les informations de votre base de donnée MySQL dans le fichier suivant:
+4) Entrez les informations de votre base de données MySQL dans le fichier suivant:
 
     app/config/parameters.ini
 

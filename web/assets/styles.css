@@ -123,7 +123,7 @@ input[type="submit"] {
 input[type="submit"]:hover {
     cursor: pointer;
     background-color: #fff;
-    border: 2px solid #333333;
+    border: 2px solid #0485b4;
     padding:  4px 9px;
 
     -webkit-border-radius: 6px;
@@ -200,7 +200,7 @@ table table {
 }
 
 td, th {
-    border: 1px solid black;
+    border: 1px solid #7d7d7d;
     text-align: center;
 
     padding: 5px 3px;
@@ -212,6 +212,7 @@ td {
 
 th {
     border-bottom: 2px solid black;
+    border-right: 1px solid black;
     padding: 10px 5px;
     font-size: 1.1em;
 }

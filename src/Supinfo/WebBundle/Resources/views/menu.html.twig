@@ -7,15 +7,15 @@
         </div>
         
         <div id="login">
-            {% if is_granted('ROLE_USER') %}
-                Logged in as <a href="{{ path('client_User_view', {'id': app.security.token.user.id}) }}">{{ app.security.token.user.username }}</a>
-            {% endif %}
-
             {% if not is_granted('ROLE_USER') %}
-                - <a href="{{ path('login') }}">Login</a>
+                <a href="{{ path('login') }}">Login</a>
             {% endif %}
 
             {% if is_granted('ROLE_USER') %}
+                Logged in as
+                <a href="{{ path('client_User_view', {'id': app.security.token.user.id}) }}">
+                    {{ app.security.token.user.username }}
+                </a>
                 - <a href="{{ path('logout') }}">Logout</a>
             {% endif %}
         </div>
